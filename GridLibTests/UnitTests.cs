@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GridLib;
 using MapDataLib;
@@ -12,7 +11,29 @@ namespace GridLibTests
         [Fact]
         public void ProperUpperLeftPointinCell()
         {
-
+            Map map = new Map();
+            var md1 = new MapData(GeometryType.Line);
+            md1.Vertexes.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(2,2,1,1),
+                new MapPoint(3,5,1,1),
+                new MapPoint(5,7,1,1),
+                new MapPoint(5,5,1,1),
+                new MapPoint(7,5,1,1),
+                new MapPoint(9,5,1,1)
+            });
+            map.Add(md1);
+            var md2 = new MapData(GeometryType.Line);
+            md2.Vertexes.Add(2, new List<MapPoint>
+            {
+                new MapPoint(7,7,2,1),
+                new MapPoint(6.2,4.2,2,1),
+                new MapPoint(7,3,2,1),
+                new MapPoint(9,5.5,2,1),
+                new MapPoint(10,8,2,1)
+            });
+            map.Add(md2);
+            var grid = new Grid(map, 2, 0.5);
         }
 
         [Fact]
@@ -42,7 +63,7 @@ namespace GridLibTests
             map.Add(md2);
             var grid = new Grid(map, 2, 0.5);
             var numberCellChilds = grid.Cells[2, 1].GetAllCells().Count();
-            Assert.Equal(4,numberCellChilds);
+            Assert.Equal(7,numberCellChilds);
 
 
         }
