@@ -1,7 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ee2159dc_002Db94b_002D41ce_002Da2c8_002Df75c1318d919/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ProperNumberOfCellsWithOneLevel" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::08AD938B-353C-427D-89C6-2CD1D9B81297::.NETFramework,Version=v4.7.2::GridLibTests.UnitTests.ProperNumberOfCellsWithOneLevel&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::08AD938B-353C-427D-89C6-2CD1D9B81297::.NETFramework,Version=v4.7.2::GridLibTests.UnitTests.ProperNumberOfCells&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::08AD938B-353C-427D-89C6-2CD1D9B81297::.NETFramework,Version=v4.7.2::GridLibTests.UnitTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

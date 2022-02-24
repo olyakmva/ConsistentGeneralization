@@ -10,7 +10,7 @@ namespace GridLib
         public double DetailSize { get; set; }
         public double CellSize { get; set; }
         public Dictionary<int, List<Cell>> ObjDictionary;
-        private const int EmptyCellLevel = -5;
+        public const int EmptyCellLevel = -5;
         public Grid(Map map, double cellSize, double detail)
         {
             CellSize = cellSize;

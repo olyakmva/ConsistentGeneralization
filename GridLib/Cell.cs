@@ -12,6 +12,9 @@ namespace GridLib
         public double Size { get; set; }
         public int Level { get; set; }
         public List<Cell> Children { get; set; }
+
+        private const int SeveralObjectsInCell = -1;
+
         public Dictionary<int, List<MapPoint>> MapPoints { get; set; }
 
         public Cell()
@@ -23,7 +26,7 @@ namespace GridLib
         {
             if (Level == 0)
             {
-                ObjectId = -1;
+                ObjectId = SeveralObjectsInCell;
                 if(MapPoints.ContainsKey(point.Id))
                     MapPoints[point.Id].Add(point);
                 else MapPoints.Add(point.Id, new List<MapPoint>(new []{point}));
@@ -65,7 +68,7 @@ namespace GridLib
                     break;
                 }
 
-                this.ObjectId = -1;
+                this.ObjectId = SeveralObjectsInCell;
                 foreach (var pair in MapPoints)
                 {
                     foreach (var pnt in pair.Value)
@@ -109,7 +112,7 @@ namespace GridLib
 
         public IEnumerable<Cell> GetAllCells()
         {
-            List<Cell> result = new List<Cell>();
+            var result = new List<Cell>();
             if (Children == null) 
                 result.Add(this);
 
