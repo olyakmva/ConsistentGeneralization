@@ -12,6 +12,7 @@ namespace GridLib
         public double Size { get; set; }
         public int Level { get; set; }
         public List<Cell> Children { get; set; }
+        public CellState State { get;  set; }
 
         private const int SeveralObjectsInCell = -1;
 
@@ -20,6 +21,7 @@ namespace GridLib
         public Cell()
         {
             MapPoints = new Dictionary<int, List<MapPoint>>();
+            State = CellState.EmptyCell;
         }
 
         public void Add(MapPoint point)
