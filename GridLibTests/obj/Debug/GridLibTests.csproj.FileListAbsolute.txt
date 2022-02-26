@@ -28,3 +28,5 @@ E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.csproj.CopyComplete
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.dll
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.pdb
+E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\bin\Debug\AlgorithmsLibrary.dll
+E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\bin\Debug\AlgorithmsLibrary.pdb

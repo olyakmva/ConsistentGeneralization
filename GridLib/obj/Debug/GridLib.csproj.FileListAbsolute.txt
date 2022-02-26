@@ -18,3 +18,5 @@ E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Mono.xml
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\obj\Debug\GridLib.csprojAssemblyReference.cache
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\obj\Debug\GridLib.csproj.CopyComplete
+E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\bin\Debug\AlgorithmsLibrary.dll
+E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\bin\Debug\AlgorithmsLibrary.pdb

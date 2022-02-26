@@ -47,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlgorithmsLibrary\AlgorithmsLibrary.csproj">
+      <Project>{f02989b0-5bfb-4d6c-9d04-2b7ed2ad347a}</Project>
+      <Name>AlgorithmsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapDataLib\MapDataLib.csproj">
       <Project>{30b67a91-8899-4973-8883-0da67f41f6d7}</Project>
       <Name>MapDataLib</Name>

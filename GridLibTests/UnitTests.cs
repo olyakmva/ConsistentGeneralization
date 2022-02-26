@@ -39,33 +39,50 @@ namespace GridLibTests
         }
 
         [Fact]
-        public void ProperNumberOfCells()
+        public void ProperNumberOfNotEmptyCellsOnMaxLevel()
         {
             Map map = new Map();
             var md1 = new MapData(GeometryType.Line);
-            md1.Vertexes.Add(1,new List<MapPoint>()
+            int objId = 1;
+            const int objWeight = 1;
+            md1.Vertexes.Add(objId,new List<MapPoint>()
             {
-                new MapPoint(2,2,1,1),
-                new MapPoint(3,5,1,1),
-                new MapPoint(5,7,1,1),
-                new MapPoint(5,5,1,1),
-                new MapPoint(7,5,1,1),
-                new MapPoint(9,5,1,1)
+                new MapPoint(0,0,objId,objWeight),
+                new MapPoint(1,3,objId,objWeight),
+                new MapPoint(3.5,1.5,objId,objWeight),
+                new MapPoint(5.5,0.5,objId,objWeight),
+                new MapPoint(5,1.5,objId,objWeight)
+               
             });
             map.Add(md1);
             var md2 = new MapData(GeometryType.Line);
-            md2.Vertexes.Add(2, new List<MapPoint>
+            objId = 2;
+            md2.Vertexes.Add(objId, new List<MapPoint>
             {
-                new MapPoint(7,7,2,1),
-                new MapPoint(6.2,4.2,2,1),
-                new MapPoint(7,3,2,1),
-                new MapPoint(9,5.5,2,1),
-                new MapPoint(10,8,2,1)
+                new MapPoint(5,3,objId,objWeight),
+                new MapPoint(4.5,1.5,objId,objWeight),
+                new MapPoint(4.4,0.5,objId,objWeight),
+                new MapPoint(2.5,1,objId,objWeight),
+                new MapPoint(3.5,2.5,objId,objWeight),
+                new MapPoint(3,2.8,objId,objWeight)
             });
             map.Add(md2);
-            var grid = new Grid(map, 2, 0.5);
-            var numberCellChilds = grid.Cells[2, 1].GetAllCells().Count();
-            Assert.Equal(7,numberCellChilds);
+            int cellSize = 2;
+            var grid = new Grid(map, cellSize, 0.5);
+            int singleObjCellCount = 0;
+            int manyObjCellCount = 0;
+            for (var i = 0; i < grid.Cells.GetLength(0); i++)
+            {
+                for (var j = 0; j < grid.Cells.GetLength(1); j++)
+                {
+                    if (grid.Cells[i, j].State == CellState.OneObject)
+                        singleObjCellCount++;
+                    if (grid.Cells[i, j].State == CellState.SeveralObjects)
+                        manyObjCellCount++;
+                }
+            }
+            Assert.Equal(3,singleObjCellCount);
+            Assert.Equal(3,manyObjCellCount);
         }
         [Fact]
         public void ProperNumberOfCellsWithOneLevel()
@@ -97,7 +114,7 @@ namespace GridLibTests
                 {
                     if (grid.Cells[i, j].MapPoints.Count == 0) continue;
                     count++;
-                    Assert.Equal(objId, grid.Cells[i, j].ObjectId);
+                    Assert.Contains(objId, grid.Cells[i, j].ObjectIdList);
                     Assert.Equal(2,grid.Cells[i, j].Level);
                 }
             }

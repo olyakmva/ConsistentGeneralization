@@ -37,6 +37,11 @@ namespace MapDataLib
             ComputeMinMaxValues(mapData);
         }
 
+        public MapData GetObjById(int id)
+        {
+            return MapLayers.Find(x => x.Vertexes.ContainsKey(id));
+        }
+
         public IEnumerator<MapData> GetEnumerator()
         {
             return MapLayers.GetEnumerator();

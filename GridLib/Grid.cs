@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AlgorithmsLibrary;
 using MapDataLib;
 
 namespace GridLib
@@ -11,66 +12,48 @@ namespace GridLib
         public double CellSize { get; set; }
         public Dictionary<int, List<Cell>> ObjDictionary;
         private List<Cell> _needToDropList;
+        private Map _map;
+
         public Grid(Map map, double cellSize, double detail)
         {
+            _map = map;
             CellSize = cellSize;
             DetailSize = detail;
-            int maxLevel = 1;
-            var x = CellSize;
-            while (x / 2 > DetailSize)
-            {
-                maxLevel++;
-                x /= 2;
-            }
+            int maxLevel =  CalculateMaxLevel();
+            InitCells(map, cellSize, maxLevel);
 
             _needToDropList = new List<Cell>();
-            ObjDictionary = new Dictionary<int, List< Cell>>();
-            int n =(int) Math.Ceiling((map.Xmax - map.Xmin) / cellSize)+1; 
-            int m = (int)Math.Ceiling((map.Ymax - map.Ymin) / cellSize)+1;
-            Cells = new Cell[n, m];
-            for(var i=0; i<n; i++)
-            for (var j = 0; j < m; j++)
-            {
-                Cells[i, j] = new Cell
-                {
-                    LowerLeftPoint = new MapPoint() {X = map.Xmin + i * cellSize, Y = map.Ymin + j * cellSize},
-                    Level = maxLevel,
-                    Size = CellSize
-                };
-            }
-            
+            ObjDictionary = new Dictionary<int, List<Cell>>();
+           
             foreach (var mapObj in map)
             {
                 foreach (var pointList in mapObj.Vertexes)
                 {
-                    foreach (var point in pointList.Value)
+                    for (var k = 0; k < pointList.Value.Count; k++)
                     {
+                        var point = pointList.Value[k];
                         int i = (int) Math.Truncate((point.X - map.Xmin) / CellSize);
                         int j = (int) Math.Truncate((point.Y - map.Ymin) / CellSize);
-                        if (Cells[i, j].State==CellState.EmptyCell )
+                        if (Cells[i, j].State == CellState.EmptyCell)
                         {
-                            Cells[i, j].ObjectId = pointList.Key;
+                            Cells[i, j].ObjectIdList.Add(pointList.Key);
                             Cells[i, j].Level = maxLevel;
                             Cells[i, j].State = CellState.OneObject;
-                            Cells[i,j].MapPoints.Add(pointList.Key, new List<MapPoint>(new []{point}));
-                            if (ObjDictionary.ContainsKey(pointList.Key))
-                            {
-                                ObjDictionary[pointList.Key].Add(Cells[i, j]); 
-                            }
-                            else ObjDictionary.Add(pointList.Key,new List<Cell>(new [] {Cells[i,j]}) );
+                            Cells[i, j].MapPoints.Add(pointList.Key, new List<MapPoint>(new[] {point}));
+                            ModifyObjDictionary(pointList.Key, Cells[i, j]);
                         }
                         else
                         {
                             if (Cells[i, j].State == CellState.OneObject)
                             {
-                                if (Cells[i, j].ObjectId == pointList.Key)
+                                if (Cells[i, j].ObjectIdList.Contains(pointList.Key))
                                 {
                                     Cells[i, j].MapPoints[pointList.Key].Add(point);
                                 }
                                 else
                                 {
                                     Cells[i, j].State = CellState.SeveralObjects;
-                                    _needToDropList.Add(Cells[i,j]);
+                                    _needToDropList.Add(Cells[i, j]);
                                     if (Cells[i, j].MapPoints.ContainsKey(pointList.Key))
                                     {
                                         Cells[i, j].MapPoints[pointList.Key].Add(point);
@@ -78,11 +61,7 @@ namespace GridLib
                                     else
                                     {
                                         Cells[i, j].MapPoints.Add(pointList.Key, new List<MapPoint>(new[] {point}));
-                                        if (ObjDictionary.ContainsKey(pointList.Key))
-                                        {
-                                            ObjDictionary[pointList.Key].Add(Cells[i, j]);
-                                        }
-                                        else ObjDictionary.Add(pointList.Key, new List<Cell>(new[] { Cells[i, j] }));
+                                        ModifyObjDictionary(pointList.Key, Cells[i, j]);
                                     }
                                 }
                             }
@@ -95,18 +74,141 @@ namespace GridLib
                                 else
                                 {
                                     _needToDropList.Add(Cells[i, j]);
-                                    Cells[i, j].MapPoints.Add(pointList.Key, new List<MapPoint>(new[] { point }));
-                                    if (ObjDictionary.ContainsKey(pointList.Key))
-                                    {
-                                        ObjDictionary[pointList.Key].Add(Cells[i, j]);
-                                    }
-                                    else ObjDictionary.Add(pointList.Key, new List<Cell>(new[] { Cells[i, j] }));
+                                    Cells[i, j].MapPoints.Add(pointList.Key, new List<MapPoint>(new[] {point}));
+                                    ModifyObjDictionary(pointList.Key, Cells[i, j]);
                                 }
                             }
+                        }
+
+                        if (k >= pointList.Value.Count - 1) continue;
+                        var nextPoint = pointList.Value[k + 1];
+                        var (ind1, ind2) = GetGridIndexes(nextPoint);
+                        
+                        if (Math.Abs(i - ind1) + Math.Abs(j - ind2) >= 2)
+                        {
+                            var minI = Math.Min(i, ind1);
+                            var maxI = Math.Max(i, ind1);
+                            var minJ = Math.Min(j, ind2);
+                            var maxJ = Math.Max(j, ind2);
+                            Line line = new Line(point, nextPoint);
+                            for (var i1 = minI; i1 <= maxI; i1++)
+                            for (var j1 = minJ; j1 <= maxJ; j1++)
+                            {
+                                if (Cells[i1, j1].ObjectIdList.Contains(point.Id))
+                                    continue;
+                                if (i1 == i && j1 == j || i1 == ind1 && j1 == ind2)
+                                    continue;
+                                if (!Cells[i1, j1].HasCommonPoint(line))
+                                    continue;
+                                ModifyObjDictionary(point.Id, Cells[i1, j1]);
+                                Cells[i1, j1].ObjectIdList.Add(point.Id);
+                                if (!Cells[i1, j1].MapPoints.ContainsKey(point.Id))
+                                    Cells[i1, j1].MapPoints.Add(point.Id, new List<MapPoint>());
+                                if (Cells[i1, j1].State == CellState.EmptyCell)
+                                    Cells[i1, j1].State = CellState.OneObject;
+                                else if (Cells[i1, j1].State == CellState.OneObject)
+                                {
+                                    Cells[i1, j1].State = CellState.SeveralObjects;
+                                    _needToDropList.Add(Cells[i1, j1]);
+                                }
+                            }
+
                         }
                     }
                 }
             }
+            // разбиение на более низких уровнях
+            for (int i = maxLevel - 1; i >= 0; i--)
+            {
+                var listForNextLevel = new List<Cell>();
+                foreach (var cell in _needToDropList)
+                {
+                    cell.AddChildren();
+                    foreach (var objId in cell.ObjectIdList)
+                    {
+                        // найти слой по Id объекта 
+                        var layer = map.GetObjById(objId);
+                        if (layer == null)
+                        {
+                            ErrorLog.WriteToLogFile("нет слоя " + objId);
+                            continue;
+                        }
+                        // найти точки, которые подходят этой ячейке
+                        var pointList = layer.Vertexes[objId];
+                        for (var k = 0; k < pointList.Count; k++)
+                        {
+                            // добавить эти точки в дочернюю ячейку, изменить ее состояние
+                            if (cell.IsIn(pointList[k]))
+                            {
+                                cell.Add(pointList[k]);
+                            }
+                            else if (k < pointList.Count - 1)
+                            {
+                                var nextPoint = pointList[k + 1];
+                                var line1 = new Line(pointList[k], nextPoint);
+                                if (cell.HasCommonPoint(line1))
+                                {
+                                    cell.Add(line1, pointList[k].Id);
+                                }
+
+                            }
+                            //заменить большую ячейку на маленькую в objDictionary
+                           // ObjDictionary[pointList[k].Id].Find()
+
+                        }
+                    }
+                    // создать новый лист ячеек, подлежащих разбиению
+                    var dropCells = cell.GetChildrenWithManyObjects();
+                    if (dropCells != null)
+                        listForNextLevel.AddRange(dropCells);
+                }
+                _needToDropList = listForNextLevel;
+            }
+        }
+
+        private void InitCells(  int maxLevel)
+        {
+            int n = (int) Math.Ceiling((_map.Xmax - _map.Xmin) / CellSize) + 1;
+            int m = (int) Math.Ceiling((_map.Ymax - _map.Ymin) / CellSize) + 1;
+            Cells = new Cell[n, m];
+            for (var i = 0; i < n; i++)
+            for (var j = 0; j < m; j++)
+            {
+                Cells[i, j] = new Cell
+                {
+                    LowerLeftPoint = new MapPoint() {X = _map.Xmin + i * CellSize, Y = _map.Ymin + j * CellSize},
+                    Level = maxLevel,
+                    Size = CellSize
+                };
+            }
+        }
+
+        private int CalculateMaxLevel()
+        {
+            int maxLevel = 1;
+            var x = CellSize;
+            while (x / 2 > DetailSize)
+            {
+                maxLevel++;
+                x /= 2;
+            }
+            return maxLevel;
+        }
+
+        private void ModifyObjDictionary(int objId, Cell cell)
+        {
+            if (ObjDictionary.ContainsKey(objId))
+            {
+                ObjDictionary[objId].Add(cell);
+            }
+            else ObjDictionary.Add(objId, new List<Cell>(new[] {cell}));
+        }
+
+        private (int, int) GetGridIndexes(MapPoint point)
+        {
+            int ind1 = (int)Math.Truncate((point.X - _map.Xmin) / CellSize);
+            int ind2 = (int)Math.Truncate((point.Y - _map.Ymin) / CellSize);
+            return (ind1, ind2);
         }
     }
 }
