@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AlgorithmsLibrary;
 using MapDataLib;
@@ -85,9 +86,9 @@ namespace GridLib
             }
         }
 
-        public void Add(Line line, int id)
+        public void Add(MapPoint point1, MapPoint point2, int id)
         {
-            foreach (var childCell in Children.Where(childCell => childCell.HasCommonPoint(line)))
+            foreach (var childCell in Children.Where(childCell => childCell.HasCommonPoint(point1,point2)))
             {
                 if (childCell.State == CellState.EmptyCell)
                 {
@@ -105,6 +106,10 @@ namespace GridLib
             }
         }
 
+        public IEnumerable<Cell> GetChildrenCellsWithObject(int objId)
+        {
+            return Children.FindAll(c => c.ObjectIdList.Contains(objId));
+        }
         public List<Cell> GetChildrenWithManyObjects()
         {
             return Children.FindAll(c => c.State == CellState.SeveralObjects);
@@ -128,7 +133,6 @@ namespace GridLib
             var result = new List<Cell>();
             if (Children == null) 
                 result.Add(this);
-
             else
             {
                 foreach (var cell in Children)
@@ -136,7 +140,6 @@ namespace GridLib
                     result.AddRange(cell.GetAllCells());
                 }
             }
-
             return result;
         }
 
@@ -155,16 +158,24 @@ namespace GridLib
         public bool HasCommonPoint(Line line)
         {
             var cellPoints = GetPoints();
-            int count = 0;
-            foreach (var point in cellPoints)
-            {
-                if (line.GetSign(point) > 0)
-                    count++;
-            }
+            int count = cellPoints.Count(point => line.GetSign(point) > 0);
+            return count != 0 && count != 4;
+        }
 
-            if (count == 0 || count == 4)
-                return false;
-            return true;
+        public bool HasCommonPoint(MapPoint point1, MapPoint point2)
+        {
+            var line = new Line(point1, point2);
+            if (!HasCommonPoint(line)) return false;
+            var minX = Math.Min(point1.X, point2.X);
+            var maxX = Math.Max(point1.X, point2.X);
+            var minY = Math.Min(point1.Y, point2.Y);
+            var maxY = Math.Max(point1.Y, point2.Y);
+            if ((minX <= LowerLeftPoint.X + Size && maxX >= LowerLeftPoint.X) &&
+                (minY <= LowerLeftPoint.Y + Size && maxY >= LowerLeftPoint.Y))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

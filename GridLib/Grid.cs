@@ -11,7 +11,6 @@ namespace GridLib
         public double DetailSize { get; set; }
         public double CellSize { get; set; }
         public Dictionary<int, List<Cell>> ObjDictionary;
-        private List<Cell> _needToDropList;
         private Map _map;
 
         public Grid(Map map, double cellSize, double detail)
@@ -20,9 +19,9 @@ namespace GridLib
             CellSize = cellSize;
             DetailSize = detail;
             int maxLevel =  CalculateMaxLevel();
-            InitCells(map, cellSize, maxLevel);
+            InitCells( maxLevel);
 
-            _needToDropList = new List<Cell>();
+            var needToDropList = new List<Cell>();
             ObjDictionary = new Dictionary<int, List<Cell>>();
            
             foreach (var mapObj in map)
@@ -52,8 +51,9 @@ namespace GridLib
                                 }
                                 else
                                 {
+                                    Cells[i, j].ObjectIdList.Add(pointList.Key);
                                     Cells[i, j].State = CellState.SeveralObjects;
-                                    _needToDropList.Add(Cells[i, j]);
+                                    needToDropList.Add(Cells[i, j]);
                                     if (Cells[i, j].MapPoints.ContainsKey(pointList.Key))
                                     {
                                         Cells[i, j].MapPoints[pointList.Key].Add(point);
@@ -67,13 +67,17 @@ namespace GridLib
                             }
                             else
                             {
+                                if (!Cells[i, j].ObjectIdList.Contains(pointList.Key))
+                                {
+                                    Cells[i, j].ObjectIdList.Add(pointList.Key);
+                                }
                                 if (Cells[i, j].MapPoints.ContainsKey(pointList.Key))
                                 {
                                     Cells[i, j].MapPoints[pointList.Key].Add(point);
                                 }
                                 else
                                 {
-                                    _needToDropList.Add(Cells[i, j]);
+                                    needToDropList.Add(Cells[i, j]);
                                     Cells[i, j].MapPoints.Add(pointList.Key, new List<MapPoint>(new[] {point}));
                                     ModifyObjDictionary(pointList.Key, Cells[i, j]);
                                 }
@@ -109,7 +113,7 @@ namespace GridLib
                                 else if (Cells[i1, j1].State == CellState.OneObject)
                                 {
                                     Cells[i1, j1].State = CellState.SeveralObjects;
-                                    _needToDropList.Add(Cells[i1, j1]);
+                                    needToDropList.Add(Cells[i1, j1]);
                                 }
                             }
 
@@ -121,7 +125,7 @@ namespace GridLib
             for (int i = maxLevel - 1; i >= 0; i--)
             {
                 var listForNextLevel = new List<Cell>();
-                foreach (var cell in _needToDropList)
+                foreach (var cell in needToDropList)
                 {
                     cell.AddChildren();
                     foreach (var objId in cell.ObjectIdList)
@@ -142,27 +146,26 @@ namespace GridLib
                             {
                                 cell.Add(pointList[k]);
                             }
-                            else if (k < pointList.Count - 1)
+                            if (k < pointList.Count - 1)
                             {
                                 var nextPoint = pointList[k + 1];
-                                var line1 = new Line(pointList[k], nextPoint);
-                                if (cell.HasCommonPoint(line1))
+                                if (cell.HasCommonPoint(pointList[k], nextPoint))
                                 {
-                                    cell.Add(line1, pointList[k].Id);
+                                    cell.Add(pointList[k], nextPoint, pointList[k].Id);
                                 }
 
                             }
-                            //заменить большую ячейку на маленькую в objDictionary
-                           // ObjDictionary[pointList[k].Id].Find()
-
                         }
+                        //заменить большую ячейку на маленькую в objDictionary
+                        ObjDictionary[objId].Remove(cell);
+                        ObjDictionary[objId].AddRange(cell.GetChildrenCellsWithObject(objId));
                     }
                     // создать новый лист ячеек, подлежащих разбиению
                     var dropCells = cell.GetChildrenWithManyObjects();
                     if (dropCells != null)
                         listForNextLevel.AddRange(dropCells);
                 }
-                _needToDropList = listForNextLevel;
+                needToDropList = listForNextLevel;
             }
         }
 

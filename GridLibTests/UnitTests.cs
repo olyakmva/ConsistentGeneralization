@@ -41,32 +41,7 @@ namespace GridLibTests
         [Fact]
         public void ProperNumberOfNotEmptyCellsOnMaxLevel()
         {
-            Map map = new Map();
-            var md1 = new MapData(GeometryType.Line);
-            int objId = 1;
-            const int objWeight = 1;
-            md1.Vertexes.Add(objId,new List<MapPoint>()
-            {
-                new MapPoint(0,0,objId,objWeight),
-                new MapPoint(1,3,objId,objWeight),
-                new MapPoint(3.5,1.5,objId,objWeight),
-                new MapPoint(5.5,0.5,objId,objWeight),
-                new MapPoint(5,1.5,objId,objWeight)
-               
-            });
-            map.Add(md1);
-            var md2 = new MapData(GeometryType.Line);
-            objId = 2;
-            md2.Vertexes.Add(objId, new List<MapPoint>
-            {
-                new MapPoint(5,3,objId,objWeight),
-                new MapPoint(4.5,1.5,objId,objWeight),
-                new MapPoint(4.4,0.5,objId,objWeight),
-                new MapPoint(2.5,1,objId,objWeight),
-                new MapPoint(3.5,2.5,objId,objWeight),
-                new MapPoint(3,2.8,objId,objWeight)
-            });
-            map.Add(md2);
+            Map map = CreateMap();
             int cellSize = 2;
             var grid = new Grid(map, cellSize, 0.5);
             int singleObjCellCount = 0;
@@ -120,6 +95,94 @@ namespace GridLibTests
             }
             Assert.Equal(6,count);
         }
+        [Fact]
+        public void CellWithTwoObjHasChildren()
+        {
+            var map = CreateMap();
+            int cellSize = 2;
+            var grid = new Grid(map, cellSize, 0.5);
+            int manyObjChildCount = 0;
+            for (var i = 0; i < grid.Cells.GetLength(0); i++)
+            {
+                for (var j = 0; j < grid.Cells.GetLength(1); j++)
+                {
+                    if (grid.Cells[i, j].State == CellState.SeveralObjects)
+                    {
+                        foreach (var child in grid.Cells[i, j].Children)
+                        {
+                            Assert.Equal(grid.Cells[i,j].Level, child.Level+1);
+                            Assert.True(Math.Abs(grid.Cells[i, j].Size - child.Size*2)< 0.001);
+                            if (child.State == CellState.SeveralObjects)
+                                manyObjChildCount++;
+                        }
+                    }
+                }
+            }
+            Assert.Equal(5, manyObjChildCount);
+        }
+
+        [Fact]
+        public void CellWithTwoObjHasChildrenOnLowLevel()
+        {
+            var map = CreateMap();
+            int cellSize = 2;
+            var grid = new Grid(map, cellSize, 0.5);
+            int childLowLevelCount = 0;
+            for (var i = 0; i < grid.Cells.GetLength(0); i++)
+            {
+                for (var j = 0; j < grid.Cells.GetLength(1); j++)
+                {
+                   if (grid.Cells[i, j].State == CellState.SeveralObjects)
+                   {
+                        foreach (var child in grid.Cells[i, j].Children)
+                        {
+                            if (child.State == CellState.SeveralObjects)
+                            {
+                                foreach (var lowChild in child.Children)
+                                {
+                                    Assert.Equal(child.Level, lowChild.Level + 1);
+                                    Assert.True(Math.Abs(child.Size - lowChild.Size * 2) < 0.001);
+                                    if (lowChild.ObjectIdList.Count > 0)
+                                        childLowLevelCount++;
+                                }
+                            }
+                        }
+                   }
+                }
+            }
+            Assert.Equal(16,childLowLevelCount);
+
+        }
+
+        private static Map CreateMap()
+        {
+            Map map = new Map();
+            var md1 = new MapData(GeometryType.Line);
+            int objId = 1;
+            const int objWeight = 1;
+            md1.Vertexes.Add(objId, new List<MapPoint>()
+            {
+                new MapPoint(0, 0, objId, objWeight),
+                new MapPoint(1, 3, objId, objWeight),
+                new MapPoint(3.5, 1.5, objId, objWeight),
+                new MapPoint(5.5, 0.5, objId, objWeight),
+                new MapPoint(5, 1.5, objId, objWeight)
+            });
+            map.Add(md1);
+            var md2 = new MapData(GeometryType.Line);
+            objId = 2;
+            md2.Vertexes.Add(objId, new List<MapPoint>
+            {
+                new MapPoint(5, 3, objId, objWeight),
+                new MapPoint(4.5, 1.5, objId, objWeight),
+                new MapPoint(4.4, 0.5, objId, objWeight),
+                new MapPoint(2.5, 1, objId, objWeight),
+                new MapPoint(3.5, 2.5, objId, objWeight),
+                new MapPoint(2.9, 2.8, objId, objWeight)
+            });
+            map.Add(md2);
+            return map;
+        }
 
         [Fact]
         public void ProperGridForThreeMapObjects()
@@ -131,7 +194,7 @@ namespace GridLibTests
             md1.Vertexes.Add(objId, new List<MapPoint>()
             {
                 new MapPoint(0,0,objId,objWeight),
-                new MapPoint(2,2,objId,objWeight),
+                new MapPoint(2,1.9,objId,objWeight),
                 new MapPoint(3,3,objId,objWeight),
                 new MapPoint(4.2,3.8,objId,objWeight),
                 new MapPoint(5.5,4.3,objId,objWeight),
@@ -166,7 +229,7 @@ namespace GridLibTests
             var numberCellChilds = grid.Cells[0, 0].GetAllCells().Count();
             Assert.Equal(16, numberCellChilds);
             numberCellChilds = grid.Cells[1, 0].GetAllCells().Count();
-            Assert.Equal(10, numberCellChilds);
+            Assert.Equal(13, numberCellChilds);
         }
 
     }
