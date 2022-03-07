@@ -26,13 +26,12 @@ namespace GridLib
            
             foreach (var mapObj in map)
             {
-                foreach (var pointList in mapObj.Vertexes)
+                foreach (var pointList in mapObj.MapObjDictionary)
                 {
                     for (var k = 0; k < pointList.Value.Count; k++)
                     {
                         var point = pointList.Value[k];
-                        int i = (int) Math.Truncate((point.X - map.Xmin) / CellSize);
-                        int j = (int) Math.Truncate((point.Y - map.Ymin) / CellSize);
+                        var (i, j) = GetGridIndexes(point);                     
                         if (Cells[i, j].State == CellState.EmptyCell)
                         {
                             Cells[i, j].ObjectIdList.Add(pointList.Key);
@@ -138,7 +137,7 @@ namespace GridLib
                             continue;
                         }
                         // найти точки, которые подходят этой ячейке
-                        var pointList = layer.Vertexes[objId];
+                        var pointList = layer.MapObjDictionary[objId];
                         for (var k = 0; k < pointList.Count; k++)
                         {
                             // добавить эти точки в дочернюю ячейку, изменить ее состояние

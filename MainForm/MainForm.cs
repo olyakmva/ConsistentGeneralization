@@ -173,7 +173,7 @@ namespace MainForm
         /// <param name="pen">Цвет в случае отображения нескольких MapData на одном picturebox</param>
         private void Display(Graphics g, MapData md, Pen pen)
         {
-            foreach (var pair in md.Vertexes)
+            foreach (var pair in md.MapObjDictionary)
             {
                 var list = pair.Value;
                 if (list.Count == 0)

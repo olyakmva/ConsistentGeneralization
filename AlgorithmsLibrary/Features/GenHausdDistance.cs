@@ -8,13 +8,13 @@ namespace AlgorithmsLibrary.Features
         {
             public static double Get(MapData inMap, MapData outMap)
             {
-                int n = inMap.Vertexes.Count;
+                int n = inMap.MapObjDictionary.Count;
                 double distSum = 0;
 
-                foreach (var pair in inMap.Vertexes )
+                foreach (var pair in inMap.MapObjDictionary )
                 {
-                    var lstIn = inMap.Vertexes[pair.Key];
-                    var lstOut = outMap.Vertexes[pair.Key];
+                    var lstIn = inMap.MapObjDictionary[pair.Key];
+                    var lstOut = outMap.MapObjDictionary[pair.Key];
                     double max = 0;
                     if (lstOut.Count == 0)
                         continue;

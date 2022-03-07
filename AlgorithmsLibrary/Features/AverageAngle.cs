@@ -11,7 +11,7 @@ namespace AlgorithmsLibrary.Features
             double angle = 0;
             int count = 0;
 
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var chain = pair.Value;
                 if (chain.Count < 3)
@@ -30,7 +30,7 @@ namespace AlgorithmsLibrary.Features
             double sum = 0,
                 product =0;
 
-           foreach (var pair in map.Vertexes)
+           foreach (var pair in map.MapObjDictionary)
            {
                var chain = pair.Value;
                 if (chain.Count < 3)

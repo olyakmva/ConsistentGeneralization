@@ -11,7 +11,7 @@ namespace AlgorithmsLibrary
 
         public virtual void Run(MapData map)
         {
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var chain = pair.Value;
                 Process(chain);

@@ -19,7 +19,7 @@ namespace MapDataLib
 
         void ComputeMinMaxValues(MapData mapData)
         {
-            foreach (var pair in mapData.Vertexes)
+            foreach (var pair in mapData.MapObjDictionary)
             {
                 var vlist = pair.Value;
                 var xmin = vlist.Min(point=> point.X);
@@ -39,7 +39,7 @@ namespace MapDataLib
 
         public MapData GetObjById(int id)
         {
-            return MapLayers.Find(x => x.Vertexes.ContainsKey(id));
+            return MapLayers.Find(x => x.MapObjDictionary.ContainsKey(id));
         }
 
         public IEnumerator<MapData> GetEnumerator()
