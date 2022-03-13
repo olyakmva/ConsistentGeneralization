@@ -115,3 +115,33 @@ e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Projections.xml
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Mono.xml
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\MainForm\obj\Debug\MainForm.csproj.CopyComplete
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.csproj.AssemblyReference.cache
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.csproj.SuggestedBindingRedirects.cache
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.Controls.AlgParamControl.resources
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.MainForm.resources
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.Properties.Resources.resources
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.csproj.GenerateResource.cache
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.csproj.CoreCompileInputs.cache
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.exe
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.pdb
+D:\ConsistentGeneralization\MainForm\bin\Debug\MainForm.exe.config
+D:\ConsistentGeneralization\MainForm\bin\Debug\MainForm.exe
+D:\ConsistentGeneralization\MainForm\bin\Debug\MainForm.pdb
+D:\ConsistentGeneralization\MainForm\bin\Debug\AlgorithmsLibrary.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\GridLib.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\MapDataLib.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Data.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Topology.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Serialization.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Projections.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Mono.dll
+D:\ConsistentGeneralization\MainForm\bin\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\MainForm\bin\Debug\GridLib.pdb
+D:\ConsistentGeneralization\MainForm\bin\Debug\MapDataLib.pdb
+D:\ConsistentGeneralization\MainForm\bin\Debug\MapDataLib.dll.config
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Data.xml
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Topology.xml
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Serialization.xml
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Projections.xml
+D:\ConsistentGeneralization\MainForm\bin\Debug\DotSpatial.Mono.xml
+D:\ConsistentGeneralization\MainForm\obj\Debug\MainForm.csproj.CopyComplete

@@ -9,7 +9,7 @@ namespace MapDataLib
     {
         public static MapData ToMapData(IFeatureSet fSet)
         {
-            fSet .
+            //fSet .
             var list = fSet.Features;
             GeometryType type= GeometryType.Unspecified;
             switch (list[0].BasicGeometry.FeatureType)

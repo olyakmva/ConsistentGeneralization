@@ -30,3 +30,38 @@ E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.pdb
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\bin\Debug\AlgorithmsLibrary.dll
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLibTests\bin\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.csproj.AssemblyReference.cache
+D:\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.csproj.SuggestedBindingRedirects.cache
+D:\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.csproj.CoreCompileInputs.cache
+D:\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.dll
+D:\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.pdb
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\GridLibTests.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\GridLibTests.pdb
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\GridLib.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\MapDataLib.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.abstractions.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.assert.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.core.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.execution.desktop.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\AlgorithmsLibrary.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Data.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Topology.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Serialization.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Projections.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Mono.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\GridLib.pdb
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\MapDataLib.pdb
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\MapDataLib.dll.config
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.assert.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.core.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.execution.desktop.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Data.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Topology.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Serialization.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Projections.xml
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\DotSpatial.Mono.xml
+D:\ConsistentGeneralization\GridLibTests\obj\Debug\GridLibTests.csproj.CopyComplete
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.runner.visualstudio.testadapter.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.runner.reporters.net452.dll
+D:\ConsistentGeneralization\GridLibTests\bin\Debug\xunit.runner.utility.net452.dll
