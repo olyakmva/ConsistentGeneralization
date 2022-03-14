@@ -26,7 +26,7 @@ namespace AlgorithmsLibrary.Features
                 new MinCharacteristicsComputation(),
                 new SkoCharacteristics()
             };
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var chain = pair.Value;
                 if(chain.Count < 3)
@@ -85,7 +85,7 @@ namespace AlgorithmsLibrary.Features
         public static double GetMinSquare(MapData map)
         {
             double minTrArea = Double.MaxValue;
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var chain = pair.Value;
                 if (chain.Count < 3)

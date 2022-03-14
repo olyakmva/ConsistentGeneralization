@@ -9,6 +9,7 @@ namespace MapDataLib
     {
         public static MapData ToMapData(IFeatureSet fSet)
         {
+            //fSet .
             var list = fSet.Features;
             GeometryType type= GeometryType.Unspecified;
             switch (list[0].BasicGeometry.FeatureType)
@@ -26,6 +27,7 @@ namespace MapDataLib
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
             var map = new MapData(type);
             foreach (var item in list)
             {
@@ -36,7 +38,7 @@ namespace MapDataLib
                     var p = new MapPoint(t.X, t.Y, item.Fid, 1.0);
                     points.Add(p);
                 }
-                map.Vertexes.Add(item.Fid, points);
+                map.MapObjDictionary.Add(item.Fid, points);
             }
             return map;
         }
@@ -57,7 +59,7 @@ namespace MapDataLib
                     break;
             }
             FeatureSet fs = new FeatureSet(featureType);
-            foreach (var pairList in map.Vertexes)
+            foreach (var pairList in map.MapObjDictionary)
             {
                 Coordinate[] coord = new Coordinate[pairList.Value.Count];
                 for (int i = 0; i < pairList.Value.Count; i++)

@@ -40,3 +40,23 @@ e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Projections.xml
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Mono.xml
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CopyComplete
+D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.AssemblyReference.cache
+D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
+D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Data.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Topology.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Serialization.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Projections.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Mono.dll
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.pdb
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.dll.config
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Data.xml
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Topology.xml
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Serialization.xml
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Projections.xml
+D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Mono.xml
+D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CopyComplete

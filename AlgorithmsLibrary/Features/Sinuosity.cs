@@ -17,7 +17,7 @@ namespace AlgorithmsLibrary.Features
         {
             double fullLength = 0;
             double fullBaselineLength = 0;
-            foreach (var pair in md.Vertexes)
+            foreach (var pair in md.MapObjDictionary)
             {
                 var chain = pair.Value;
                 fullLength += GetLength( chain);
@@ -57,7 +57,7 @@ namespace AlgorithmsLibrary.Features
             double fullLength = 0;
             double fullBaselineLength = 0;
 
-            foreach (var pair in chmd.Vertexes)
+            foreach (var pair in chmd.MapObjDictionary)
             {
                 var chain = pair.Value;
                 double currLength = 0;
@@ -128,7 +128,7 @@ namespace AlgorithmsLibrary.Features
         {
             double result = 0;
 
-            foreach (var inpair in inChmd.Vertexes)
+            foreach (var inpair in inChmd.MapObjDictionary)
             {
                 //if (inChain.BaselineLength == 0) break;
                 var inChain = inpair.Value;
@@ -139,7 +139,7 @@ namespace AlgorithmsLibrary.Features
                 double sinDifference = 0;
 
                 //ищем соответствующую цепочку в результирующих данных
-                foreach (var outPair in outChmd.Vertexes)
+                foreach (var outPair in outChmd.MapObjDictionary)
                 {
                     var outChain = outPair.Value;
                     if ((inChain[0].Equals(outChain[0]) && inChain[inChain.Count - 1].Equals(outChain[outChain.Count - 1])) ||

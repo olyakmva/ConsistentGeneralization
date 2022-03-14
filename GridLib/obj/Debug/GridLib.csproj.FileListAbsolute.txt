@@ -20,3 +20,25 @@ E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\obj\Debug\GridLib.csproj.CopyComplete
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\bin\Debug\AlgorithmsLibrary.dll
 E:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\GridLib\bin\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\GridLib\obj\Debug\GridLib.csproj.AssemblyReference.cache
+D:\ConsistentGeneralization\GridLib\obj\Debug\GridLib.csproj.CoreCompileInputs.cache
+D:\ConsistentGeneralization\GridLib\obj\Debug\GridLib.dll
+D:\ConsistentGeneralization\GridLib\obj\Debug\GridLib.pdb
+D:\ConsistentGeneralization\GridLib\bin\Debug\GridLib.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\GridLib.pdb
+D:\ConsistentGeneralization\GridLib\bin\Debug\AlgorithmsLibrary.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\MapDataLib.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Data.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Topology.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Serialization.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Projections.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Mono.dll
+D:\ConsistentGeneralization\GridLib\bin\Debug\AlgorithmsLibrary.pdb
+D:\ConsistentGeneralization\GridLib\bin\Debug\MapDataLib.pdb
+D:\ConsistentGeneralization\GridLib\bin\Debug\MapDataLib.dll.config
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Data.xml
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Topology.xml
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Serialization.xml
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Projections.xml
+D:\ConsistentGeneralization\GridLib\bin\Debug\DotSpatial.Mono.xml
+D:\ConsistentGeneralization\GridLib\obj\Debug\GridLib.csproj.CopyComplete

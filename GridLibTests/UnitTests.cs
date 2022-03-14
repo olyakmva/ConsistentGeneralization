@@ -14,7 +14,7 @@ namespace GridLibTests
         {
             Map map = new Map();
             var md1 = new MapData(GeometryType.Line);
-            md1.Vertexes.Add(1, new List<MapPoint>()
+            md1.MapObjDictionary.Add(1, new List<MapPoint>()
             {
                 new MapPoint(2,2,1,1),
                 new MapPoint(3,5,1,1),
@@ -66,7 +66,7 @@ namespace GridLibTests
             var md1 = new MapData(GeometryType.Line);
             const int objId = 1;
             const int objWeight = 1;
-            md1.Vertexes.Add(objId, new List<MapPoint>()
+            md1.MapObjDictionary.Add(objId, new List<MapPoint>()
             {
                 new MapPoint(2,2,objId,objWeight),
                 new MapPoint(2.2, 3,objId,objWeight),
@@ -160,7 +160,7 @@ namespace GridLibTests
             var md1 = new MapData(GeometryType.Line);
             int objId = 1;
             const int objWeight = 1;
-            md1.Vertexes.Add(objId, new List<MapPoint>()
+            md1.MapObjDictionary.Add(objId, new List<MapPoint>()
             {
                 new MapPoint(0, 0, objId, objWeight),
                 new MapPoint(1, 3, objId, objWeight),
@@ -171,7 +171,7 @@ namespace GridLibTests
             map.Add(md1);
             var md2 = new MapData(GeometryType.Line);
             objId = 2;
-            md2.Vertexes.Add(objId, new List<MapPoint>
+            md2.MapObjDictionary.Add(objId, new List<MapPoint>
             {
                 new MapPoint(5, 3, objId, objWeight),
                 new MapPoint(4.5, 1.5, objId, objWeight),
@@ -191,7 +191,7 @@ namespace GridLibTests
             var md1 = new MapData(GeometryType.Line); 
             int objId = 1;
             const int objWeight = 1;
-            md1.Vertexes.Add(objId, new List<MapPoint>()
+            md1.MapObjDictionary.Add(objId, new List<MapPoint>()
             {
                 new MapPoint(0,0,objId,objWeight),
                 new MapPoint(2,1.9,objId,objWeight),
@@ -204,7 +204,7 @@ namespace GridLibTests
             map.Add(md1);
             objId = 2;
             var md2 = new MapData(GeometryType.Line);
-            md2.Vertexes.Add(objId, new List<MapPoint>
+            md2.MapObjDictionary.Add(objId, new List<MapPoint>
             {
                 new MapPoint(1,5,objId,objWeight),
                 new MapPoint(2,3,objId,objWeight),
@@ -215,7 +215,7 @@ namespace GridLibTests
             map.Add(md2);
             objId = 3;
             var md3 = new MapData(GeometryType.Line);
-            md3.Vertexes.Add(objId, new List<MapPoint>
+            md3.MapObjDictionary.Add(objId, new List<MapPoint>
             {
                 new MapPoint(1.3,0.5,objId,objWeight),
                 new MapPoint(1.5,2.3,objId,objWeight),

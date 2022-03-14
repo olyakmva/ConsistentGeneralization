@@ -9,7 +9,7 @@ namespace AlgorithmsLibrary.Features
         {
             double length = 0;
 
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var chain = pair.Value;
                 for (int i = 0; i < chain.Count - 1; i++)

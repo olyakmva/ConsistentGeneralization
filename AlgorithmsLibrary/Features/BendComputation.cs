@@ -11,7 +11,7 @@ namespace AlgorithmsLibrary.Features
         {
             int bendNumber = 0;
 
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 int count = 0;
                 int index = 0;
@@ -37,7 +37,7 @@ namespace AlgorithmsLibrary.Features
                 new SkoCharacteristics()
             };
            
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var count = 0;
                 var index = 0;
@@ -118,7 +118,7 @@ namespace AlgorithmsLibrary.Features
                 skoComputer.AverageFeatures = feachureSet.Average;
                 feachureSet.Sko = skoComputer.GetResult();
             }
-            feachureSet.ShapeProminence = Math.Round(feachureSet.ShapeProminence / map.Vertexes.Count, 3);
+            feachureSet.ShapeProminence = Math.Round(feachureSet.ShapeProminence / map.MapObjDictionary.Count, 3);
             feachureSet.TotalArea = Math.Round(feachureSet.TotalArea);
             return feachureSet;
         }

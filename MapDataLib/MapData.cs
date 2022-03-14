@@ -10,20 +10,20 @@ namespace MapDataLib
     [Serializable]
     public class MapData
     {
-        public Dictionary<int, List<MapPoint>> Vertexes { get; }
+        public Dictionary<int, List<MapPoint>> MapObjDictionary { get; }
         public GeometryType Geometry { get; }
         public int Count => GetAllVertices().Count;
 
         public MapData( GeometryType type)
         {
-            Vertexes = new Dictionary<int, List<MapPoint>>();
+            MapObjDictionary = new Dictionary<int, List<MapPoint>>();
             Geometry = type;
         }
         
         public List<MapPoint> GetAllVertices()
         {
             var resultList = new List<MapPoint>();
-            foreach (var objPair in Vertexes)
+            foreach (var objPair in MapObjDictionary)
             {
                 resultList.AddRange(objPair.Value);
             }
@@ -47,7 +47,7 @@ namespace MapDataLib
         
         public void ClearWeights()
         {
-            foreach (var chain in Vertexes)
+            foreach (var chain in MapObjDictionary)
             {
                 foreach (var vertex in chain.Value)
                 {

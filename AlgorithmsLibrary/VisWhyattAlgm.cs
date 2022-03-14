@@ -12,12 +12,12 @@ namespace AlgorithmsLibrary
         public virtual void Run(MapData map)
         {
             Options.Tolerance = Options.Tolerance * Options.Tolerance;
-            foreach (var pair in map.Vertexes)
+            foreach (var pair in map.MapObjDictionary)
             {
                 var chain = pair.Value;
                 int endIndex = chain.Count - 1;
                 Run(ref chain, 0,  endIndex);
-                map.Vertexes[pair.Key] = chain;
+                map.MapObjDictionary[pair.Key] = chain;
             }
             Options.OutParam = Options.Tolerance;
         }
