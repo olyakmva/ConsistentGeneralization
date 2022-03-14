@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MainForm
+namespace MapDataLib
 {
     public static class Colors
     {

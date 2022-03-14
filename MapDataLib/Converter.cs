@@ -11,6 +11,8 @@ namespace MapDataLib
         {
             //fSet .
             var list = fSet.Features;
+            if (list.Count == 0)
+                return null;
             GeometryType type= GeometryType.Unspecified;
             switch (list[0].BasicGeometry.FeatureType)
             {

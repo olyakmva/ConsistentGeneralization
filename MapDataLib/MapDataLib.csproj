@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Colors.cs" />
     <Compile Include="ContainerOfIntesections.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="Geometry.cs" />

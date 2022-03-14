@@ -1,29 +1,3 @@
-E:\Каталог Оли\Nauka\MapGeneralization\AlgorithmsComparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
-E:\Каталог Оли\Nauka\MapGeneralization\AlgorithmsComparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
-E:\Каталог Оли\Nauka\MapGeneralization\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
-E:\Каталог Оли\Nauka\MapGeneralization\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
-F:\C#\algorithmscomparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
-F:\C#\algorithmscomparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
-F:\C#\algorithmscomparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
-F:\C#\algorithmscomparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
-E:\Каталог Оли\Nauka\MapGeneralization\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
-e:\Каталог Оли\Nauka\MapGeneralization\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csprojAssemblyReference.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2018_2020\AlgorithmsComparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2018_2020\AlgorithmsComparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2018_2020\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csprojAssemblyReference.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2018_2020\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2018_2020\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2018_2020\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\AlgorithmsComparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\AlgorithmsComparision\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csprojAssemblyReference.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\AlgorithmsComparision\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csprojAssemblyReference.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
-e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.dll
@@ -39,24 +13,8 @@ e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralizat
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Serialization.xml
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Projections.xml
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Mono.xml
+e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csprojAssemblyReference.cache
+e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
 e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CopyComplete
-D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.AssemblyReference.cache
-D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CoreCompileInputs.cache
-D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\AlgorithmsLibrary.pdb
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Data.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Topology.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Serialization.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Projections.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Mono.dll
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.pdb
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\MapDataLib.dll.config
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Data.xml
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Topology.xml
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Serialization.xml
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Projections.xml
-D:\ConsistentGeneralization\AlgorithmsLibrary\bin\Debug\DotSpatial.Mono.xml
-D:\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.csproj.CopyComplete
+e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.dll
+e:\Каталог Оли\Nauka\MapGeneralization\Grant2022\ConsistentGeneralization\AlgorithmsLibrary\obj\Debug\AlgorithmsLibrary.pdb

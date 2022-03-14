@@ -29,21 +29,20 @@ namespace MainForm
              CreateAlgmControls();
             _applicationPath = Environment.CurrentDirectory;
             _inputMap = new Map();
-            Colors.Init();
         }
 
         private void CreateAlgmControls()
         {
             int x = 0, y = 55, ctrlHeight = 120;
             _listCtrls = new List<AlgParamControl>();
-            AlgParamControl sleeveFitCtrl = new AlgParamControl()
+            AlgParamControl gridControl = new AlgParamControl()
             {
-                AlgmName = "SleeveFitAlgm",
+                AlgmName = "GridOptions",
                 Location = new Point(x, y)
             };
             y += ctrlHeight;
-            _listCtrls.Add(sleeveFitCtrl);
-            mainContainer .Panel1.Controls.Add(sleeveFitCtrl);
+            _listCtrls.Add(gridControl);
+            mainContainer .Panel1.Controls.Add(gridControl);
             btnProcess.Location = new Point(x,y);
         }
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
@@ -57,7 +56,9 @@ namespace MainForm
                     string shapeFileName = openFileDialog1.FileName;
                     var shapeFile = new ShapeFileIO(); 
                     var mapObj = shapeFile.Open(shapeFileName);
-                    _inputMap.Add(mapObj);
+                    if (mapObj != null)
+                        _inputMap.Add(mapObj);
+                    else MessageBox.Show(@"This layer hasn't any point");
                 }
                 catch (Exception ex)
                 {
@@ -75,8 +76,7 @@ namespace MainForm
                 MessageBox.Show(@"Please, load a map ");
                 return;
             }
-
-            double cellSize = _listCtrls[0].OutScale * 2;
+            double cellSize = _listCtrls[0].OutScale;
             double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
             _grid = new Grid(_inputMap, cellSize, detail);
             mapPictureBox.Invalidate();
@@ -127,7 +127,12 @@ namespace MainForm
         {
             
         }
-
+        private void ClearMapToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            _inputMap = new Map();
+            _grid = null;
+            mapPictureBox.Invalidate();
+        }
         #region Отрисовка карты
 
         private void MapPictureBoxPaint(object sender, PaintEventArgs e)
@@ -136,9 +141,8 @@ namespace MainForm
             g.Clear(Color.White);
             foreach (var mapData in _inputMap.MapLayers )
             {
-
-                var c = Color.FromName(Colors.GetNext()) ; 
-                var pen = new Pen(c, 1.75f);
+                var color = Color.FromName(mapData.ColorName) ; 
+                var pen = new Pen(color, 1.75f);
                 Display(g, mapData, pen);
             }
 
@@ -266,8 +270,9 @@ namespace MainForm
         }
 
 
+
         #endregion
 
-      
+       
     }
 }
