@@ -29,58 +29,20 @@ namespace MainForm
              CreateAlgmControls();
             _applicationPath = Environment.CurrentDirectory;
             _inputMap = new Map();
-            Colors.Init();
         }
 
         private void CreateAlgmControls()
         {
             int x = 0, y = 55, ctrlHeight = 120;
             _listCtrls = new List<AlgParamControl>();
-            //AlgParamControl douglasCtrl = new AlgParamControl()
-            //{
-            //    Location = new Point(x, y),
-            //    AlgmName = "DouglasPeuckerAlgm"
-            //};
-            //_listCtrls.Add(douglasCtrl);
-            //y += ctrlHeight;
-            //AlgParamControl liCtrl = new AlgParamControl()
-            //{
-            //    AlgmName = "LiOpenshawAlgm",
-            //    Location = new Point(x, y)
-            //};
-            //_listCtrls.Add(liCtrl);
-            //y += ctrlHeight;
-            //AlgParamControl visvWhyatCtrl = new AlgParamControl()
-            //{
-            //    AlgmName = "VisvWhyattAlgm",
-            //    Location = new Point(x, y)
-            //};
-            //y += ctrlHeight;
-            //_listCtrls.Add(visvWhyatCtrl);
-
-            AlgParamControl sleeveFitCtrl = new AlgParamControl()
+            AlgParamControl gridControl = new AlgParamControl()
             {
-                AlgmName = "SleeveFitAlgm",
+                AlgmName = "GridOptions",
                 Location = new Point(x, y)
             };
             y += ctrlHeight;
-            _listCtrls.Add(sleeveFitCtrl);
-             //mainContainer.Panel1.Controls .Add(douglasCtrl);
-            //mainContainer.Panel1.Controls.Add(liCtrl);
-            //mainContainer.Panel1 .Controls.Add(visvWhyatCtrl);
-            mainContainer .Panel1.Controls.Add(sleeveFitCtrl);
-           
-
-            //foreach (var ctrl in _listCtrls)
-            //{
-            //    foreach (var otherCtrl in _listCtrls)
-            //    {
-            //        if(ctrl == otherCtrl)
-            //            continue;
-            //        ctrl.CopyingParams += otherCtrl.OnCopyingParams;
-            //    }
-            //}
-         
+            _listCtrls.Add(gridControl);
+            mainContainer .Panel1.Controls.Add(gridControl);
             btnProcess.Location = new Point(x,y);
         }
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
@@ -94,7 +56,9 @@ namespace MainForm
                     string shapeFileName = openFileDialog1.FileName;
                     var shapeFile = new ShapeFileIO(); 
                     var mapObj = shapeFile.Open(shapeFileName);
-                    _inputMap.Add(mapObj);
+                    if (mapObj != null)
+                        _inputMap.Add(mapObj);
+                    else MessageBox.Show(@"This layer hasn't any point");
                 }
                 catch (Exception ex)
                 {
@@ -105,9 +69,31 @@ namespace MainForm
             Text = $@"Algorithm Comparision  {fileName} ";
              
         }
-  
-       private void SetGraphicsParams(Map inputMap)
-       {
+        private void BtnProcessClick(object sender, EventArgs e)
+        {
+            if (_inputMap == null)
+            {
+                MessageBox.Show(@"Please, load a map ");
+                return;
+            }
+            double cellSize = _listCtrls[0].OutScale;
+            double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
+            _grid = new Grid(_inputMap, cellSize, detail);
+            mapPictureBox.Invalidate();
+        }
+
+        private void ShowToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (_inputMap == null)
+            {
+                MessageBox.Show(@"Please, load a map ");
+                return;
+            }
+            SetGraphicsParams(_inputMap);
+            mapPictureBox.Invalidate();
+        }
+        private void SetGraphicsParams(Map inputMap)
+        {
             double xmin = inputMap.Xmin, xmax=inputMap.Xmax;
             double ymin=inputMap.Ymin, ymax=inputMap.Ymax;
             
@@ -141,7 +127,12 @@ namespace MainForm
         {
             
         }
-
+        private void ClearMapToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            _inputMap = new Map();
+            _grid = null;
+            mapPictureBox.Invalidate();
+        }
         #region Отрисовка карты
 
         private void MapPictureBoxPaint(object sender, PaintEventArgs e)
@@ -150,9 +141,8 @@ namespace MainForm
             g.Clear(Color.White);
             foreach (var mapData in _inputMap.MapLayers )
             {
-
-                var c = Color.FromName(Colors.GetNext()) ; 
-                var pen = new Pen(c, 1.75f);
+                var color = Color.FromName(mapData.ColorName) ; 
+                var pen = new Pen(color, 1.75f);
                 Display(g, mapData, pen);
             }
 
@@ -255,12 +245,7 @@ namespace MainForm
             lblCurScaleValue.Text = _currentScale.ToString(CultureInfo.InvariantCulture);
             mapPictureBox.Invalidate();
         }
-        private void MapSplitContainerPanel1Resize(object sender, EventArgs e)
-        {
-            mapPictureBox.Width = Width;
-            mapPictureBox.Height = Height;
-            mapPictureBox.Invalidate();
-        }
+        
         private void MapPictureBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
             _state.Scale = Math.Max(_state.DefscaleX / mapPictureBox.Width, _state.DefscaleY / mapPictureBox.Height);
@@ -285,73 +270,9 @@ namespace MainForm
         }
 
 
+
         #endregion
 
-        private void BtnProcessClick(object sender, EventArgs e)
-        {
-            if (_inputMap == null)
-            {
-                MessageBox.Show(@"Please, load a map ");
-                return;
-            }
-
-            double cellSize = _listCtrls[0].OutScale * 2;
-            double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
-            _grid = new Grid(_inputMap, cellSize,detail);
-
-            //foreach (var ctrl in _listCtrls)
-            //{
-            //    if (!ctrl.IsChecked)
-            //        continue;
-            //    var map = _inputMap.Clone();
-                
-            //    ISimplificationAlgm algm = ctrl.GetAlgorithm();
-            //    if (ctrl.IsPercentParametr || ctrl.IsBendParametr)
-            //    {
-            //        algm.Options.PointNumberGap = Convert.ToDouble(percentErrUpDn.Value);
-            //    }
-            //    algm.Run(map);
-                
-            //    var layerName = $"{ctrl.AlgmName}";
-            //    var l = new Layer(map, layerName, algm.Options.OutScale)
-            //    {
-            //        GenHausdDist = GenHausdorfDistance.Get(_inputMap, map)
-            //    };
-            //    l.Characteristics.ParamValue = Math.Round(algm.Options.OutParam);
-            //    if (ctrl.IsPercentParametr)
-            //    {
-            //        l.Characteristics.IsPercent = true;
-            //    }
-            //    if (ctrl.IsBendParametr)
-            //    {
-            //        l.Characteristics.IsBend = true;
-            //    }
-            //    l.Characteristics.Length = Math.Round(l.Characteristics.Length / _layers[0].Characteristics.Length, 2);
-
-            //    if (_gaussFilterMap != null)
-            //    {
-            //        l.FilterModifHausdDistance = GenHausdorfDistance.Get(_gaussFilterMap, map);
-            //    }
-            //    _layers.Add(l);
-            //    AddNewRowToResultTable(l);
-            //}
-            mapPictureBox.Invalidate();
-        }
-
-        private void OnLayerVisibleChanged(object sender, EventArgs e)
-        {
-            mapPictureBox.Invalidate();
-        }
-
-        private void ShowToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            if (_inputMap == null)
-            {
-                MessageBox.Show(@"Please, load a map ");
-                return;
-            }
-            SetGraphicsParams(_inputMap);
-            mapPictureBox.Invalidate();
-        }
+       
     }
 }

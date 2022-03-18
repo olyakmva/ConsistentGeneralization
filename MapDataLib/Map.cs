@@ -15,6 +15,7 @@ namespace MapDataLib
             MapLayers = new List<MapData>();
             Xmin = double.MaxValue;
             Ymin = Xmin;
+            Colors.Init();
         }
 
         void ComputeMinMaxValues(MapData mapData)

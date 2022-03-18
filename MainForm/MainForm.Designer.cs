@@ -46,6 +46,7 @@
             this.mapPictureBox = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.clearMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainContainer)).BeginInit();
             this.mainContainer.Panel1.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.clearMapToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -82,21 +84,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -167,7 +169,7 @@
             // 
             this.viewScaleUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.viewScaleUpDown.Increment = new decimal(new int[] {
-            500,
+            100,
             0,
             0,
             0});
@@ -179,7 +181,7 @@
             0,
             0});
             this.viewScaleUpDown.Minimum = new decimal(new int[] {
-            100,
+            50,
             0,
             0,
             0});
@@ -189,7 +191,7 @@
             this.viewScaleUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.viewScaleUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             this.viewScaleUpDown.Value = new decimal(new int[] {
-            1000,
+            500,
             0,
             0,
             0});
@@ -245,6 +247,13 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // clearMapToolStripMenuItem
+            // 
+            this.clearMapToolStripMenuItem.Name = "clearMapToolStripMenuItem";
+            this.clearMapToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.clearMapToolStripMenuItem.Text = "ClearMap";
+            this.clearMapToolStripMenuItem.Click += new System.EventHandler(this.ClearMapToolStripMenuItemClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -290,6 +299,7 @@
         private System.Windows.Forms.Label lblCurScale;
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearMapToolStripMenuItem;
     }
 }
 

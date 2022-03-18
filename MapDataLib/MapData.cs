@@ -13,11 +13,13 @@ namespace MapDataLib
         public Dictionary<int, List<MapPoint>> MapObjDictionary { get; }
         public GeometryType Geometry { get; }
         public int Count => GetAllVertices().Count;
+        public string ColorName { get; private set; }
 
         public MapData( GeometryType type)
         {
             MapObjDictionary = new Dictionary<int, List<MapPoint>>();
             Geometry = type;
+            ColorName = Colors.GetNext();
         }
         
         public List<MapPoint> GetAllVertices()
