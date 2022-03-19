@@ -135,6 +135,47 @@ namespace MapDataLib
                 return false;
             }
         }
+
+        //1 объект в другом
+        // T*F    
+        // **F   
+        // *** 
+        public bool ObjectsAreWithin()
+        {
+            if (matrixofnineintersections[0, 0] == true &&
+               matrixofnineintersections[0, 2] == false &&
+               matrixofnineintersections[1, 2] == false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        //объекты пересекаются
+        // T*F        *TF        **F        **F
+        // **F   OR   **F   OR   T*F   OR   *TF
+        // ***        ***        ***        ***
+        public bool ObjectsAreCoveredBy()
+        {
+            if ((matrixofnineintersections[0, 0] == true
+                || matrixofnineintersections[0, 1] == true
+                || matrixofnineintersections[1, 0] == true
+                || matrixofnineintersections[1, 1] == true)
+                && (matrixofnineintersections[0, 2] == false &&
+             matrixofnineintersections[1, 2] == false))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
         #endregion
 
         public void CalculatingIntersections()

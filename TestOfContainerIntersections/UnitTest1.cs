@@ -41,6 +41,8 @@ namespace TestOfContainerIntersections
             Assert.True(model.ObjectsAreContains());
             Assert.True(model.ObjectsAreCovers());
             Assert.True(model.ObjectsAreIntersects());
+            Assert.True(model.ObjectsAreCoveredBy());
+            Assert.True(model.ObjectsAreWithin());
 
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint()); 
@@ -70,6 +72,8 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreIntersects());
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
         }
 
         [Fact]
@@ -93,6 +97,8 @@ namespace TestOfContainerIntersections
             Assert.True(model.ObjectsAreContains());
             Assert.True(model.ObjectsAreCovers());
 
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
@@ -117,12 +123,14 @@ namespace TestOfContainerIntersections
             ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
 
             Assert.True(model.ObjectsAreDisjoint());
-
+            
             Assert.False(model.ObjectsAreIntersects());
             Assert.False(model.ObjectsAreContains());
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
 
         }
 
@@ -145,6 +153,8 @@ namespace TestOfContainerIntersections
             ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
 
             Assert.True(model.ObjectsAreIntersects());
+            Assert.True(model.ObjectsAreCoveredBy());
+            Assert.True(model.ObjectsAreWithin());
 
             Assert.False(model.ObjectsAreContains());
             Assert.False(model.ObjectsAreCovers());
@@ -173,6 +183,8 @@ namespace TestOfContainerIntersections
 
             Assert.True(model.ObjectsAreDisjoint());
 
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
             Assert.False(model.ObjectsAreIntersects());
             Assert.False(model.ObjectsAreContains());
             Assert.False(model.ObjectsAreCovers());
@@ -205,6 +217,8 @@ namespace TestOfContainerIntersections
             Assert.True(model.ObjectsAreContains());
             Assert.True(model.ObjectsAreCovers());
 
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
@@ -232,6 +246,8 @@ namespace TestOfContainerIntersections
 
             Assert.True(model.ObjectsAreDisjoint());
 
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
             Assert.False(model.ObjectsAreIntersects());
             Assert.False(model.ObjectsAreContains());
             Assert.False(model.ObjectsAreCovers());
@@ -262,6 +278,8 @@ namespace TestOfContainerIntersections
             ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
 
             Assert.True(model.ObjectsAreIntersects());
+            Assert.True(model.ObjectsAreCoveredBy());
+            Assert.True(model.ObjectsAreWithin());
 
             Assert.False(model.ObjectsAreContains());
             Assert.False(model.ObjectsAreCovers());
@@ -293,6 +311,8 @@ namespace TestOfContainerIntersections
 
             Assert.True(model.ObjectsAreDisjoint());
 
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
             Assert.False(model.ObjectsAreIntersects());
             Assert.False(model.ObjectsAreContains());
             Assert.False(model.ObjectsAreCovers());
