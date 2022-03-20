@@ -106,7 +106,7 @@ namespace GridLib
             }
         }
 
-        public IEnumerable<Cell> GetChildrenCellsWithObject(int objId)
+        public IEnumerable<Cell> GetChildrenCellsWithThisObject(int objId)
         {
             return Children.FindAll(c => c.ObjectIdList.Contains(objId));
         }
@@ -141,6 +141,11 @@ namespace GridLib
                 }
             }
             return result;
+        }
+
+        public IEnumerable<Cell> GetAllChildCellsWithObject(int objId)
+        {
+            return this.GetAllCells().Where(t => t.ObjectIdList.Contains(objId));
         }
 
         public IEnumerable<MapPoint> GetPoints()

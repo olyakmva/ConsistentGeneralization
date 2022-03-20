@@ -13,16 +13,21 @@ namespace MapDataLib
             var list = fSet.Features;
             if (list.Count == 0)
                 return null;
+            int idRatio = 0;
             GeometryType type= GeometryType.Unspecified;
+            
             switch (list[0].BasicGeometry.FeatureType)
             {
                 case FeatureType.Line: type = GeometryType.Line;
                     break;
                 case FeatureType.Point: type = GeometryType.Point;
+                    idRatio = 10000;
                     break;
                 case FeatureType.Polygon: type = GeometryType.Polygon;
+                    idRatio = 100000;
                     break;
                 case FeatureType.MultiPoint: type = GeometryType.MultiPoint;
+                    idRatio = 10000;
                     break;
                 case FeatureType.Unspecified:
                     break;
@@ -37,10 +42,10 @@ namespace MapDataLib
                 var points = new List<MapPoint>();
                 foreach (var t in xy)
                 {
-                    var p = new MapPoint(t.X, t.Y, item.Fid, 1.0);
+                    var p = new MapPoint(t.X, t.Y, item.Fid+idRatio, 1.0);
                     points.Add(p);
                 }
-                map.MapObjDictionary.Add(item.Fid, points);
+                map.MapObjDictionary.Add(item.Fid+idRatio, points);
             }
             return map;
         }
