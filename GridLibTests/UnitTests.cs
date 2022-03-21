@@ -364,6 +364,30 @@ namespace GridLibTests
             Assert.Equal(grid.ObjDictionary[1].Count, oneObjCount);
             Assert.Equal(grid.ObjDictionary[4].Count, otherObjCount);
         }
+
+        [Fact]
+        public void AdditionalPointsIfLineIntersectCell()
+        {
+            Map map = new Map();
+
+            var md1 = new MapData(GeometryType.Line);
+            var objId = 1;
+            var objWeight = 1;
+            md1.MapObjDictionary.Add(objId, new List<MapPoint>
+            {
+                new MapPoint(0, 0, objId, objWeight),
+                new MapPoint(1, 3, objId, objWeight),
+                new MapPoint(3.5, 1.5, objId, objWeight),
+                new MapPoint(5.5, 0.5, objId, objWeight)
+            });
+            map.Add(md1);
+            int cellSize = 2;
+            var grid = new Grid(map, cellSize, 0.5);
+            Assert.Equal(2, grid.Cells[1, 1].MapPoints[objId].Count);
+            Assert.Equal(2, grid.Cells[0, 1].MapPoints[objId].Count);
+            Assert.Equal(1, grid.Cells[0, 0].MapPoints[objId].Count);
+
+        }
     }
 }
 
