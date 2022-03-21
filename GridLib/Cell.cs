@@ -16,6 +16,7 @@ namespace GridLib
         public CellState State { get;  set; }
         public Dictionary<int, List<MapPoint>> MapPoints { get; set; }
 
+
         public Cell()
         {
             MapPoints = new Dictionary<int, List<MapPoint>>();
@@ -110,6 +111,7 @@ namespace GridLib
             foreach (var childCell in Children.Where(childCell => childCell.HasCommonPoint(point1,point2)))
             {
                 var (pnt1, pnt2) = childCell.GetIntersectionPoints(point1, point2);
+                if(pnt1 == null) continue;
                 if (!childCell.MapPoints.ContainsKey(id))
                 {
                     childCell.MapPoints.Add(id,
@@ -245,8 +247,8 @@ namespace GridLib
                 {
                     var x = -1 * (line.B * cellPoints[i].Y + line.C) / line.A;
                     MapPoint p = new MapPoint(x, cellPoints[i].Y, cellPoints[i].Id, cellPoints[i].Weight + 10);
-                    if ((p.CompareTo(point1) < 0 && p.CompareTo(point2) > 0) ||
-                        (p.CompareTo(point1) > 0 && p.CompareTo(point2) < 0))
+                    if ((p.CompareTo(point1) <= 0 && p.CompareTo(point2) > 0) ||
+                        (p.CompareTo(point1) > 0 && p.CompareTo(point2) <= 0))
                         ptsList.Add(p);
                     
                 }
@@ -254,8 +256,8 @@ namespace GridLib
                 {
                     var y = -1 * (line.A * cellPoints[i].X + line.C) / line.B;
                     MapPoint p = new MapPoint(cellPoints[i].X, y, cellPoints[i].Id, cellPoints[i].Weight + 10);
-                    if ((p.CompareTo(point1) < 0 && p.CompareTo(point2) > 0) ||
-                        (p.CompareTo(point1) > 0 && p.CompareTo(point2) < 0))
+                    if ((p.CompareTo(point1) <= 0 && p.CompareTo(point2) > 0) ||
+                        (p.CompareTo(point1) > 0 && p.CompareTo(point2) <= 0))
                         ptsList.Add(p);
                 }
             }
@@ -265,7 +267,7 @@ namespace GridLib
                 return (ptsList[0], ptsList[1]);
             if (ptsList.Count == 1)
                 return (ptsList[0], null);
-            throw new ApplicationException("No intersection points inside cell");
+            return (null,null);
         }
 
     }

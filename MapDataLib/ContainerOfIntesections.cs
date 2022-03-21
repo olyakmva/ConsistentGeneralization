@@ -5,7 +5,7 @@ namespace MapDataLib
     public class ContainerOfIntersections
     {
         /// <summary>
-        /// Тут будет храниться матрицы 9 пересечений
+        /// Тут будут храниться матрицы 9 пересечений
         /// </summary>
         List<List<ModelOfNineIntersections>> ModelOfNineIntersections;
         /// <summary>
