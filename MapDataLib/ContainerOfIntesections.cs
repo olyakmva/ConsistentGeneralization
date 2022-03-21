@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MapDataLib
 {
     public class ContainerOfIntersections
     {
         /// <summary>
-        /// Тут будет храниться матрицы 9 пересечений
+        /// Тут будут храниться матрицы 9 пересечений
         /// </summary>
         List<List<ModelOfNineIntersections>> ModelOfNineIntersections;
         /// <summary>

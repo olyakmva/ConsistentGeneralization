@@ -143,7 +143,15 @@ namespace MainForm
             {
                 var color = Color.FromName(mapData.ColorName) ; 
                 var pen = new Pen(color, 1.75f);
-                Display(g, mapData, pen);
+                if (mapData.Geometry == GeometryType.Point || mapData.Geometry == GeometryType.MultiPoint)
+                {
+                    var brush = new SolidBrush(color);
+                    DisplayPoints(g,mapData, brush);
+                }
+                else
+                {
+                    Display(g, mapData, pen);
+                }
             }
 
             if (_grid != null)
@@ -172,7 +180,24 @@ namespace MainForm
                 {
                     var pt1 = _state.GetPoint(list[j], mapPictureBox.Height - 1);
                     var pt2 = _state.GetPoint(list[j + 1], mapPictureBox.Height - 1);
+                    g.DrawEllipse(pen,pt1.X, pt1.Y,4,4);
+                    g.DrawEllipse(pen, pt2.X, pt2.Y, 4, 4);
                     g.DrawLine(pen, pt1, pt2);
+                }
+            }
+        }
+
+        private void DisplayPoints(Graphics g, MapData md, Brush brush)
+        {
+            foreach (var pair in md.MapObjDictionary)
+            {
+                var list = pair.Value;
+                if (list.Count == 0)
+                    continue;
+                foreach (var mapPoint in list)
+                {
+                    var pt1 = _state.GetPoint(mapPoint, mapPictureBox.Height - 1);
+                    g.FillEllipse(brush, pt1.X, pt1.Y, 5,5);
                 }
             }
         }
