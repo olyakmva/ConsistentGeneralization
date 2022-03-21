@@ -255,7 +255,11 @@ namespace MapDataLib
                     double maxx = Math.Max(x1, x2);
                     double maxy = Math.Max(y1, y2);
 
-                    if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //{
+                    //    flag = true;
+                    //}
+                    if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
                     {
                         flag = true;
                     }
@@ -288,7 +292,11 @@ namespace MapDataLib
                     double maxx = Math.Max(x1, x2);
                     double maxy = Math.Max(y1, y2);
 
-                    if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //{
+                    //    flag = true;
+                    //}
+                    if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
                     {
                         flag = true;
                     }
@@ -343,7 +351,11 @@ namespace MapDataLib
                     double maxx = Math.Max(x1, x2);
                     double maxy = Math.Max(y1, y2);
 
-                    if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //{
+                    //    flag = true;
+                    //}
+                    if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
                     {
                         flag = true;
                     }
@@ -385,7 +397,11 @@ namespace MapDataLib
                     double maxx = Math.Max(x1, x2);
                     double maxy = Math.Max(y1, y2);
 
-                    if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                    //{
+                    //    flag = true;
+                    //}
+                    if (((x - x1) *(y2-y1)) == ((y - y1)* (x2 - x1))  && x >= minx && x <= maxx && y >= miny && y <= maxy)
                     {
                         flag = true;
                     }
