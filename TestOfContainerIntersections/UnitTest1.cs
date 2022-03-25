@@ -1,4 +1,5 @@
 using MapDataLib;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -6,22 +7,7 @@ namespace TestOfContainerIntersections
 {
     public class UnitTest1
     {
-        [Fact]
-        public void AfterCreationModelOfNineIntersectionsMatrixIsExist()
-        {
-            ModelOfNineIntersections model = new ModelOfNineIntersections();
-            int expected = 3;
-            bool flag = false;
-            Assert.Equal(model.matrixofnineintersections.GetLength(0), expected);
-            Assert.Equal(model.matrixofnineintersections.GetLength(1), expected);
-            for (int i = 0; i < expected; i++)
-            {
-                for (int j = 0; j < expected; j++)
-                {
-                    Assert.Equal(model.matrixofnineintersections[i, j], flag);
-                }
-            }
-        }
+
         #region PointPoint
         [Fact]
         public void EqualsPointPointModelOfNineIntersections()
@@ -47,6 +33,7 @@ namespace TestOfContainerIntersections
 
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -75,6 +62,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreIntersects());
             Assert.False(model.ObjectsAreCoveredBy());
             Assert.False(model.ObjectsAreWithin());
+            Assert.False(model.ObjectsOnBorder());
         }
         #endregion
 
@@ -105,6 +93,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -134,6 +123,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreCoveredBy());
             Assert.False(model.ObjectsAreWithin());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         #endregion
@@ -166,6 +156,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -195,6 +186,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         #endregion
@@ -229,6 +221,8 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
+
 
         }
 
@@ -261,6 +255,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -292,6 +287,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         [Fact]
@@ -322,6 +318,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         #endregion
@@ -357,6 +354,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -389,7 +387,8 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreWithin());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
-            Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsAreDisjoint()); 
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -422,6 +421,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         [Fact]
@@ -453,6 +453,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         #endregion
@@ -488,6 +489,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         [Fact]
@@ -520,6 +522,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -553,6 +556,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         [Fact]
@@ -584,6 +588,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         #endregion
@@ -620,6 +625,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         [Fact]
@@ -653,6 +659,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
             Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
 
         }
 
@@ -687,6 +694,7 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
         }
         [Fact]
@@ -719,7 +727,137 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreCovers());
             Assert.False(model.ObjectsAreEquals());
             Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsOnBorder());
 
+        }
+        #endregion
+
+        #region PointPolygonAndPolygonPointOnTheBorder
+        [Fact]
+        public void IntersectPolygonPointModelOfNineIntersectionsRightOrderOnTheBorder()
+        {
+            var md1 = new MapData(GeometryType.Polygon);
+            md1.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,0,1,1),
+                new MapPoint(0,1,1,1),
+                new MapPoint(1,1,1,1),
+                new MapPoint(1,0,1,1),
+                new MapPoint(0,0,1,1)
+            });
+            var md2 = new MapData(GeometryType.Point);
+            md2.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,0,1,1),
+            });
+
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+
+            Assert.True(model.ObjectsAreIntersects());
+            Assert.True(model.ObjectsAreContains());
+            Assert.True(model.ObjectsAreCovers());
+
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
+            Assert.False(model.ObjectsAreEquals());
+            Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
+
+        }
+        [Fact]
+        public void IntersectPointPolygonModelOfNineIntersectionsRightOrderOnTheBorder()
+        {
+            var md1 = new MapData(GeometryType.Point);
+            md1.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,0,1,1),
+            });
+            var md2 = new MapData(GeometryType.Polygon);
+            md2.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,0,1,1),
+                new MapPoint(0,1,1,1),
+                new MapPoint(1,1,1,1),
+                new MapPoint(1,0,1,1),
+                new MapPoint(0,0,1,1)
+            });
+
+
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+
+            Assert.True(model.ObjectsAreIntersects());
+            Assert.True(model.ObjectsAreCoveredBy());
+            Assert.True(model.ObjectsAreWithin());
+            Assert.True(model.ObjectsOnBorder());
+
+            Assert.False(model.ObjectsAreContains());
+            Assert.False(model.ObjectsAreCovers());
+            Assert.False(model.ObjectsAreEquals());
+            Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsAreDisjoint());
+
+        }
+        #endregion
+
+        #region LineLine
+
+        [Fact]
+        public void TestIntersectionLineLine()
+        {
+            var md1 = new MapData(GeometryType.Line);
+            md1.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,0,1,1),
+                new MapPoint(4,4,1,1),
+            });
+            var md2 = new MapData(GeometryType.Line);
+            md2.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,4,1,1),
+                new MapPoint(4,0,1,1),
+            });
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.ObjectsAreIntersects());
+
+            Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
+            Assert.False(model.ObjectsAreContains());
+            Assert.False(model.ObjectsAreCovers());
+            Assert.False(model.ObjectsAreEquals());
+            Assert.False(model.ObjectsAreMeets());
+            Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
+        }
+
+        [Fact]
+        public void TestIntersectionLineLine2()
+        {
+            var md1 = new MapData(GeometryType.Line);
+            md1.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,0,1,1),
+                new MapPoint(2,2,1,1),
+                new MapPoint(2,0,1,1),
+            });
+            var md2 = new MapData(GeometryType.Line);
+            md2.MapObjDictionary.Add(1, new List<MapPoint>()
+            {
+                new MapPoint(0,4,1,1),
+                new MapPoint(4,0,1,1),
+            });
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+
+            Assert.True(model.ObjectsAreMeets());
+            Assert.True(model.ObjectsAreIntersects());
+
+            //Assert.False(model.ObjectsAreCoveredBy());
+            Assert.False(model.ObjectsAreWithin());
+            Assert.False(model.ObjectsAreContains());
+            //Assert.False(model.ObjectsAreCovers());
+            Assert.False(model.ObjectsAreEquals());
+            Assert.False(model.ObjectsAreDisjoint());
+            Assert.False(model.ObjectsOnBorder());
         }
         #endregion
     }
