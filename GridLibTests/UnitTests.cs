@@ -385,7 +385,7 @@ namespace GridLibTests
             var grid = new Grid(map, cellSize, 0.5);
             Assert.Equal(2, grid.Cells[1, 1].MapPoints[objId].Count);
             Assert.Equal(2, grid.Cells[0, 1].MapPoints[objId].Count);
-            Assert.Equal(1, grid.Cells[0, 0].MapPoints[objId].Count);
+            Assert.Single(grid.Cells[0, 0].MapPoints[objId]);
 
         }
     }
