@@ -51,22 +51,19 @@ namespace GridLib
                         var nextPoint = pointList[k + 1];
                         var (ind1, ind2) = GetGridIndexes(nextPoint);
 
-                        if (Math.Abs(i - ind1) + Math.Abs(j - ind2) < 2) continue;
+                        if (Math.Abs(i - ind1) + Math.Abs(j - ind2) == 0) continue;
                         var minI = Math.Min(i, ind1);
                         var maxI = Math.Max(i, ind1);
                         var minJ = Math.Min(j, ind2);
                         var maxJ = Math.Max(j, ind2);
-                        Line line = new Line(point, nextPoint);
+                       
                         for (var i1 = minI; i1 <= maxI; i1++)
                         for (var j1 = minJ; j1 <= maxJ; j1++)
                         {
-                            if (!Cells[i1, j1].HasCommonPoint(line))
+                            if (!Cells[i1, j1].HasCommonPoint(point, nextPoint))
                                 continue;
                             ModifyObjDictionary(point.Id, Cells[i1, j1]);
-                            var (p1, p2) = Cells[i1, j1].GetIntersectionPoints(point, nextPoint);
-                            Cells[i1,j1].Add(p1,point.Id);
-                            if(p2!=null)
-                                Cells[i1, j1].Add(p2, point.Id);
+                            Cells[i1, j1].AddLineIntersectionPoints(point, nextPoint);
                             if (Cells[i1, j1].State == CellState.SeveralObjects)
                             {
                                 if(!needToDropList.Contains(Cells[i1, j1]))
@@ -113,8 +110,10 @@ namespace GridLib
                             }
                         }
                         //заменить большую ячейку на маленькую в objDictionary
+                        var cellIndex=ObjDictionary[objId].FindIndex(c=>c.Equals(cell));
                         ObjDictionary[objId].Remove(cell);
-                        ObjDictionary[objId].AddRange(cell.GetChildrenCellsWithThisObject(objId));
+                        foreach(var child in cell.GetChildrenCellsWithThisObject(objId))
+                            ObjDictionary[objId].Insert(cellIndex,child);  
                     }
                     // создать новый лист ячеек, подлежащих разбиению
                     var dropCells = cell.GetChildrenWithManyObjects();

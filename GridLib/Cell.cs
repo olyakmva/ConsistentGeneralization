@@ -23,7 +23,10 @@ namespace GridLib
             State = CellState.EmptyCell;
             ObjectIdList = new List<int>();
         }
-
+        /// <summary>
+        /// Добавляет дочерние ячейки. Они расположены в порядке обхода 
+        /// против часовой стрелки начиная с левого нижнего угла
+        /// </summary>
         public void AddChildren()
         {
             if (Children != null) return;
@@ -43,13 +46,13 @@ namespace GridLib
                 },
                 new Cell
                 {
-                    Size = Size / 2, LowerLeftPoint = new MapPoint {X = LowerLeftPoint.X, Y = LowerLeftPoint.Y + Size / 2},
+                    Size = Size / 2, LowerLeftPoint = new MapPoint {X = LowerLeftPoint.X+Size/2, Y = LowerLeftPoint.Y + Size / 2},
                     Level = Level - 1,
                     State = CellState.EmptyCell
                 },
                 new Cell
                 {
-                    Size = Size / 2, LowerLeftPoint = new MapPoint {X = LowerLeftPoint.X + Size / 2, Y = LowerLeftPoint.Y + Size / 2},
+                    Size = Size / 2, LowerLeftPoint = new MapPoint {X = LowerLeftPoint.X , Y = LowerLeftPoint.Y + Size / 2},
                     Level = Level - 1,
                     State = CellState.EmptyCell
                 }
@@ -94,7 +97,8 @@ namespace GridLib
                 {
                     if (childCell.ObjectIdList.Contains(point.Id))
                     {
-                        childCell.MapPoints[point.Id].Add(point);
+                        if( !childCell.MapPoints[point.Id].Contains(point))
+                                    childCell.MapPoints[point.Id].Add(point);
                     }
                     else
                     {
@@ -119,11 +123,14 @@ namespace GridLib
                 }
                 else
                 {
+                    if(!childCell.MapPoints[id].Contains(pnt1))
+                    {
                     int ind1 =childCell.MapPoints[id].FindIndex(p => p.CompareTo(pnt1) > 0);
                     if(ind1 >=0)
                         childCell.MapPoints[id].Insert(ind1,pnt1);
                     else childCell.MapPoints[id].Add(pnt1);
-                    if (pnt2 != null)
+                    }
+                    if (pnt2 != null && !childCell.MapPoints[id].Contains(pnt2) )
                     {
                         int ind2 = childCell.MapPoints[id].FindIndex(p => p.CompareTo(pnt2) < 0);
                         if (ind2 >= 0)
@@ -202,7 +209,7 @@ namespace GridLib
             return points;
         }
 
-        public bool HasCommonPoint(Line line)
+       private bool HasCommonPoint(Line line)
         {
             var cellPoints = GetPoints();
             int count = cellPoints.Count(point => line.GetSign(point) > 0);
@@ -263,12 +270,22 @@ namespace GridLib
             }
 
             ptsList.Sort();
+            ptsList= ptsList.Distinct().ToList();
             if (ptsList.Count > 1)
                 return (ptsList[0], ptsList[1]);
             if (ptsList.Count == 1)
                 return (ptsList[0], null);
             return (null,null);
         }
+        public void AddLineIntersectionPoints(MapPoint point1, MapPoint point2)
+        { 
+            var (p1,p2) = GetIntersectionPoints( point1,  point2);
+            if(p1!=null) 
+                Add(p1,point1.Id);
+            if(p2!=null)
+                Add(p2, point2.Id);
+        }
+
 
     }
 }
