@@ -9,7 +9,7 @@ namespace MapDataLib
     {
         public static MapData ToMapData(IFeatureSet fSet)
         {
-            //fSet .
+            
             var list = fSet.Features;
             if (list.Count == 0)
                 return null;

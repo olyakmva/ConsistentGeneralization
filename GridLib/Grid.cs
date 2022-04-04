@@ -122,8 +122,18 @@ namespace GridLib
                 }
                 needToDropList = listForNextLevel;
             }
+            FillContainerOfIntersections();
         }
-
+        private void FillContainerOfIntersections()
+        {
+            for (var i = 0; i < Cells.GetLength(0); i++)
+            {
+              for (var j = 0; j < Cells.GetLength(1); j++)
+              {
+                    Cells[i,j].FillContainerOfIntersections();
+              } 
+            }
+        }
         private void BuildGridForPoints(MapData mapData, List<Cell>needToDropList)
         {
             foreach (var mapObj in mapData.MapObjDictionary)

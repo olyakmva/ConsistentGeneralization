@@ -14,6 +14,7 @@ namespace GridLib
         public int Level { get; set; }
         public List<Cell> Children { get; set; }
         public CellState State { get;  set; }
+        public ContainerOfIntersections Intersections {get; private set;}
         public Dictionary<int, List<MapPoint>> MapPoints { get; set; }
 
 
@@ -151,6 +152,37 @@ namespace GridLib
                 {
                     if (childCell.ObjectIdList.Count>1)
                         childCell.State = CellState.SeveralObjects;
+                }
+            }
+        }
+
+        internal void FillContainerOfIntersections()
+        {
+            if(State == CellState.EmptyCell || State == CellState.OneObject)
+                return;
+            if(Children!=null)
+            {
+                foreach(var child in Children)
+                {
+                    child.FillContainerOfIntersections();
+                }
+            }
+            else
+            {
+                Intersections = new ContainerOfIntersections();
+                foreach(var pair in MapPoints)
+                {
+                    var mapObjItem = new MapObjItem(){ Id = pair.Key, Points = pair.Value };
+                    if (pair.Key < 10000)
+                    {
+                        mapObjItem.Geometry = GeometryType.Line;
+                    }
+                    else if (pair.Key >= 100000)
+                    {
+                         mapObjItem.Geometry = GeometryType.Polygon;
+                    }
+                    else  mapObjItem.Geometry = GeometryType.Point;
+                    Intersections.Add(mapObjItem);
                 }
             }
         }

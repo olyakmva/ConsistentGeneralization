@@ -7,7 +7,7 @@ using Xunit;
 
 namespace GridLibTests
 {
-    public class UnitTests
+    public class GridUnitTests
     {
         [Fact]
         public void ProperUpperLeftPointInCell()

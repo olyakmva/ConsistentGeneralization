@@ -58,7 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CellIntersectionPointsTest.cs" />
-    <Compile Include="UnitTests.cs" />
+    <Compile Include="MapCellConnectionTests.cs" />
+    <Compile Include="GridUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

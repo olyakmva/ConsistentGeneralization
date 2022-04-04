@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+ 
 
 namespace MapDataLib
 {
@@ -11,15 +12,15 @@ namespace MapDataLib
         /// <summary>
         /// Тут хранятся все объекты
         /// </summary>
-        List<MapData> mapDatas;
+        public List<MapObjItem> mapDatas {get; }
 
         public ContainerOfIntersections()
         {
             ModelOfNineIntersections = new List<List<ModelOfNineIntersections>>();
-            mapDatas = new List<MapData>();
+            mapDatas = new List<MapObjItem>();
         }
         
-        public void Add(MapData mapData)
+        public void Add(MapObjItem mapData)
         {
             mapDatas.Add(mapData);
             List<ModelOfNineIntersections> list = new List<ModelOfNineIntersections>(); 

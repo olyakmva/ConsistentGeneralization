@@ -62,6 +62,7 @@
     <Compile Include="Geometry.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapData.cs" />
+    <Compile Include="MapObjItem.cs" />
     <Compile Include="MapPoint.cs" />
     <Compile Include="ModelOfNineIntersections.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

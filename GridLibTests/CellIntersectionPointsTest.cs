@@ -30,7 +30,7 @@ namespace GridLibTests
             Assert.Equal(2, grid.Cells[1, 1].MapPoints[id].Count);
         }
         [Fact]
-        public void AddPointsToLevel2()
+        public void AddPointsToLowLevel()
         {
             int id = 1;
             var map = OneObjMap(id);
@@ -76,6 +76,96 @@ namespace GridLibTests
             Assert.Equal(2, cells001[1].MapPoints[id].Count);
 
         }
+        [Fact]
+        public void ContainerOfIntersectionsIsNullForEmptyOrOneObjectCells()
+        {
+            int id = 1;
+            var map = OneObjMap(id);
+            map.Add(SomeObj(2));
+            var cellSize = 2;
+            var detail = 0.5;
+            var grid = new Grid(map, cellSize, detail);
+            foreach(var cell in grid.Cells)
+            {
+                if(cell.State== CellState.EmptyCell || cell.State== CellState.OneObject)
+                    Assert.Null(cell.Intersections);
+            }
+        }
+        [Fact]
+        public void ContainerOfIntersectionsIsNullForCellsWithChildren()
+        {
+            int id = 1;
+            var map = OneObjMap(id);
+            map.Add(SomeObj(2));
+            var cellSize = 2;
+            var detail = 0.5;
+            var grid = new Grid(map, cellSize, detail);
+            foreach(var cell in grid.Cells)
+            {
+                if(cell.Children!=null)
+                    Assert.Null(cell.Intersections);
+            }
+        }
+        [Fact]
+        public void CheckContainerOfIntersectionsForCellsWithChildren()
+        {
+            int id = 1;
+            var map = OneObjMap(id);
+            map.Add(SomeObj(2));
+            var cellSize = 2;
+            var detail = 1;
+            var grid = new Grid(map, cellSize, detail);
+            foreach(var cell in grid.Cells)
+            {
+                if(cell.Children!=null)
+                {
+                    foreach(var child in cell.Children)
+                    { 
+                        if(child.State== CellState.SeveralObjects)
+                        {
+                            Assert.NotNull(child.Intersections);
+                        }
+                        else Assert.Null(child.Intersections);
+                    }
+                }
+            }
+        }
+         [Fact]
+        public void CheckContentOfContainerOfIntersections()
+        {
+            int id = 1;
+            var map = OneObjMap(id);
+            map.Add(SomeObj(2));
+            var cellSize = 2;
+            var detail = 1;
+            var grid = new Grid(map, cellSize, detail);
+            
+            var cell00 = grid.Cells[0,0].Children[0];
+            Assert.Equal(2, cell00.Intersections.mapDatas.Count);
+            var mapObj1 = cell00.Intersections.mapDatas.Find(m=>m.Id==1);
+            Assert.Equal(3, mapObj1.Points.Count);
+            var mapObj2 = cell00.Intersections.mapDatas.Find(m=>m.Id==2);
+            Assert.Equal(2, mapObj2.Points.Count);
+            foreach(var cell in grid.Cells)
+            {
+                if(cell.Children!=null)
+                {
+                    foreach(var child in cell.Children)
+                    { 
+                        if(child.State== CellState.SeveralObjects)
+                        {
+                            foreach(var pair in child.MapPoints)
+                            {
+                                var mapObjItem = child.Intersections.mapDatas.Find(m=>m.Id ==pair.Key);
+                                Assert.Equal(pair.Value.Count, mapObjItem.Points.Count);
+                            }
+                        }
+                        else Assert.Null(child.Intersections);
+                    }
+                }
+            }
+        }
+
         private Map OneObjMap( int id=1)
         {
             Map map = new Map();
@@ -106,6 +196,7 @@ namespace GridLibTests
 
             return mapLineObj;
         }
-
+       
+        
     }
 }
