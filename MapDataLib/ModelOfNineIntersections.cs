@@ -7,8 +7,8 @@ namespace MapDataLib
     public class ModelOfNineIntersections
     {
         public bool[,] matrixofnineintersections;
-        MapObjItem mapDataLine;
-        MapObjItem mapDataColumn;
+        MapObjItem MapObjItemLine;
+        MapObjItem MapObjItemColumn;
         public ModelOfNineIntersections()
         {
             matrixofnineintersections = new bool[3, 3];
@@ -17,8 +17,8 @@ namespace MapDataLib
         public ModelOfNineIntersections(MapObjItem mapDataLine, MapObjItem mapDataColumn)
         {
             matrixofnineintersections = new bool[3, 3];
-            this.mapDataLine = mapDataLine;
-            this.mapDataColumn = mapDataColumn;
+            this.MapObjItemLine = mapDataLine;
+            this.MapObjItemColumn = mapDataColumn;
             CalculatingIntersections();
         }
         #region TypesOfIntersections
@@ -177,52 +177,37 @@ namespace MapDataLib
                 return false;
             }
         }
-        public bool ObjectsOnBorder()
-        {
-            if (matrixofnineintersections[0, 0] == true
-                && matrixofnineintersections[2, 0] == true
-                && matrixofnineintersections[2, 2] == true
-                && matrixofnineintersections[0, 2] == false)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
         #endregion
 
         public void CalculatingIntersections()
         {
-            switch (mapDataLine.Geometry)
+            switch (MapObjItemLine.Geometry)
             {
-                case GeometryType.Point when mapDataColumn.Geometry == GeometryType.Point:
+                case GeometryType.Point when MapObjItemColumn.Geometry == GeometryType.Point:
                     PointPoint();
                     break;
-                case GeometryType.Point when mapDataColumn.Geometry == GeometryType.Line:
+                case GeometryType.Point when MapObjItemColumn.Geometry == GeometryType.Line:
                     PointLine();
                     break;
-                case GeometryType.Point when mapDataColumn.Geometry == GeometryType.Polygon:
+                case GeometryType.Point when MapObjItemColumn.Geometry == GeometryType.Polygon:
                     PointPolygon();
                     break;
-                case GeometryType.Line when mapDataColumn.Geometry == GeometryType.Point:
+                case GeometryType.Line when MapObjItemColumn.Geometry == GeometryType.Point:
                     LinePoint();
                     break;
-                case GeometryType.Line when mapDataColumn.Geometry == GeometryType.Line:
+                case GeometryType.Line when MapObjItemColumn.Geometry == GeometryType.Line:
                     LineLine();
                     break;
-                case GeometryType.Line when mapDataColumn.Geometry == GeometryType.Polygon:
+                case GeometryType.Line when MapObjItemColumn.Geometry == GeometryType.Polygon:
                     LinePolygon();
                     break;
-                case GeometryType.Polygon when mapDataColumn.Geometry == GeometryType.Point:
+                case GeometryType.Polygon when MapObjItemColumn.Geometry == GeometryType.Point:
                     PolygonPoint();
                     break;
-                case GeometryType.Polygon when mapDataColumn.Geometry == GeometryType.Line:
+                case GeometryType.Polygon when MapObjItemColumn.Geometry == GeometryType.Line:
                     PolygonLine();
                     break;
-                case GeometryType.Polygon when mapDataColumn.Geometry == GeometryType.Polygon:
+                case GeometryType.Polygon when MapObjItemColumn.Geometry == GeometryType.Polygon:
                     PolygonPolygon();
                     break;
             }
@@ -235,117 +220,109 @@ namespace MapDataLib
         {
             bool flag = false;
 
-        //    var x1 = mapDataLine.MapObjDictionary.First().Value[0].X;
-        //    var y1 = mapDataLine.MapObjDictionary.First().Value[0].Y;
+            var x1 = MapObjItemLine.Points[0].X;
+            var y1 = MapObjItemLine.Points[0].Y;
 
-        //    var x2 = mapDataColumn.MapObjDictionary.First().Value[0].X;
-        //    var y2 = mapDataColumn.MapObjDictionary.First().Value[0].Y;
+            var x2 = MapObjItemColumn.Points[0].X;
+            var y2 = MapObjItemColumn.Points[0].Y;
+            if (x1 == x2 && y1 == y2)
+            {
+                flag = true;
+            }
 
-        //    if (x1 == x2 && y1 == y2)
-        //    {
-        //        flag = true;
-        //    }
-
-        //    if (flag)
-        //    {
-        //        matrixofnineintersections[0, 0] = true;
-        //    }
+            if (flag)
+            {
+                matrixofnineintersections[0, 0] = true;
+            }
 
         }
         public void PointLine()
         {
             bool flag = false;
 
-        //    var x = mapDataLine.MapObjDictionary.First().Value[0].X;
-        //    var y = mapDataLine.MapObjDictionary.First().Value[0].Y;
-        //    foreach (var q in mapDataColumn.MapObjDictionary.Keys)
-        //    {
-        //        for (int i = 1; i < mapDataColumn.MapObjDictionary[q].Count; i++)
-        //        {
-        //            double x1 = mapDataColumn.MapObjDictionary[q][i].X;
-        //            double x2 = mapDataColumn.MapObjDictionary[q][i - 1].X;
-        //            double y1 = mapDataColumn.MapObjDictionary[q][i].Y;
-        //            double y2 = mapDataColumn.MapObjDictionary[q][i - 1].Y;
+            var x = MapObjItemLine.Points[0].X;
+            var y = MapObjItemLine.Points[0].Y;
 
-        //            double minx = Math.Min(x1, x2);
-        //            double miny = Math.Min(y1, y2);
+            for (int i = 1; i < MapObjItemColumn.Points.Count; i++)
+            {
+                double x1 = MapObjItemColumn.Points[i].X;
+                double x2 = MapObjItemColumn.Points[i - 1].X;
+                double y1 = MapObjItemColumn.Points[i].Y;
+                double y2 = MapObjItemColumn.Points[i - 1].Y;
 
-        //            double maxx = Math.Max(x1, x2);
-        //            double maxy = Math.Max(y1, y2);
+                double minx = Math.Min(x1, x2);
+                double miny = Math.Min(y1, y2);
 
-        //            //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-        //            //{
-        //            //    flag = true;
-        //            //}
-        //            if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-        //            {
-        //                flag = true;
-        //            }
-        //        }
-        //    }
-        //    if (flag)
-        //    {
-        //        matrixofnineintersections[0, 0] = true;
-        //        matrixofnineintersections[2, 0] = true;
-        //    }
+                double maxx = Math.Max(x1, x2);
+                double maxy = Math.Max(y1, y2);
+
+                if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                {
+                    flag = true;
+                }
+                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                {
+                    flag = true;
+                }
+            }
+
+            if (flag)
+            {
+                matrixofnineintersections[0, 0] = true;
+                matrixofnineintersections[2, 0] = true;
+            }
         }
         public void PointPolygon()
         {
             bool flag = false;
 
-        //    var x = mapDataLine.MapObjDictionary.First().Value[0].X;
-        //    var y = mapDataLine.MapObjDictionary.First().Value[0].Y;
-        //    foreach (var q in mapDataColumn.MapObjDictionary.Keys)
-        //    {
-        //        for (int i = 1; i < mapDataColumn.MapObjDictionary[q].Count; i++)
-        //        {
-        //            double x1 = mapDataColumn.MapObjDictionary[q][i].X;
-        //            double x2 = mapDataColumn.MapObjDictionary[q][i - 1].X;
-        //            double y1 = mapDataColumn.MapObjDictionary[q][i].Y;
-        //            double y2 = mapDataColumn.MapObjDictionary[q][i - 1].Y;
+            var x = MapObjItemLine.Points[0].X;
+            var y = MapObjItemLine.Points[0].Y;
 
-        //            double minx = Math.Min(x1, x2);
-        //            double miny = Math.Min(y1, y2);
+            for (int i = 1; i < MapObjItemColumn.Points.Count; i++)
+            {
+                double x1 = MapObjItemColumn.Points[i].X;
+                double x2 = MapObjItemColumn.Points[i - 1].X;
+                double y1 = MapObjItemColumn.Points[i].Y;
+                double y2 = MapObjItemColumn.Points[i - 1].Y;
 
-        //            double maxx = Math.Max(x1, x2);
-        //            double maxy = Math.Max(y1, y2);
+                double minx = Math.Min(x1, x2);
+                double miny = Math.Min(y1, y2);
 
-        //            //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-        //            //{
-        //            //    flag = true;
-        //            //}
-        //            if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-        //            {
-        //                flag = true;
-        //            }
-        //        }
-        //    }
-        //    if (flag == true)
-        //    {
-        //        matrixofnineintersections[0, 0] = true;
-        //        matrixofnineintersections[2, 0] = true;
-        //        matrixofnineintersections[2, 2] = true;
-        //        return;
-        //    }
-        //    foreach (var q in mapDataColumn.MapObjDictionary.Keys)
-        //    {
-        //        int j = mapDataColumn.MapObjDictionary[q].Count - 1;
-        //        for (int i = 0; i < mapDataColumn.MapObjDictionary[q].Count; i++)
-        //        {
-        //            if ((mapDataColumn.MapObjDictionary[q][i].Y < y && mapDataColumn.MapObjDictionary[q][j].Y >= y || mapDataColumn.MapObjDictionary[q][j].Y < y && mapDataColumn.MapObjDictionary[q][i].Y >= y) &&
-        //                 (mapDataColumn.MapObjDictionary[q][i].X + (y - mapDataColumn.MapObjDictionary[q][i].Y) / (mapDataColumn.MapObjDictionary[q][j].Y - mapDataColumn.MapObjDictionary[q][i].Y) * (mapDataColumn.MapObjDictionary[q][j].X - mapDataColumn.MapObjDictionary[q][i].X) < x))
-        //            {
-        //                flag = !flag;
-        //            }
-        //            j = i;
-        //        }
-        //    }
+                double maxx = Math.Max(x1, x2);
+                double maxy = Math.Max(y1, y2);
 
-        //    if (flag)
-        //    {
-        //        matrixofnineintersections[0, 0] = true;
-        //        matrixofnineintersections[2, 0] = true;
-        //    }
+                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                {
+                    flag = true;
+                }
+            }
+            if (flag == true)
+            {
+                matrixofnineintersections[1, 1] = true;
+                matrixofnineintersections[2, 0] = true;
+                return;
+            }
+            int j = MapObjItemColumn.Points.Count - 1;
+            for (int i = 0; i < MapObjItemColumn.Points.Count; i++)
+            {
+                if ((MapObjItemColumn.Points[i].Y < y && MapObjItemColumn.Points[j].Y >= y || MapObjItemColumn.Points[j].Y < y && MapObjItemColumn.Points[i].Y >= y) &&
+                     (MapObjItemColumn.Points[i].X + (y - MapObjItemColumn.Points[i].Y) / (MapObjItemColumn.Points[j].Y - MapObjItemColumn.Points[i].Y) * (MapObjItemColumn.Points[j].X - MapObjItemColumn.Points[i].X) < x))
+                {
+                    flag = !flag;
+                }
+                j = i;
+            }
+
+            if (flag)
+            {
+                matrixofnineintersections[0, 0] = true;
+                matrixofnineintersections[2, 0] = true;
+            }
         }
         #endregion
 
@@ -354,146 +331,186 @@ namespace MapDataLib
         {
             bool flag = false;
 
-            //var x = mapDataColumn.MapObjDictionary.First().Value[0].X;
-            //var y = mapDataColumn.MapObjDictionary.First().Value[0].Y;
+            var x = MapObjItemColumn.Points[0].X;
+            var y = MapObjItemColumn.Points[0].Y;
 
-            //foreach (var q in mapDataLine.MapObjDictionary.Keys)
-            //{
-            //    for (int i = 1; i < mapDataLine.MapObjDictionary[q].Count; i++)
-            //    {
-            //        double x1 = mapDataLine.MapObjDictionary[q][i].X;
-            //        double x2 = mapDataLine.MapObjDictionary[q][i - 1].X;
-            //        double y1 = mapDataLine.MapObjDictionary[q][i].Y;
-            //        double y2 = mapDataLine.MapObjDictionary[q][i - 1].Y;
+            for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            {
+                double x1 = MapObjItemLine.Points[i].X;
+                double x2 = MapObjItemLine.Points[i - 1].X;
+                double y1 = MapObjItemLine.Points[i].Y;
+                double y2 = MapObjItemLine.Points[i - 1].Y;
 
-            //        double minx = Math.Min(x1, x2);
-            //        double miny = Math.Min(y1, y2);
+                double minx = Math.Min(x1, x2);
+                double miny = Math.Min(y1, y2);
 
-            //        double maxx = Math.Max(x1, x2);
-            //        double maxy = Math.Max(y1, y2);
+                double maxx = Math.Max(x1, x2);
+                double maxy = Math.Max(y1, y2);
 
-            //        //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //        //{
-            //        //    flag = true;
-            //        //}
-            //        if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //        {
-            //            flag = true;
-            //        }
-            //    }
-            //}
-            //if (flag)
-            //{
-            //    matrixofnineintersections[0, 0] = true;
-            //    matrixofnineintersections[0, 2] = true;
-            //}
+                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                {
+                    flag = true;
+                }
+            }
+            if (flag)
+            {
+                matrixofnineintersections[0, 0] = true;
+                matrixofnineintersections[0, 2] = true;
+            }
         }
         public void LineLine()
         {
-            //foreach (var q in mapDataLine.MapObjDictionary.Keys)
-            //{
-            //    for (int i = 1; i < mapDataLine.MapObjDictionary[q].Count; i++)
-            //    {
-            //        var a1 = mapDataLine.MapObjDictionary[q][i - 1].X;
-            //        var b1 = mapDataLine.MapObjDictionary[q][i - 1].Y;
-            //        var a2 = mapDataLine.MapObjDictionary[q][i].X;
-            //        var b2 = mapDataLine.MapObjDictionary[q][i].Y;
-            //        MapPoint mapPoint1 = new MapPoint(a1, b1, 1, 1);
-            //        MapPoint mapPoint2 = new MapPoint(a2, b2, 1, 1);
-            //        LineMode l1 = new LineMode(mapPoint1, mapPoint2);
 
-            //        foreach (var g in mapDataColumn.MapObjDictionary.Keys)
-            //        {
-            //            for (int j = 1; j < mapDataColumn.MapObjDictionary[g].Count; j++)
-            //            {
-            //                double x1 = mapDataColumn.MapObjDictionary[g][j].X;
-            //                double x2 = mapDataColumn.MapObjDictionary[g][j - 1].X;
-            //                double y1 = mapDataColumn.MapObjDictionary[g][j].Y;
-            //                double y2 = mapDataColumn.MapObjDictionary[g][j - 1].Y;
-            //                MapPoint mapPoint3 = new MapPoint(x1, y1, 1, 1);
-            //                MapPoint mapPoint4 = new MapPoint(x2, y2, 1, 1);
-            //                LineMode l2 = new LineMode(mapPoint3, mapPoint4);
-            //                var point = l1.GetIntersectionPoint(l2);
+            for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            {
+                var a1 = MapObjItemLine.Points[i - 1].X;
+                var b1 = MapObjItemLine.Points[i - 1].Y;
+                var a2 = MapObjItemLine.Points[i].X;
+                var b2 = MapObjItemLine.Points[i].Y;
+                MapPoint mapPoint1 = new MapPoint(a1, b1, 1, 1);
+                MapPoint mapPoint2 = new MapPoint(a2, b2, 1, 1);
+                LineMode l1 = new LineMode(mapPoint1, mapPoint2);
 
-            //                var maxx1 = Math.Max(a1, a2);
-            //                var minx1 = Math.Min(a1, a2);
-            //                var maxy1 = Math.Max(b1, b2);
-            //                var miny1 = Math.Min(b1, b2);
+                for (int j = 1; j < MapObjItemColumn.Points.Count; j++)
+                {
+                    double x1 = MapObjItemColumn.Points[j].X;
+                    double x2 = MapObjItemColumn.Points[j - 1].X;
+                    double y1 = MapObjItemColumn.Points[j].Y;
+                    double y2 = MapObjItemColumn.Points[j - 1].Y;
+                    MapPoint mapPoint3 = new MapPoint(x1, y1, 1, 1);
+                    MapPoint mapPoint4 = new MapPoint(x2, y2, 1, 1);
+                    LineMode l2 = new LineMode(mapPoint3, mapPoint4);
+                    var point = l1.GetIntersectionPoint(l2);
 
-            //                var maxx2 = Math.Max(x1, x2);
-            //                var minx2 = Math.Min(x1, x2);
-            //                var maxy2 = Math.Max(y1, y2);
-            //                var miny2 = Math.Min(y1, y2);
-            //                if (point != null)
-            //                {
-            //                    if (point.X < maxx1 && point.X < maxx2 &&
-            //                    point.X > minx1 && point.X > minx2 &&
-            //                    point.Y < maxy1 && point.Y < maxy2 &&
-            //                    point.Y > miny1 && point.Y > miny2)
-            //                    {
-            //                        var x = point.X;
-            //                        var y = point.Y;
-            //                        Vector vector1 = new Vector(a1-x, b1-y);
-            //                        Vector vector2 = new Vector(x1 - x, y1 - y);
-            //                        Vector vector3 = new Vector(x2 - x, y2 - y);
-            //                        Vector vector4 = new Vector(a2 - x, b2 - y);
+                    var maxx1 = Math.Max(a1, a2);
+                    var minx1 = Math.Min(a1, a2);
+                    var maxy1 = Math.Max(b1, b2);
+                    var miny1 = Math.Min(b1, b2);
 
-            //                        var q1 = Vector.AngleOfVectors(vector2, vector1);
-            //                        var q2 = Vector.AngleOfVectors(vector3, vector1);
-            //                        var q3 = Vector.AngleOfVectors(vector4, vector1);
+                    var maxx2 = Math.Max(x1, x2);
+                    var minx2 = Math.Min(x1, x2);
+                    var maxy2 = Math.Max(y1, y2);
+                    var miny2 = Math.Min(y1, y2);
+                    if (point != null)
+                    {
+                        if (point.X < maxx1 && point.X < maxx2 &&
+                        point.X > minx1 && point.X > minx2 &&
+                        point.Y < maxy1 && point.Y < maxy2 &&
+                        point.Y > miny1 && point.Y > miny2)
+                        {
+                            var x = point.X;
+                            var y = point.Y;
+                            Vector vector1 = new Vector(a1 - x, b1 - y);
+                            Vector vector2 = new Vector(x1 - x, y1 - y);
+                            Vector vector3 = new Vector(x2 - x, y2 - y);
+                            Vector vector4 = new Vector(a2 - x, b2 - y);
 
-            //                        var p1 = Math.Max(q2, q1);
-            //                        var p2 = Math.Min(q1, q2);
-            //                        if (q3 > p2 && q3 < p1)
-            //                        {
-            //                            matrixofnineintersections[0, 0] = true;
-            //                            matrixofnineintersections[0, 2] = true;
-            //                            matrixofnineintersections[2, 0] = true;
-            //                            matrixofnineintersections[2, 2] = true;
-            //                        }
-            //                        else
-            //                        {
-            //                            matrixofnineintersections[1, 1] = true;
-            //                        }
+                            var q1 = Vector.AngleOfVectors(vector2, vector1);
+                            var q2 = Vector.AngleOfVectors(vector3, vector1);
+                            var q3 = Vector.AngleOfVectors(vector4, vector1);
 
-            //                    }
-            //                    else if (point.X ==a1 && point.Y ==b1 || point.X ==a2 && point.Y ==b2 || point.X == x1 && point.Y == y1 || point.X == x2 && point.Y == y2)
-            //                    {
-            //                        if (i!= mapDataLine.MapObjDictionary[q].Count - 1)
-            //                        {
-            //                            var tmpx = mapDataLine.MapObjDictionary[q][i + 1].X;
-            //                            var tmpy = mapDataLine.MapObjDictionary[q][i + 1].Y;
-            //                            var x = point.X;
-            //                            var y = point.Y;
-            //                            Vector vector1 = new Vector(a1 - x, b1 - y);
-            //                            Vector vector2 = new Vector(x1 - x, y1 - y);
-            //                            Vector vector3 = new Vector(x2 - x, y2 - y);
-            //                            Vector vector4 = new Vector(tmpx - x,tmpy - y);
+                            var p1 = Math.Max(q2, q1);
+                            var p2 = Math.Min(q1, q2);
+                            if (q3 > p2 && q3 < p1)
+                            {
+                                matrixofnineintersections[0, 0] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                matrixofnineintersections[2, 2] = true;
+                                return;
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
 
-            //                            var q1 = Vector.AngleOfVectors(vector2, vector1);
-            //                            var q2 = Vector.AngleOfVectors(vector3, vector1);
-            //                            var q3 = Vector.AngleOfVectors(vector4, vector1);
+                        }
+                        else if (point.X == a1 && point.Y == b1 || point.X == a2 && point.Y == b2 || point.X == x1 && point.Y == y1 || point.X == x2 && point.Y == y2)
+                        {
+                            if (i != MapObjItemLine.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemLine.Points[i + 1].X;
+                                var tmpy = MapObjItemLine.Points[i + 1].Y;
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(x1 - x, y1 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
 
-            //                            var p1 = Math.Max(q2, q1);
-            //                            var p2 = Math.Min(q1, q2);
-            //                            if (q3 > p2 && q3 < p1)
-            //                            {
-            //                                matrixofnineintersections[0, 0] = true;
-            //                                matrixofnineintersections[0, 2] = true;
-            //                                matrixofnineintersections[2, 0] = true;
-            //                                matrixofnineintersections[2, 2] = true;
-            //                            }
-            //                            else
-            //                            {
-            //                                matrixofnineintersections[1, 1] = true;
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if (q3 > p2 && q3 < p1)
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                            }
+                            else if (j != MapObjItemColumn.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemColumn.Points[j + 1].X;
+                                var tmpy = MapObjItemColumn.Points[j + 1].Y;
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(a2 - x, b2 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if ((q3 >0 && p2>0 && q3<180 && p2<180) || (q3>180 && p2>180 && q3<360 && p2<360))
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return; 
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
         public void LinePolygon()
         {
@@ -506,59 +523,53 @@ namespace MapDataLib
         {
             bool flag = false;
 
-            //var x = mapDataColumn.MapObjDictionary.First().Value[0].X;
-            //var y = mapDataColumn.MapObjDictionary.First().Value[0].Y;
-            //foreach (var q in mapDataLine.MapObjDictionary.Keys)
-            //{
-            //    for (int i = 1; i < mapDataLine.MapObjDictionary[q].Count; i++)
-            //    {
-            //        double x1 = mapDataLine.MapObjDictionary[q][i].X;
-            //        double x2 = mapDataLine.MapObjDictionary[q][i - 1].X;
-            //        double y1 = mapDataLine.MapObjDictionary[q][i].Y;
-            //        double y2 = mapDataLine.MapObjDictionary[q][i - 1].Y;
+            var x = MapObjItemColumn.Points[0].X;
+            var y = MapObjItemColumn.Points[0].Y;
 
-            //        double minx = Math.Min(x1, x2);
-            //        double miny = Math.Min(y1, y2);
+            for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            {
+                double x1 = MapObjItemLine.Points[i].X;
+                double x2 = MapObjItemLine.Points[i - 1].X;
+                double y1 = MapObjItemLine.Points[i].Y;
+                double y2 = MapObjItemLine.Points[i - 1].Y;
 
-            //        double maxx = Math.Max(x1, x2);
-            //        double maxy = Math.Max(y1, y2);
+                double minx = Math.Min(x1, x2);
+                double miny = Math.Min(y1, y2);
 
-            //        //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //        //{
-            //        //    flag = true;
-            //        //}
-            //        if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //        {
-            //            flag = true;
-            //        }
-            //    }
-            //}
-            //if (flag == true)
-            //{
-            //    matrixofnineintersections[0, 0] = true;
-            //    matrixofnineintersections[0, 2] = true;
-            //    matrixofnineintersections[2, 2] = true;
-            //    return;
-            //}
-            //foreach (var q in mapDataLine.MapObjDictionary.Keys)
-            //{
-            //    int j = mapDataLine.MapObjDictionary[q].Count - 1;
-            //    for (int i = 0; i < mapDataLine.MapObjDictionary[q].Count; i++)
-            //    {
-            //        if ((mapDataLine.MapObjDictionary[q][i].Y < y && mapDataLine.MapObjDictionary[q][j].Y >= y || mapDataLine.MapObjDictionary[q][j].Y < y && mapDataLine.MapObjDictionary[q][i].Y >= y) &&
-            //             (mapDataLine.MapObjDictionary[q][i].X + (y - mapDataLine.MapObjDictionary[q][i].Y) / (mapDataLine.MapObjDictionary[q][j].Y - mapDataLine.MapObjDictionary[q][i].Y) * (mapDataLine.MapObjDictionary[q][j].X - mapDataLine.MapObjDictionary[q][i].X) < x))
-            //        {
-            //            flag = !flag;
-            //        }
-            //        j = i;
-            //    }
-            //}
+                double maxx = Math.Max(x1, x2);
+                double maxy = Math.Max(y1, y2);
 
-            //if (flag)
-            //{
-            //    matrixofnineintersections[0, 0] = true;
-            //    matrixofnineintersections[0, 2] = true;
-            //}
+                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                {
+                    flag = true;
+                }
+            }
+            if (flag == true)
+            {
+                matrixofnineintersections[1, 1] = true;
+                matrixofnineintersections[0, 2] = true;
+                return;
+            }
+            int j = MapObjItemLine.Points.Count - 1;
+            for (int i = 0; i < MapObjItemLine.Points.Count; i++)
+            {
+                if ((MapObjItemLine.Points[i].Y < y && MapObjItemLine.Points[j].Y >= y || MapObjItemLine.Points[j].Y < y && MapObjItemLine.Points[i].Y >= y) &&
+                     (MapObjItemLine.Points[i].X + (y - MapObjItemLine.Points[i].Y) / (MapObjItemLine.Points[j].Y - MapObjItemLine.Points[i].Y) * (MapObjItemLine.Points[j].X - MapObjItemLine.Points[i].X) < x))
+                {
+                    flag = !flag;
+                }
+                j = i;
+            }
+
+            if (flag)
+            {
+                matrixofnineintersections[0, 0] = true;
+                matrixofnineintersections[0, 2] = true;
+            }
         }
         public void PolygonLine()
         {
