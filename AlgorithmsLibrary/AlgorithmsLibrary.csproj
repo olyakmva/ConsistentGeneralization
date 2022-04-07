@@ -52,18 +52,21 @@
     <Compile Include="Features\LengthComputation.cs" />
     <Compile Include="Features\Sinuosity.cs" />
     <Compile Include="Features\TripletComputation.cs" />
+    <Compile Include="GenericLiOpenshowAlgm.cs" />
     <Compile Include="HausdorfDistanceCriterion.cs" />
-    <Compile Include="Triangle.cs" />
     <Compile Include="AlgInterface.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="LiOpenShowAlgm.cs" />
-    <Compile Include="Line.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DouglasPeuckerAlgm.cs" />
     <Compile Include="SleeveFitAlgm.cs" />
     <Compile Include="VisWhyattAlgm.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GeomObjectsLib\GeomObjectsLib.csproj">
+      <Project>{5207b18f-abcc-474b-b2d1-35f45ae114a8}</Project>
+      <Name>GeomObjectsLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapDataLib\MapDataLib.csproj">
       <Project>{30b67a91-8899-4973-8883-0da67f41f6d7}</Project>
       <Name>MapDataLib</Name>

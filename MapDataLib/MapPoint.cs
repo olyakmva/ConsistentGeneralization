@@ -1,15 +1,15 @@
-﻿using System;
+﻿using GeomObjectsLib;
+using System;
 
 namespace MapDataLib
 {
     // точка на карте. Имеет координаты, 
     //  идентификатор - к какому объекту принадлежит 
         [Serializable]
-        public class MapPoint : IComparable<MapPoint>
+        public class MapPoint : Point, IComparable<MapPoint>
         {
             public int Id { get; private set; }
-            public double X { set; get; }
-            public double Y { set; get; }
+           
             public double Weight { get; set; }
 
             public MapPoint()
@@ -25,11 +25,6 @@ namespace MapDataLib
                 Y = coordY;
                 Id = id;
                 Weight = w;
-            }
-
-            public double DistanceToVertex(MapPoint v)
-            {
-                return Math.Sqrt(Math.Pow(X - v.X, 2) + Math.Pow(Y - v.Y, 2));
             }
 
             public override string ToString()

@@ -1,24 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.Serialization;
-using MapDataLib;
 
-namespace AlgorithmsLibrary
+
+namespace GeomObjectsLib
 {
-    
-    public static class ErrorLog
-    {
-        public static void WriteToLogFile(string msg)
-        {
-            string fileName = "log.txt";
-            FileStream f = new FileStream(fileName ,FileMode.Append,FileAccess.Write);
-            using (var sr = new StreamWriter(f))
-            {
-                sr.WriteLine("{0}", msg);
-            }
-        }
-    }
-    
+  
     [Serializable]
     public class LineCoefEqualsZeroException : Exception
     {
@@ -38,7 +24,7 @@ namespace AlgorithmsLibrary
         public double B { get; set; }
         public double C { get; set; }
 
-        public Line(MapPoint v1, MapPoint v2)
+        public Line(Point v1, Point v2)
         {
             A = v2.Y - v1.Y;
             B = (v1.X - v2.X);
@@ -57,7 +43,7 @@ namespace AlgorithmsLibrary
             return string.Format("{0:f2}x + {1:f2}y + {2:f2} =0", A, B, C);
         }
 
-        public double GetDistance(MapPoint v)
+        public double GetDistance(Point v)
         {
             return Math.Abs(A * v.X + B * v.Y + C) / Math.Sqrt(A * A + B * B);
         }
@@ -135,19 +121,19 @@ namespace AlgorithmsLibrary
             return tangens;
         }
 
-        public MapPoint GetIntersectionPoint(Line otherLine)
+        public Point GetIntersectionPoint(Line otherLine)
         {
             var delta = A * otherLine.B - B * otherLine.A;
             if (Math.Abs(delta) < double.Epsilon)
                 return null;
             var delta1 = (-1 * C * otherLine.B + B * otherLine.C);
             var delta2 = A * otherLine.C * (-1) + otherLine.A * C;
-            return new MapPoint { X = delta1 / delta, Y = delta2 / delta };
+            return new Point { X = delta1 / delta, Y = delta2 / delta };
         }
 
-        public MapPoint GetPerpendicularFoundationPoint(MapPoint initVertex)
+        public Point GetPerpendicularFoundationPoint(Point initVertex)
         {
-            var result = new MapPoint();
+            var result = new Point();
             var delta = B * B + A * A;
             var delta1 = (B * initVertex.X - A * initVertex.Y) * B - C * A;
             var delta2 = B * C * (-1) - (B * initVertex.X - A * initVertex.Y) * A;
@@ -155,7 +141,7 @@ namespace AlgorithmsLibrary
             result.Y = delta2 / delta;
             return result;
         }
-        public int GetSign(MapPoint v)
+        public int GetSign(Point v)
         {
             double result = A * v.X + B * v.Y + C;
             const double tolerance = 0.001;
@@ -183,12 +169,14 @@ namespace AlgorithmsLibrary
         /// </summary>
         /// <param name="point"> точка</param>
         /// <returns></returns>
-        public Line GetPerpendicularLine(MapPoint point)
+        public Line GetPerpendicularLine(Point point)
         {
-            var line = new Line();
-            line.A = B;
-            line.B = -1 * A;
-            line.C = point.Y * A - point.X * B;
+            var line = new Line
+            {
+                A = B,
+                B = -1 * A,
+                C = point.Y * A - point.X * B
+            };
             return line;
         }
     }

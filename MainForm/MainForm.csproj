@@ -101,6 +101,10 @@
       <Project>{f02989b0-5bfb-4d6c-9d04-2b7ed2ad347a}</Project>
       <Name>AlgorithmsLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GeomObjectsLib\GeomObjectsLib.csproj">
+      <Project>{5207b18f-abcc-474b-b2d1-35f45ae114a8}</Project>
+      <Name>GeomObjectsLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GridLib\GridLib.csproj">
       <Project>{009b6b45-eea8-49bc-9436-f8ec49e613a5}</Project>
       <Name>GridLib</Name>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GeomObjectsLib;
 using MapDataLib;
 
 namespace AlgorithmsLibrary.Features

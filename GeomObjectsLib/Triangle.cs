@@ -1,13 +1,12 @@
 ﻿using System;
-using MapDataLib;
 
-namespace AlgorithmsLibrary
+namespace GeomObjectsLib
 {
     public class Triangle
     {
-        public MapPoint A, B, C;
+        public Point A, B, C;
 
-        public Triangle(MapPoint d, MapPoint e, MapPoint f)
+        public Triangle(Point d, Point e, Point f)
         {
             A = d;
             B = e;

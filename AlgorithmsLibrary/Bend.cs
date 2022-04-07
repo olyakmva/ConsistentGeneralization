@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MapDataLib;
+using GeomObjectsLib;
 
 namespace AlgorithmsLibrary
 {
@@ -151,7 +152,7 @@ namespace AlgorithmsLibrary
             
             if (BendNodeList.Count == 3)
             {
-                leftPoint = baseLine.GetPerpendicularFoundationPoint(BendNodeList[1]);
+                leftPoint =(MapPoint) baseLine.GetPerpendicularFoundationPoint(BendNodeList[1]);
                 leftLine = new Line(BendNodeList[1], leftPoint);
                 if (leftLine.GetSign(BendNodeList[0]) != leftLine.GetSign(BendNodeList[BendNodeList.Count - 1]))
                 {
@@ -162,7 +163,7 @@ namespace AlgorithmsLibrary
 
             if (leftLine.GetSign(BendNodeList[1]) * leftLine.GetSign(BendNodeList[BendNodeList.Count-1]) <0)
             {
-                leftPoint = baseLine.GetPerpendicularFoundationPoint(BendNodeList[1]);
+                leftPoint =(MapPoint) baseLine.GetPerpendicularFoundationPoint(BendNodeList[1]);
                 if( baseLine.GetSign(leftPoint) !=0)
                     leftLine = new Line(BendNodeList[1], leftPoint);
                 else leftLine = baseLine.GetPerpendicularLine(BendNodeList[1]);
@@ -175,7 +176,7 @@ namespace AlgorithmsLibrary
                     }
                     else
                     {
-                        leftPoint = baseLine.GetPerpendicularFoundationPoint(BendNodeList[i]);
+                        leftPoint =(MapPoint) baseLine.GetPerpendicularFoundationPoint(BendNodeList[i]);
                         if (baseLine.GetSign(leftPoint) != 0)
                             leftLine = new Line(BendNodeList[i], leftPoint);
                         else leftLine = baseLine.GetPerpendicularLine(BendNodeList[i]);

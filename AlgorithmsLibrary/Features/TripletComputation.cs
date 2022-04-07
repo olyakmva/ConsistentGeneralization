@@ -1,4 +1,5 @@
 ﻿using System;
+using GeomObjectsLib;
 using MapDataLib;
 
 namespace AlgorithmsLibrary.Features
@@ -65,15 +66,14 @@ namespace AlgorithmsLibrary.Features
                         computer.Add(tFeachures);
                     }
                     count++;
-                    index = index + 2;
+                    index += 2;
                 }
                 feachureSet.TotalArea += totalArea;
             }
             feachureSet.Average = computators[0].GetResult();
             feachureSet.Max = computators[1].GetResult();
             feachureSet.Min = computators[2].GetResult();
-            var skoComputer = computators[3] as SkoCharacteristics;
-            if (skoComputer != null)
+            if (computators[3] is SkoCharacteristics skoComputer)
             {
                 skoComputer.AverageFeatures = feachureSet.Average;
                 feachureSet.Sko = skoComputer.GetResult();
@@ -103,7 +103,7 @@ namespace AlgorithmsLibrary.Features
                     }
                     if (s < minTrArea)
                         minTrArea = s;
-                    index = index + 2;
+                    index += 2;
                 }
             }
             return Math.Round(minTrArea,3);

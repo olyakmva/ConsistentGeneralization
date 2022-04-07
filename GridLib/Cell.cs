@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AlgorithmsLibrary;
+using GeomObjectsLib;
 using MapDataLib;
 
 namespace GridLib

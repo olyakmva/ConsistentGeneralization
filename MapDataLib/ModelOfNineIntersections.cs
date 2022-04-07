@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using GeomObjectsLib;
+using System;
 using System.Runtime.Serialization;
 
 namespace MapDataLib
@@ -373,7 +373,7 @@ namespace MapDataLib
                 var b2 = MapObjItemLine.Points[i].Y;
                 MapPoint mapPoint1 = new MapPoint(a1, b1, 1, 1);
                 MapPoint mapPoint2 = new MapPoint(a2, b2, 1, 1);
-                LineMode l1 = new LineMode(mapPoint1, mapPoint2);
+                Line l1 = new Line(mapPoint1, mapPoint2);
 
                 for (int j = 1; j < MapObjItemColumn.Points.Count; j++)
                 {
@@ -383,7 +383,7 @@ namespace MapDataLib
                     double y2 = MapObjItemColumn.Points[j - 1].Y;
                     MapPoint mapPoint3 = new MapPoint(x1, y1, 1, 1);
                     MapPoint mapPoint4 = new MapPoint(x2, y2, 1, 1);
-                    LineMode l2 = new LineMode(mapPoint3, mapPoint4);
+                    Line l2 = new Line(mapPoint3, mapPoint4);
                     var point = l1.GetIntersectionPoint(l2);
 
                     var maxx1 = Math.Max(a1, a2);
@@ -582,47 +582,7 @@ namespace MapDataLib
         #endregion
     }
 
-    #region Line
-    [Serializable]
-    public class LineCoefEqualsZeroException : Exception
-    {
-        public LineCoefEqualsZeroException(string message) : base(message)
-        { }
-
-        protected LineCoefEqualsZeroException(
-            SerializationInfo info,
-            StreamingContext context)
-            : base(info, context)
-        { }
-    }
-    public class LineMode
-    {
-        public double A { get; set; }
-        public double B { get; set; }
-        public double C { get; set; }
-
-        public LineMode(MapPoint v1, MapPoint v2)
-        {
-            A = v2.Y - v1.Y;
-            B = (v1.X - v2.X);
-            C = v1.Y * (-1) * B - v1.X * A;
-            if (Math.Abs(A) < double.Epsilon && Math.Abs(B) < double.Epsilon && Math.Abs(C) < double.Epsilon)
-            {
-                throw new LineCoefEqualsZeroException(" коэффициенты уравнения прямой= нулю");
-            }
-        }
-        public MapPoint GetIntersectionPoint(LineMode otherLine)
-        {
-            var delta = A * otherLine.B - B * otherLine.A;
-            if (Math.Abs(delta) < double.Epsilon)
-                return null;
-            var delta1 = (-1 * C * otherLine.B + B * otherLine.C);
-            var delta2 = A * otherLine.C * (-1) + otherLine.A * C;
-            return new MapPoint(delta1 / delta, delta2 / delta, 1, 1);
-        }
-
-    }
-    #endregion
+   
 
     #region Vector
     struct Vector

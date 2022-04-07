@@ -59,6 +59,7 @@
     <Compile Include="Colors.cs" />
     <Compile Include="ContainerOfIntesections.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="ErrorLog.cs" />
     <Compile Include="Geometry.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapData.cs" />
@@ -71,6 +72,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeomObjectsLib\GeomObjectsLib.csproj">
+      <Project>{5207b18f-abcc-474b-b2d1-35f45ae114a8}</Project>
+      <Name>GeomObjectsLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

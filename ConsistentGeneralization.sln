@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31912.275
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLib", "GridLib\GridLib.csproj", "{009B6B45-EEA8-49BC-9436-F8EC49E613A5}"
 EndProject
@@ -13,7 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapDataLib", "MapDataLib\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLibTests", "GridLibTests\GridLibTests.csproj", "{08AD938B-353C-427D-89C6-2CD1D9B81297}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestOfContainerIntersections", "TestOfContainerIntersections\TestOfContainerIntersections.csproj", "{9AD62879-F8FD-4247-80AF-350F1903C91E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestOfContainerIntersections", "TestOfContainerIntersections\TestOfContainerIntersections.csproj", "{9AD62879-F8FD-4247-80AF-350F1903C91E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeomObjectsLib", "GeomObjectsLib\GeomObjectsLib.csproj", "{5207B18F-ABCC-474B-B2D1-35F45AE114A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{9AD62879-F8FD-4247-80AF-350F1903C91E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD62879-F8FD-4247-80AF-350F1903C91E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD62879-F8FD-4247-80AF-350F1903C91E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5207B18F-ABCC-474B-B2D1-35F45AE114A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5207B18F-ABCC-474B-B2D1-35F45AE114A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5207B18F-ABCC-474B-B2D1-35F45AE114A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5207B18F-ABCC-474B-B2D1-35F45AE114A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

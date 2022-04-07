@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AlgorithmsLibrary;
 using MapDataLib;
 
 namespace GridLib
