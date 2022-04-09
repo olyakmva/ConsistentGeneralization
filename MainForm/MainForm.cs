@@ -180,8 +180,8 @@ namespace MainForm
                 {
                     var pt1 = _state.GetPoint(list[j], mapPictureBox.Height - 1);
                     var pt2 = _state.GetPoint(list[j + 1], mapPictureBox.Height - 1);
-                    g.DrawEllipse(pen,pt1.X, pt1.Y,4,4);
-                    g.DrawEllipse(pen, pt2.X, pt2.Y, 4, 4);
+                    //g.DrawEllipse(pen,pt1.X, pt1.Y,4,4);
+                    //g.DrawEllipse(pen, pt2.X, pt2.Y, 4, 4);
                     g.DrawLine(pen, pt1, pt2);
                 }
             }

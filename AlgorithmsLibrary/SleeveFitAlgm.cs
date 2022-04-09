@@ -69,5 +69,14 @@ namespace AlgorithmsLibrary
             indEnd--;
             return indEnd;
         }
+
+       public void Run(Map map)
+       {
+            foreach( var mapData in map.MapLayers)
+            {
+                Run(mapData);
+            }
+       }
+       
     }
 }

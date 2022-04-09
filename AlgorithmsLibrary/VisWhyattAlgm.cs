@@ -10,6 +10,14 @@ namespace AlgorithmsLibrary
     {
         public SimplificationAlgmParameters Options { get; set; }
 
+        public void Run(Map map)
+        {
+            foreach( var mapData in map.MapLayers)
+            {
+                Run(mapData);
+            }
+        }
+
         public virtual void Run(MapData map)
         {
             Options.Tolerance = Options.Tolerance * Options.Tolerance;

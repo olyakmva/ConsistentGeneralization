@@ -2,16 +2,10 @@
 
 namespace AlgorithmsLibrary
 {
-    public interface ICriterion
-    {
-        void GetParamByCriterion(SimplificationAlgmParameters options);
-        void Init(MapData initMap, SimplificationAlgmParameters options);
-        bool IsSatisfy(MapData map);
-    }
     public interface ISimplificationAlgm
     {
         SimplificationAlgmParameters Options { get; set; }
-        void Run(MapData map);
+        void Run(Map map);
     }
 
     public class SimplificationAlgmParameters

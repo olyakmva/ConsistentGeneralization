@@ -215,5 +215,13 @@ namespace AlgorithmsLibrary
             }
             Options.OutParam = Options .Tolerance;
         }
+        public void Run(Map map)
+        {
+            foreach( var mapData in map.MapLayers)
+            {
+                Run(mapData);
+            }
+        }
+
     }
 }

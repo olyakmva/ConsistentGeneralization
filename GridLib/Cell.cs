@@ -317,7 +317,5 @@ namespace GridLib
             if(p2!=null)
                 Add(p2, point2.Id);
         }
-
-
     }
 }
