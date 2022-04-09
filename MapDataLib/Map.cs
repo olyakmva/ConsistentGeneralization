@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MapDataLib
 {
+    [Serializable]
     public class Map:IEnumerable<MapData>
     {
         public List<MapData> MapLayers;
@@ -37,7 +40,20 @@ namespace MapDataLib
             MapLayers.Add(mapData);
             ComputeMinMaxValues(mapData);
         }
-
+        public Map Clone()
+        {
+            Map clone;
+            var bf = new BinaryFormatter();
+            using (Stream fs = new FileStream("temp.bin", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                bf.Serialize(fs, this);
+            }
+            using (Stream fs = new FileStream("temp.bin", FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+                clone = (Map)bf.Deserialize(fs);
+            }
+            return clone;
+        }
         public MapData GetObjById(int id)
         {
             return MapLayers.Find(x => x.MapObjDictionary.ContainsKey(id));

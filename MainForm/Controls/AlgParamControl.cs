@@ -8,8 +8,7 @@ namespace MainForm.Controls
     public partial class AlgParamControl : UserControl
     {
         private ISimplificationAlgm _algm;
-        public event EventHandler CopyingParams ;
-        
+                
         public double Tolerance
         {
             get => Convert.ToDouble(paramUpDown.Value);
@@ -26,6 +25,12 @@ namespace MainForm.Controls
         {
             set => lblName.Text = value;
             get => lblName.Text;
+        }
+
+        public string ScaleCellName
+        {
+            get => lblOutScale.Text;
+            set=> lblOutScale.Text=value;
         }
 
         public double OutScale
@@ -52,21 +57,6 @@ namespace MainForm.Controls
             p.OutScale = Convert.ToInt32(OutScale);
             _algm.Options = p;
             return _algm;
-        }
-
-        
-        private void BtnCopyClick(object sender, EventArgs e)
-        {
-            CopyingParams?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnCopyingParams(object sender, EventArgs e)
-        {
-            AlgParamControl ctrl = (AlgParamControl) sender;
-            Tolerance  = ctrl.Tolerance;
-            DetailSize = ctrl.DetailSize;
-            OutScale = ctrl.OutScale;
-            IsChecked = ctrl.IsChecked;
         }
     }
 }

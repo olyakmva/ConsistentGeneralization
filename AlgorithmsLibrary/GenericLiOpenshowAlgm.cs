@@ -16,8 +16,9 @@ namespace AlgorithmsLibrary
         private double _cellSize;
         private double _shift;
         public SimplificationAlgmParameters Options { get; set; }
+        public Grid grid;
 
-        public GenericLiOpenshowAlgm(Map map, Grid grid)
+        public GenericLiOpenshowAlgm( )
         {
 
         }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using AlgorithmsLibrary;
 using GridLib;
 using MainForm.Controls;
 using  MapDataLib;
@@ -42,7 +43,15 @@ namespace MainForm
             };
             y += ctrlHeight;
             _listCtrls.Add(gridControl);
+            var liCtrl = new AlgParamControl()
+            {
+                AlgmName = "GenericLiOpenshow",
+                 Location = new Point(x, y),
+                 ScaleCellName="OutScale"
+            };
+            y += ctrlHeight;
             mainContainer .Panel1.Controls.Add(gridControl);
+            mainContainer .Panel1.Controls.Add(liCtrl);
             btnProcess.Location = new Point(x,y);
         }
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
@@ -76,9 +85,15 @@ namespace MainForm
                 MessageBox.Show(@"Please, load a map ");
                 return;
             }
+
             double cellSize = _listCtrls[0].OutScale;
             double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
             _grid = new Grid(_inputMap, cellSize, detail);
+            
+            var outMap = _inputMap.Clone();
+            ISimplificationAlgm algm = _listCtrls[1].GetAlgorithm();
+            algm.Run(outMap);
+
             mapPictureBox.Invalidate();
         }
 

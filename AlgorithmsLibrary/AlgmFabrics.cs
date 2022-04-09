@@ -8,6 +8,8 @@ namespace AlgorithmsLibrary
             ISimplificationAlgm algm = null;
             switch (algmName)
             {
+                case "GenericLiOpenshow": 
+                    algm = new GenericLiOpenshowAlgm(); break;
                 case "DouglasPeuckerAlgm":
                     algm = new DouglasPeuckerAlgm();
                     break;

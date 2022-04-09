@@ -33,7 +33,6 @@
             this.scaleUpDown = new System.Windows.Forms.NumericUpDown();
             this.lblTolerance = new System.Windows.Forms.Label();
             this.paramUpDown = new System.Windows.Forms.NumericUpDown();
-            this.btnCopy = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.checkRun = new System.Windows.Forms.CheckBox();
@@ -123,16 +122,6 @@
             0,
             0,
             0});
-            // 
-            // btnCopy
-            // 
-            this.btnCopy.Location = new System.Drawing.Point(220, 0);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(29, 23);
-            this.btnCopy.TabIndex = 5;
-            this.btnCopy.Text = "C";
-            this.btnCopy.UseVisualStyleBackColor = true;
-            this.btnCopy.Click += new System.EventHandler(this.BtnCopyClick);
             // 
             // label2
             // 
@@ -227,7 +216,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.detailUpDown);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.paramUpDown);
             this.Controls.Add(this.lblTolerance);
             this.Controls.Add(this.scaleUpDown);
@@ -250,7 +238,6 @@
         private System.Windows.Forms.NumericUpDown scaleUpDown;
         private System.Windows.Forms.Label lblTolerance;
         private System.Windows.Forms.NumericUpDown paramUpDown;
-        private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkRun;
