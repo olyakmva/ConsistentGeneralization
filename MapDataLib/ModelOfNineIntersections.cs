@@ -6,9 +6,24 @@ namespace MapDataLib
 {
     public class ModelOfNineIntersections
     {
-        public bool[,] matrixofnineintersections;
+        /// <summary>
+        /// Матрица 9 пересечений
+        /// </summary>
+        private bool[,] matrixofnineintersections;
+        /// <summary>
+        /// Преимущество строки над столбцом (сначала строка, потом столбец)
+        /// </summary>
         MapObjItem MapObjItemLine;
         MapObjItem MapObjItemColumn;
+        /// <summary>
+        /// Линия и точка
+        /// </summary>
+        public bool CanBeGeneralized;
+        /// <summary>
+        /// 2 линии
+        /// </summary>
+        public MapPoint PointIntesection;
+
         public ModelOfNineIntersections()
         {
             matrixofnineintersections = new bool[3, 3];
@@ -256,11 +271,15 @@ namespace MapDataLib
                 double maxx = Math.Max(x1, x2);
                 double maxy = Math.Max(y1, y2);
 
-                if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                {
-                    flag = true;
-                }
-                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
                     flag = true;
                 }
@@ -296,7 +315,11 @@ namespace MapDataLib
                 //{
                 //    flag = true;
                 //}
-                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
                     flag = true;
                 }
@@ -351,7 +374,11 @@ namespace MapDataLib
                 //{
                 //    flag = true;
                 //}
-                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
                     flag = true;
                 }
@@ -397,6 +424,7 @@ namespace MapDataLib
                     var miny2 = Math.Min(y1, y2);
                     if (point != null)
                     {
+                        PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
                         if (point.X < maxx1 && point.X < maxx2 &&
                         point.X > minx1 && point.X > minx2 &&
                         point.Y < maxy1 && point.Y < maxy2 &&
@@ -543,7 +571,11 @@ namespace MapDataLib
                 //{
                 //    flag = true;
                 //}
-                if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+                //{
+                //    flag = true;
+                //}
+                if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
                     flag = true;
                 }
@@ -581,38 +613,4 @@ namespace MapDataLib
         }
         #endregion
     }
-
-   
-
-    #region Vector
-    struct Vector
-    {
-        public double X { get; }
-        public double Y { get; }
-
-        public Vector(double x, double y)
-        {
-            X = x; Y = y;
-        }
-
-        public static readonly Vector Reference = new Vector(1, 0);
-
-        public static double AngleOfReference(Vector v)
-            => NormalizeAngle(Math.Atan2(v.Y, v.X) / Math.PI * 180);
-
-        public static double AngleOfVectors(Vector first, Vector second)
-            => NormalizeAngle(AngleOfReference(first) - AngleOfReference(second));
-
-        private static double NormalizeAngle(double angle)
-        {
-            bool CheckBottom(double a) => a >= 0;
-            bool CheckTop(double a) => a < 360;
-
-            double turn = CheckBottom(angle) ? -360 : 360;
-            while (!(CheckBottom(angle) && CheckTop(angle))) angle += turn;
-            return angle;
-        }
-    }
-    #endregion
-
 }

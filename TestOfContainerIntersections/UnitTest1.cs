@@ -927,7 +927,6 @@ namespace TestOfContainerIntersections
             ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
 
             Assert.True(model.ObjectsAreIntersects());
-            
             Assert.True(model.ObjectsAreCovers());
             Assert.True(model.ObjectsAreMeets());
 

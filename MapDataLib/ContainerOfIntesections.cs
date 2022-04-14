@@ -13,6 +13,18 @@ namespace MapDataLib
         /// Тут хранятся все объекты
         /// </summary>
         public List<MapObjItem> mapDatas {get; }
+        /// <summary>
+        /// Количество линий
+        /// </summary>
+        public int CountLines = 0;
+        /// <summary>
+        /// Количество точек
+        /// </summary>
+        public int CountPoints = 0;
+        /// <summary>
+        /// Количество полигонов
+        /// </summary>
+        public int CountPolygons = 0;
 
         public ContainerOfIntersections()
         {
@@ -22,6 +34,18 @@ namespace MapDataLib
         
         public void Add(MapObjItem mapData)
         {
+            if (mapData.Geometry == GeometryType.Line)
+            {
+                CountLines++;
+            }
+            else if (mapData.Geometry == GeometryType.Point)
+            {
+                CountPoints++;
+            }
+            else if (mapData.Geometry == GeometryType.Polygon)
+            {
+                CountPolygons++;
+            }
             mapDatas.Add(mapData);
             List<ModelOfNineIntersections> list = new List<ModelOfNineIntersections>(); 
             for (int i = 0; i < mapDatas.Count-1; i++)
