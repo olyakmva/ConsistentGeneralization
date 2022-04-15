@@ -1126,5 +1126,406 @@ namespace TestOfContainerIntersections
             Assert.False(model.ObjectsAreEquals());
         }
         #endregion
+
+        #region PointLineCanBeGeneralized
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanBeGeneralizedNumber1()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(1,9,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                    new MapPoint(6,4,1,1)
+                }
+            };
+            
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanBeGeneralizedNumber2()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(6,2,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                    new MapPoint(6,4,1,1),
+                    new MapPoint(8,0,1,1),
+                    new MapPoint(10,5,1,1),
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanBeGeneralizedNumber3()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(4,1,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanBeGeneralizedNumber4()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(3,3,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanNotBeGeneralizedNumber1()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(3,0.5,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(3,0,1,1),
+                    new MapPoint(6,4,1,1),
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.False(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanNotBeGeneralizedNumber2()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(3,1,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(3,3,1,1),
+                    new MapPoint(5,1,1,1),
+                    new MapPoint(3,0,1,1),
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.False(model.CanBeGeneralized);
+        }
+        [Fact]
+        public void IntersectPointLineModelOfNineIntersectionsCanNotBeGeneralizedNumber3()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(4,1,3,3)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                    new MapPoint(6,4,1,1),
+                    new MapPoint(8,0,1,1),
+                    new MapPoint(10,5,1,1),
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.False(model.CanBeGeneralized);
+        }
+        #endregion
+
+        #region LinePointCanBeGeneralized
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanBeGeneralizedNumber1()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                    new MapPoint(6,4,1,1)
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(1,9,3,3)
+                }
+            };
+
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanBeGeneralizedNumber2()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                    new MapPoint(6,4,1,1),
+                    new MapPoint(8,0,1,1),
+                    new MapPoint(10,5,1,1),
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(6,2,3,3)
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanBeGeneralizedNumber3()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(4,1,3,3)
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanBeGeneralizedNumber4()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(3,3,3,3)
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.True(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanNotBeGeneralizedNumber1()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(3,0,1,1),
+                    new MapPoint(6,4,1,1),
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(3,0.5,3,3)
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.False(model.CanBeGeneralized);
+        }
+
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanNotBeGeneralizedNumber2()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(3,3,1,1),
+                    new MapPoint(5,1,1,1),
+                    new MapPoint(3,0,1,1),
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(3,1,3,3)
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.False(model.CanBeGeneralized);
+        }
+        [Fact]
+        public void IntersectLinePointModelOfNineIntersectionsCanNotBeGeneralizedNumber3()
+        {
+            var md1 = new MapObjItem()
+            {
+                Id = 1,
+                Geometry = GeometryType.Line,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(0,0,1,1),
+                    new MapPoint(2,2,1,1),
+                    new MapPoint(4,0,1,1),
+                    new MapPoint(6,4,1,1),
+                    new MapPoint(8,0,1,1),
+                    new MapPoint(10,5,1,1),
+                }
+            };
+            var md2 = new MapObjItem()
+            {
+                Id = 50002,
+                Geometry = GeometryType.Point,
+                Points = new List<MapPoint>
+                {
+                    new MapPoint(4,1,3,3)
+                }
+            };
+            ModelOfNineIntersections model = new ModelOfNineIntersections(md1, md2);
+            Assert.False(model.CanBeGeneralized);
+        }
+        #endregion
+
     }
 }

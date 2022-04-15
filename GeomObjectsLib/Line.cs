@@ -151,6 +151,37 @@ namespace GeomObjectsLib
                 return 1;
             return -1;
         }
+        public int GetDeviation(Point v)
+        {
+            double a;
+            double b;
+            double c;
+            if (C < 0)
+            {
+                double root = Math.Sqrt(A * A + B * B);
+                a = A / root;
+                b = B / root;
+                c = C / root;
+            }
+            else /*if*//* (C > 0)*/
+            {
+                double root = Math.Sqrt(A * A + B * B);
+                a = -A / root;
+                b = -B / root;
+                c = -C / root;
+            }
+            //else
+            //{
+            //    return 2;
+            //}
+            double result = a * v.X + b * v.Y + c;
+            const double tolerance = 0.001;
+            if (Math.Abs(result) < tolerance)
+                return 0;
+            if (result > 0)
+                return 1;
+            return -1;
+        }
 
         public double GetY(double x)
         {

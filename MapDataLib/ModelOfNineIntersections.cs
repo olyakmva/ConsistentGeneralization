@@ -18,7 +18,7 @@ namespace MapDataLib
         /// <summary>
         /// Линия и точка
         /// </summary>
-        public bool CanBeGeneralized;
+        public bool CanBeGeneralized = true;
         /// <summary>
         /// 2 линии
         /// </summary>
@@ -254,10 +254,13 @@ namespace MapDataLib
         public void PointLine()
         {
             bool flag = false;
-
             var x = MapObjItemLine.Points[0].X;
             var y = MapObjItemLine.Points[0].Y;
-
+            //int sign = 0;
+            double distance = double.MaxValue;
+            //int prevsign = 0;
+            bool flagonperpendicular = false;
+            double angle = 0;
             for (int i = 1; i < MapObjItemColumn.Points.Count; i++)
             {
                 double x1 = MapObjItemColumn.Points[i].X;
@@ -271,6 +274,7 @@ namespace MapDataLib
                 double maxx = Math.Max(x1, x2);
                 double maxy = Math.Max(y1, y2);
 
+               
                 //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 //{
                 //    flag = true;
@@ -283,12 +287,82 @@ namespace MapDataLib
                 {
                     flag = true;
                 }
+                else
+                {
+                    //Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
+                    //var q = (new Point { X = x, Y = y });
+                    //var p = line.GetPerpendicularFoundationPoint(q);
+                    //if (line.GetDistance(q)< distance/*flagonperpendicular == false*/ && p.X >= minx && p.X <= maxx && p.Y >= miny && p.Y <= maxy)
+                    //{
+                    //    prevsign = sign;
+                    //    distance = line.GetDistance(q);
+                    //    flagonperpendicular = true;
+                    //    sign = line.GetDeviation(q);
+                    //}
+
+                    Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
+                    var q = (new Point { X = x, Y = y });
+                    var p = line.GetPerpendicularFoundationPoint(q);
+                    if (line.GetDistance(q) < distance && p.X >= minx && p.X <= maxx && p.Y >= miny && p.Y <= maxy)
+                    {
+                        distance = line.GetDistance(q);
+                        Vector vector1 = new Vector(x1 - x2, y1 - y2);
+                        Vector vector2= new Vector(q.X -p.X , q.Y -p.Y);
+                        angle = Vector.AngleOfVectors(vector2, vector1);
+                        flagonperpendicular = true;
+                    }
+                }
             }
 
             if (flag)
             {
                 matrixofnineintersections[0, 0] = true;
                 matrixofnineintersections[2, 0] = true;
+            }
+            else
+            {
+                //var x1 = MapObjItemColumn.Points[0].X;
+                //var y1 = MapObjItemColumn.Points[0].Y;
+                //var x2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].X;
+                //var y2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].Y;
+                //double minx = Math.Min(x1, x2);
+                //double miny = Math.Min(y1, y2);
+                //double maxx = Math.Max(x1, x2);
+                //double maxy = Math.Max(y1, y2);
+                //Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
+                //int signl = line.GetDeviation(new Point { X = x, Y = y });
+                //if (signl == 2)
+                //{
+                //    signl = prevsign;
+                //}
+                //if (sign != signl && flagonperpendicular == true)
+                //{
+                //    CanBeGeneralized = false;
+                //}
+
+                var x1 = MapObjItemColumn.Points[0].X;
+                var y1 = MapObjItemColumn.Points[0].Y;
+                var x2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].X;
+                var y2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].Y;
+                Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
+                var q = (new Point { X = x, Y = y });
+                var p = line.GetPerpendicularFoundationPoint(q);
+                Vector vector1 = new Vector(x2 - x1, y2 - y1);
+                Vector vector2 = new Vector(q.X - p.X, q.Y - p.Y);
+                var totalangle = Vector.AngleOfVectors(vector2, vector1);
+                if ((totalangle >0 && totalangle<=180 && angle >0 && angle <=180) ||(totalangle > 180 && totalangle <= 360 && angle > 180 && angle <= 360) && flagonperpendicular == true)
+                {
+
+                }
+                else if (flagonperpendicular == false)
+                {
+
+                }
+                else
+                {
+                    CanBeGeneralized = false;
+                }
+
             }
         }
         public void PointPolygon()
@@ -353,10 +427,11 @@ namespace MapDataLib
         public void LinePoint()
         {
             bool flag = false;
-
             var x = MapObjItemColumn.Points[0].X;
             var y = MapObjItemColumn.Points[0].Y;
-
+            double distance = double.MaxValue;
+            bool flagonperpendicular = false;
+            double angle = 0;
             for (int i = 1; i < MapObjItemLine.Points.Count; i++)
             {
                 double x1 = MapObjItemLine.Points[i].X;
@@ -370,24 +445,93 @@ namespace MapDataLib
                 double maxx = Math.Max(x1, x2);
                 double maxy = Math.Max(y1, y2);
 
-                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
-                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
                 if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
                     flag = true;
                 }
+                else
+                {
+                    Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
+                    var q = (new Point { X = x, Y = y });
+                    var p = line.GetPerpendicularFoundationPoint(q);
+                    if (line.GetDistance(q) < distance && p.X >= minx && p.X <= maxx && p.Y >= miny && p.Y <= maxy)
+                    {
+                        distance = line.GetDistance(q);
+                        Vector vector1 = new Vector(x1 - x2, y1 - y2);
+                        Vector vector2 = new Vector(q.X - p.X, q.Y - p.Y);
+                        angle = Vector.AngleOfVectors(vector2, vector1);
+                        flagonperpendicular = true;
+                    }
+                }
             }
+
             if (flag)
             {
                 matrixofnineintersections[0, 0] = true;
                 matrixofnineintersections[0, 2] = true;
             }
+            else
+            {
+                var x1 = MapObjItemLine.Points[0].X;
+                var y1 = MapObjItemLine.Points[0].Y;
+                var x2 = MapObjItemLine.Points[MapObjItemLine.Points.Count - 1].X;
+                var y2 = MapObjItemLine.Points[MapObjItemLine.Points.Count - 1].Y;
+                Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
+                var q = (new Point { X = x, Y = y });
+                var p = line.GetPerpendicularFoundationPoint(q);
+                Vector vector1 = new Vector(x2 - x1, y2 - y1);
+                Vector vector2 = new Vector(q.X - p.X, q.Y - p.Y);
+                var totalangle = Vector.AngleOfVectors(vector2, vector1);
+                if ((totalangle > 0 && totalangle <= 180 && angle > 0 && angle <= 180) || (totalangle > 180 && totalangle <= 360 && angle > 180 && angle <= 360) && flagonperpendicular == true)
+                {
+
+                }
+                else if (flagonperpendicular == false)
+                {
+
+                }
+                else
+                {
+                    CanBeGeneralized = false;
+                }
+
+            }
+            //bool flag = false;
+
+            //var x = MapObjItemColumn.Points[0].X;
+            //var y = MapObjItemColumn.Points[0].Y;
+
+            //for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            //{
+            //    double x1 = MapObjItemLine.Points[i].X;
+            //    double x2 = MapObjItemLine.Points[i - 1].X;
+            //    double y1 = MapObjItemLine.Points[i].Y;
+            //    double y2 = MapObjItemLine.Points[i - 1].Y;
+
+            //    double minx = Math.Min(x1, x2);
+            //    double miny = Math.Min(y1, y2);
+
+            //    double maxx = Math.Max(x1, x2);
+            //    double maxy = Math.Max(y1, y2);
+
+            //    //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+            //    //{
+            //    //    flag = true;
+            //    //}
+            //    //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
+            //    //{
+            //    //    flag = true;
+            //    //}
+            //    if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
+            //    {
+            //        flag = true;
+            //    }
+            //}
+            //if (flag)
+            //{
+            //    matrixofnineintersections[0, 0] = true;
+            //    matrixofnineintersections[0, 2] = true;
+            //}
         }
         public void LineLine()
         {
@@ -424,12 +568,12 @@ namespace MapDataLib
                     var miny2 = Math.Min(y1, y2);
                     if (point != null)
                     {
-                        PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
                         if (point.X < maxx1 && point.X < maxx2 &&
                         point.X > minx1 && point.X > minx2 &&
                         point.Y < maxy1 && point.Y < maxy2 &&
                         point.Y > miny1 && point.Y > miny2)
                         {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
                             var x = point.X;
                             var y = point.Y;
                             Vector vector1 = new Vector(a1 - x, b1 - y);
@@ -462,6 +606,7 @@ namespace MapDataLib
                         }
                         else if (point.X == a1 && point.Y == b1 || point.X == a2 && point.Y == b2 || point.X == x1 && point.Y == y1 || point.X == x2 && point.Y == y2)
                         {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
                             if (i != MapObjItemLine.Points.Count - 1)
                             {
                                 var tmpx = MapObjItemLine.Points[i + 1].X;
@@ -499,6 +644,7 @@ namespace MapDataLib
                             {
                                 var tmpx = MapObjItemColumn.Points[j + 1].X;
                                 var tmpy = MapObjItemColumn.Points[j + 1].Y;
+
                                 var x = point.X;
                                 var y = point.Y;
                                 Vector vector1 = new Vector(a1 - x, b1 - y);

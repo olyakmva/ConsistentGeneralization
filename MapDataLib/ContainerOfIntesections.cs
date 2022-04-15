@@ -34,17 +34,17 @@ namespace MapDataLib
         
         public void Add(MapObjItem mapData)
         {
-            if (mapData.Geometry == GeometryType.Line)
+            switch (mapData.Geometry)
             {
-                CountLines++;
-            }
-            else if (mapData.Geometry == GeometryType.Point)
-            {
-                CountPoints++;
-            }
-            else if (mapData.Geometry == GeometryType.Polygon)
-            {
-                CountPolygons++;
+                case GeometryType.Line:
+                    CountLines++;
+                    break;
+                case GeometryType.Point:
+                    CountPoints++;
+                    break;
+                case GeometryType.Polygon:
+                    CountPolygons++;
+                    break;
             }
             mapDatas.Add(mapData);
             List<ModelOfNineIntersections> list = new List<ModelOfNineIntersections>(); 
