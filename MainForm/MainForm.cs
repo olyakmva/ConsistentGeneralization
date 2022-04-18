@@ -17,6 +17,7 @@ namespace MainForm
     public partial class MainForm : Form
     {
         private Map _inputMap;
+        private Map _outMap;
         readonly GraphicsState _state = new GraphicsState();
         private double _currentScale;
         private List<AlgParamControl> _listCtrls;
@@ -50,6 +51,7 @@ namespace MainForm
                  ScaleCellName="OutScale"
             };
             y += ctrlHeight;
+            _listCtrls.Add(liCtrl);
             mainContainer .Panel1.Controls.Add(gridControl);
             mainContainer .Panel1.Controls.Add(liCtrl);
             btnProcess.Location = new Point(x,y);
@@ -86,13 +88,13 @@ namespace MainForm
                 return;
             }
 
-            double cellSize = _listCtrls[0].OutScale;
+            double cellSize = _listCtrls[0].OutScale * _listCtrls[0].Tolerance;
             double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
             _grid = new Grid(_inputMap, cellSize, detail);
             
-            var outMap = _inputMap.Clone();
+            _outMap = _inputMap.Clone();
             ISimplificationAlgm algm = _listCtrls[1].GetAlgorithm();
-            algm.Run(outMap);
+            algm.Run(_outMap, _grid);
 
             mapPictureBox.Invalidate();
         }
@@ -137,15 +139,39 @@ namespace MainForm
         {
             Application.Exit();
         }
-
+       //TODO: Add unique names for layers
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            if(_outMap!=null)
+            {
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.InitialDirectory = Path.Combine(_applicationPath, "Data");
+                saveFile.Filter = @"shape files (*.shp)|*.shp|All files (*.*)|*.*";
+                 saveFile.DefaultExt = "*.shp";
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                try
+                {
+                    string shapeFileName = saveFile.FileName;
+                    var shapeFile = new ShapeFileIO(); 
+                        int k=0;
+                    foreach(var mapData in _outMap.MapLayers)
+                    {
+                        shapeFile.Save(shapeFileName+k, mapData);
+                            k++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, @"Error : " + ex.Message);
+                    return;
+                }
+            }
         }
         private void ClearMapToolStripMenuItemClick(object sender, EventArgs e)
         {
             _inputMap = new Map();
             _grid = null;
+            _outMap=null;
             mapPictureBox.Invalidate();
         }
         #region Отрисовка карты
@@ -154,7 +180,23 @@ namespace MainForm
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-            foreach (var mapData in _inputMap.MapLayers )
+            DrawMap(_inputMap,g);
+            if(_outMap!=null)
+            {
+                DrawMap(_outMap,g);
+            }
+            if (_grid != null)
+            {
+                var c = Color.FromName("Black");
+                var pen = new Pen(c, 1.25f);
+                DisplayGrid(g,_grid,pen);
+            }
+            g.Flush();
+        }
+
+        private void DrawMap(Map map, Graphics g)
+        {
+            foreach (var mapData in map.MapLayers )
             {
                 var color = Color.FromName(mapData.ColorName) ; 
                 var pen = new Pen(color, 1.75f);
@@ -168,14 +210,6 @@ namespace MainForm
                     Display(g, mapData, pen);
                 }
             }
-
-            if (_grid != null)
-            {
-                var c = Color.FromName("Black");
-                var pen = new Pen(c, 1.25f);
-                DisplayGrid(g,_grid,pen);
-            }
-            g.Flush();
         }
 
         /// <summary>

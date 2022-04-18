@@ -17,7 +17,7 @@ namespace AlgorithmsLibrary
                 var chain = pair.Value;
                 Process(chain);
             }
-            Options.OutParam = Options.Tolerance;
+            Options.Parametr = Options.Tolerance;
         }
         void Process(List<MapPoint> chain)
         {
@@ -70,7 +70,7 @@ namespace AlgorithmsLibrary
             return indEnd;
         }
 
-       public void Run(Map map)
+       public void Run(Map map, GridLib.Grid grid)
        {
             foreach( var mapData in map.MapLayers)
             {

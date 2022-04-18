@@ -31,10 +31,10 @@ namespace AlgorithmsLibrary
                 int endIndex = chain.Count - 1;
                 Run(chain, 0, ref endIndex);
             }
-            Options.OutParam = Options.Tolerance;
+            Options.Parametr = Options.Tolerance;
         }
 
-        public void Run(Map map)
+        public void Run(Map map, GridLib.Grid grid)
         {
             foreach( var mapData in map.MapLayers)
             {

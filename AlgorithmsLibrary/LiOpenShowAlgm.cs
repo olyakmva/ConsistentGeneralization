@@ -205,7 +205,7 @@ namespace AlgorithmsLibrary
 
         
 
-        public virtual void Run(MapData map)
+        public virtual void Run(MapData map, GridLib.Grid grid)
         {
             foreach (var pair in map.MapObjDictionary)
             {
@@ -213,13 +213,13 @@ namespace AlgorithmsLibrary
                 int endIndex = chain.Count - 1;
                 Run(chain, 0, ref endIndex);
             }
-            Options.OutParam = Options .Tolerance;
+            Options.Parametr = Options .Tolerance;
         }
-        public void Run(Map map)
+        public void Run(Map map, GridLib.Grid grid)
         {
             foreach( var mapData in map.MapLayers)
             {
-                Run(mapData);
+                Run(mapData, grid);
             }
         }
 

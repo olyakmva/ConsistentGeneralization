@@ -10,7 +10,7 @@ namespace AlgorithmsLibrary
     {
         public SimplificationAlgmParameters Options { get; set; }
 
-        public void Run(Map map)
+        public void Run(Map map, GridLib.Grid grid)
         {
             foreach( var mapData in map.MapLayers)
             {
@@ -28,7 +28,7 @@ namespace AlgorithmsLibrary
                 Run(ref chain, 0,  endIndex);
                 map.MapObjDictionary[pair.Key] = chain;
             }
-            Options.OutParam = Options.Tolerance;
+            Options.Parametr = Options.Tolerance;
         }
 
         private void Run(ref List<MapPoint> chain, int startIndex,  int endIndex)

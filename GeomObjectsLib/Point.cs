@@ -2,6 +2,7 @@
 
 namespace GeomObjectsLib
 {
+    [Serializable]
     public class Point
     {
          public double X { set; get; }
