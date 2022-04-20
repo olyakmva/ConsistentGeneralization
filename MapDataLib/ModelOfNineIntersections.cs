@@ -5,6 +5,7 @@ namespace MapDataLib
 {
     public class ModelOfNineIntersections
     {
+        #region Fields
         /// <summary>
         /// Матрица 9 пересечений
         /// </summary>
@@ -23,6 +24,9 @@ namespace MapDataLib
         /// </summary>
         public MapPoint PointIntesection;
 
+        #endregion
+
+        #region Construstors
         public ModelOfNineIntersections()
         {
             matrixofnineintersections = new bool[3, 3];
@@ -35,6 +39,8 @@ namespace MapDataLib
             this.MapObjItemColumn = mapDataColumn;
             CalculatingIntersections();
         }
+        #endregion
+
         #region TypesOfIntersections
         //Объекты равны
         // T*F 
@@ -232,19 +238,23 @@ namespace MapDataLib
         #region PointWithOther
         public void PointPoint()
         {
-            bool flag = false;
+            bool PointsAreEquals = false;
 
             var x1 = MapObjItemLine.Points[0].X;
             var y1 = MapObjItemLine.Points[0].Y;
 
+            Point point1 = new Point{X = x1, Y = y1};
+
             var x2 = MapObjItemColumn.Points[0].X;
             var y2 = MapObjItemColumn.Points[0].Y;
-            if (x1 == x2 && y1 == y2)
+
+            Point point2 = new Point { X = x2, Y = y2};
+            if (point1.DistanceToVertex(point2)<0.001)
             {
-                flag = true;
+                PointsAreEquals = true;
             }
 
-            if (flag)
+            if (PointsAreEquals)
             {
                 matrixofnineintersections[0, 0] = true;
             }
@@ -252,12 +262,12 @@ namespace MapDataLib
         }
         public void PointLine()
         {
-            bool flag = false;
+            bool PointLiesOnLine = false;
+
             var x = MapObjItemLine.Points[0].X;
             var y = MapObjItemLine.Points[0].Y;
-            //int sign = 0;
             double distance = double.MaxValue;
-            //int prevsign = 0;
+
             bool flagonperpendicular = false;
             double angle = 0;
             for (int i = 1; i < MapObjItemColumn.Points.Count; i++)
@@ -273,32 +283,12 @@ namespace MapDataLib
                 double maxx = Math.Max(x1, x2);
                 double maxy = Math.Max(y1, y2);
 
-               
-                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
-                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
                 if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
-                    flag = true;
+                    PointLiesOnLine = true;
                 }
                 else
                 {
-                    //Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
-                    //var q = (new Point { X = x, Y = y });
-                    //var p = line.GetPerpendicularFoundationPoint(q);
-                    //if (line.GetDistance(q)< distance/*flagonperpendicular == false*/ && p.X >= minx && p.X <= maxx && p.Y >= miny && p.Y <= maxy)
-                    //{
-                    //    prevsign = sign;
-                    //    distance = line.GetDistance(q);
-                    //    flagonperpendicular = true;
-                    //    sign = line.GetDeviation(q);
-                    //}
-
                     Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
                     var q = (new Point { X = x, Y = y });
                     var p = line.GetPerpendicularFoundationPoint(q);
@@ -313,32 +303,13 @@ namespace MapDataLib
                 }
             }
 
-            if (flag)
+            if (PointLiesOnLine)
             {
                 matrixofnineintersections[0, 0] = true;
                 matrixofnineintersections[2, 0] = true;
             }
             else
             {
-                //var x1 = MapObjItemColumn.Points[0].X;
-                //var y1 = MapObjItemColumn.Points[0].Y;
-                //var x2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].X;
-                //var y2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].Y;
-                //double minx = Math.Min(x1, x2);
-                //double miny = Math.Min(y1, y2);
-                //double maxx = Math.Max(x1, x2);
-                //double maxy = Math.Max(y1, y2);
-                //Line line = new Line(new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y2 });
-                //int signl = line.GetDeviation(new Point { X = x, Y = y });
-                //if (signl == 2)
-                //{
-                //    signl = prevsign;
-                //}
-                //if (sign != signl && flagonperpendicular == true)
-                //{
-                //    CanBeGeneralized = false;
-                //}
-
                 var x1 = MapObjItemColumn.Points[0].X;
                 var y1 = MapObjItemColumn.Points[0].Y;
                 var x2 = MapObjItemColumn.Points[MapObjItemColumn.Points.Count - 1].X;
@@ -366,7 +337,7 @@ namespace MapDataLib
         }
         public void PointPolygon()
         {
-            bool flag = false;
+            bool PointLiesOnPolygon = false;
 
             var x = MapObjItemLine.Points[0].X;
             var y = MapObjItemLine.Points[0].Y;
@@ -384,20 +355,12 @@ namespace MapDataLib
                 double maxx = Math.Max(x1, x2);
                 double maxy = Math.Max(y1, y2);
 
-                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
-                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
                 if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
-                    flag = true;
+                    PointLiesOnPolygon = true;
                 }
             }
-            if (flag == true)
+            if (PointLiesOnPolygon == true)
             {
                 matrixofnineintersections[1, 1] = true;
                 matrixofnineintersections[2, 0] = true;
@@ -409,12 +372,12 @@ namespace MapDataLib
                 if ((MapObjItemColumn.Points[i].Y < y && MapObjItemColumn.Points[j].Y >= y || MapObjItemColumn.Points[j].Y < y && MapObjItemColumn.Points[i].Y >= y) &&
                      (MapObjItemColumn.Points[i].X + (y - MapObjItemColumn.Points[i].Y) / (MapObjItemColumn.Points[j].Y - MapObjItemColumn.Points[i].Y) * (MapObjItemColumn.Points[j].X - MapObjItemColumn.Points[i].X) < x))
                 {
-                    flag = !flag;
+                    PointLiesOnPolygon = !PointLiesOnPolygon;
                 }
                 j = i;
             }
 
-            if (flag)
+            if (PointLiesOnPolygon)
             {
                 matrixofnineintersections[0, 0] = true;
                 matrixofnineintersections[2, 0] = true;
@@ -425,7 +388,7 @@ namespace MapDataLib
         #region LineWithOther
         public void LinePoint()
         {
-            bool flag = false;
+            bool LineContainsPoint = false;
             var x = MapObjItemColumn.Points[0].X;
             var y = MapObjItemColumn.Points[0].Y;
             double distance = double.MaxValue;
@@ -446,7 +409,7 @@ namespace MapDataLib
 
                 if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
-                    flag = true;
+                    LineContainsPoint = true;
                 }
                 else
                 {
@@ -464,7 +427,7 @@ namespace MapDataLib
                 }
             }
 
-            if (flag)
+            if (LineContainsPoint)
             {
                 matrixofnineintersections[0, 0] = true;
                 matrixofnineintersections[0, 2] = true;
@@ -495,46 +458,9 @@ namespace MapDataLib
                 }
 
             }
-            //bool flag = false;
-
-            //var x = MapObjItemColumn.Points[0].X;
-            //var y = MapObjItemColumn.Points[0].Y;
-
-            //for (int i = 1; i < MapObjItemLine.Points.Count; i++)
-            //{
-            //    double x1 = MapObjItemLine.Points[i].X;
-            //    double x2 = MapObjItemLine.Points[i - 1].X;
-            //    double y1 = MapObjItemLine.Points[i].Y;
-            //    double y2 = MapObjItemLine.Points[i - 1].Y;
-
-            //    double minx = Math.Min(x1, x2);
-            //    double miny = Math.Min(y1, y2);
-
-            //    double maxx = Math.Max(x1, x2);
-            //    double maxy = Math.Max(y1, y2);
-
-            //    //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //    //{
-            //    //    flag = true;
-            //    //}
-            //    //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //    //{
-            //    //    flag = true;
-            //    //}
-            //    if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-            //    {
-            //        flag = true;
-            //    }
-            //}
-            //if (flag)
-            //{
-            //    matrixofnineintersections[0, 0] = true;
-            //    matrixofnineintersections[0, 2] = true;
-            //}
         }
         public void LineLine()
         {
-
             for (int i = 1; i < MapObjItemLine.Points.Count; i++)
             {
                 var a1 = MapObjItemLine.Points[i - 1].X;
@@ -694,7 +620,7 @@ namespace MapDataLib
         #region PolygonWithOther
         public void PolygonPoint()
         {
-            bool flag = false;
+            bool PolygonContainsPoint = false;
 
             var x = MapObjItemColumn.Points[0].X;
             var y = MapObjItemColumn.Points[0].Y;
@@ -712,20 +638,12 @@ namespace MapDataLib
                 double maxx = Math.Max(x1, x2);
                 double maxy = Math.Max(y1, y2);
 
-                //if ((x - x1) / (x2 - x1) - (y - y1) / (y2 - y1) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
-                //if (((x - x1) * (y2 - y1)) == ((y - y1) * (x2 - x1)) && x >= minx && x <= maxx && y >= miny && y <= maxy)
-                //{
-                //    flag = true;
-                //}
                 if (Math.Abs(((x - x1) * (y2 - y1)) - ((y - y1) * (x2 - x1))) < double.Epsilon && x >= minx && x <= maxx && y >= miny && y <= maxy)
                 {
-                    flag = true;
+                    PolygonContainsPoint = true;
                 }
             }
-            if (flag == true)
+            if (PolygonContainsPoint == true)
             {
                 matrixofnineintersections[1, 1] = true;
                 matrixofnineintersections[0, 2] = true;
@@ -737,12 +655,12 @@ namespace MapDataLib
                 if ((MapObjItemLine.Points[i].Y < y && MapObjItemLine.Points[j].Y >= y || MapObjItemLine.Points[j].Y < y && MapObjItemLine.Points[i].Y >= y) &&
                      (MapObjItemLine.Points[i].X + (y - MapObjItemLine.Points[i].Y) / (MapObjItemLine.Points[j].Y - MapObjItemLine.Points[i].Y) * (MapObjItemLine.Points[j].X - MapObjItemLine.Points[i].X) < x))
                 {
-                    flag = !flag;
+                    PolygonContainsPoint = !PolygonContainsPoint;
                 }
                 j = i;
             }
 
-            if (flag)
+            if (PolygonContainsPoint)
             {
                 matrixofnineintersections[0, 0] = true;
                 matrixofnineintersections[0, 2] = true;
