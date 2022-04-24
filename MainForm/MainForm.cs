@@ -144,10 +144,12 @@ namespace MainForm
         {
             if(_outMap!=null)
             {
-                SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.InitialDirectory = Path.Combine(_applicationPath, "Data");
-                saveFile.Filter = @"shape files (*.shp)|*.shp|All files (*.*)|*.*";
-                 saveFile.DefaultExt = "*.shp";
+                SaveFileDialog saveFile = new SaveFileDialog
+                {
+                    InitialDirectory = Path.Combine(_applicationPath, "Data"),
+                    Filter = @"shape files (*.shp)|*.shp|All files (*.*)|*.*",
+                    DefaultExt = "*.shp"
+                };
                 if (saveFile.ShowDialog() == DialogResult.OK)
                 try
                 {

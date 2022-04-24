@@ -94,5 +94,6 @@ namespace GridLibTests
 
             return mapLineObj;
         }
+
     }
 }

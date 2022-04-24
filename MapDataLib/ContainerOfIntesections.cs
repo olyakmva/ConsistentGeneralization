@@ -8,7 +8,7 @@ namespace MapDataLib
         /// <summary>
         /// Тут будут храниться матрицы 9 пересечений
         /// </summary>
-        List<List<ModelOfNineIntersections>> ModelOfNineIntersections;
+        public List<List<ModelOfNineIntersections>> ModelOfNineIntersections;
         /// <summary>
         /// Тут хранятся все объекты
         /// </summary>

@@ -10,8 +10,8 @@ namespace GridLib
         public double DetailSize { get; set; }
         public double CellSize { get; set; }
         public Dictionary<int, List<Cell>> ObjDictionary;
-        private Map _map;
-        private int _maxLevel;
+        private readonly Map _map;
+        private readonly int _maxLevel;
 
         public Grid(Map map, double cellSize, double detail)
         {
@@ -191,11 +191,20 @@ namespace GridLib
             else ObjDictionary.Add(objId, new List<Cell>(new[] {cell}));
         }
 
-        private (int, int) GetGridIndexes(MapPoint point)
+        internal (int, int) GetGridIndexes(MapPoint point)
         {
             int ind1 = (int)Math.Truncate((point.X - _map.Xmin) / CellSize);
             int ind2 = (int)Math.Truncate((point.Y - _map.Ymin) / CellSize);
             return (ind1, ind2);
         }
+        public Cell GetCell(int id, MapPoint point)
+        {
+            if(!ObjDictionary.ContainsKey(id))
+                return null;
+            var cell = ObjDictionary[id].Find(c=> c.IsIn(point));
+            return cell;
+        }
+
+
     }
 }

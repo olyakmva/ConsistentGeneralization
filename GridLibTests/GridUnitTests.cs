@@ -388,6 +388,16 @@ namespace GridLibTests
             Assert.Equal(2,grid.Cells[0, 0].MapPoints[objId].Count);
             Assert.Equal(3, grid.Cells[1, 0].MapPoints[objId].Count);
         }
+        [Fact]
+        public void CanSearchCellByMapobjIdAndPoint()
+        {
+            Map map = CreateMap();
+            int cellSize = 2;
+            var detail =0.5;
+            var grid = new Grid(map, cellSize, detail);
+            var cell = grid.GetCell(2,new MapPoint(4.5,1.5,2,1));
+            Assert.Equal(detail, cell.Size);
+        }
     }
 }
 
