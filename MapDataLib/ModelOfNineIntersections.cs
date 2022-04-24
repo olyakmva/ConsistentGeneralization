@@ -613,7 +613,155 @@ namespace MapDataLib
         }
         public void LinePolygon()
         {
+            for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            {
+                var a1 = MapObjItemLine.Points[i - 1].X;
+                var b1 = MapObjItemLine.Points[i - 1].Y;
+                var a2 = MapObjItemLine.Points[i].X;
+                var b2 = MapObjItemLine.Points[i].Y;
+                MapPoint mapPoint1 = new MapPoint(a1, b1, 1, 1);
+                MapPoint mapPoint2 = new MapPoint(a2, b2, 1, 1);
+                Line l1 = new Line(mapPoint1, mapPoint2);
 
+                for (int j = 1; j < MapObjItemColumn.Points.Count; j++)
+                {
+                    double x1 = MapObjItemColumn.Points[j].X;
+                    double x2 = MapObjItemColumn.Points[j - 1].X;
+                    double y1 = MapObjItemColumn.Points[j].Y;
+                    double y2 = MapObjItemColumn.Points[j - 1].Y;
+                    MapPoint mapPoint3 = new MapPoint(x1, y1, 1, 1);
+                    MapPoint mapPoint4 = new MapPoint(x2, y2, 1, 1);
+                    Line l2 = new Line(mapPoint3, mapPoint4);
+                    var point = l1.GetIntersectionPoint(l2);
+
+                    var maxx1 = Math.Max(a1, a2);
+                    var minx1 = Math.Min(a1, a2);
+                    var maxy1 = Math.Max(b1, b2);
+                    var miny1 = Math.Min(b1, b2);
+
+                    var maxx2 = Math.Max(x1, x2);
+                    var minx2 = Math.Min(x1, x2);
+                    var maxy2 = Math.Max(y1, y2);
+                    var miny2 = Math.Min(y1, y2);
+                    if (point != null)
+                    {
+                        if (point.X < maxx1 && point.X < maxx2 &&
+                        point.X > minx1 && point.X > minx2 &&
+                        point.Y < maxy1 && point.Y < maxy2 &&
+                        point.Y > miny1 && point.Y > miny2)
+                        {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
+                            var x = point.X;
+                            var y = point.Y;
+                            Vector vector1 = new Vector(a1 - x, b1 - y);
+                            Vector vector2 = new Vector(x1 - x, y1 - y);
+                            Vector vector3 = new Vector(x2 - x, y2 - y);
+                            Vector vector4 = new Vector(a2 - x, b2 - y);
+
+                            var q1 = Vector.AngleOfVectors(vector2, vector1);
+                            var q2 = Vector.AngleOfVectors(vector3, vector1);
+                            var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                            var p1 = Math.Max(q2, q1);
+                            var p2 = Math.Min(q1, q2);
+                            if (q3 > p2 && q3 < p1)
+                            {
+                                matrixofnineintersections[0, 0] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                matrixofnineintersections[2, 2] = true;
+                                return;
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+
+                        }
+                        else if (point.X == a1 && point.Y == b1 || point.X == a2 && point.Y == b2 || point.X == x1 && point.Y == y1 || point.X == x2 && point.Y == y2)
+                        {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
+                            if (i != MapObjItemLine.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemLine.Points[i + 1].X;
+                                var tmpy = MapObjItemLine.Points[i + 1].Y;
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(x1 - x, y1 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if (q3 > p2 && q3 < p1)
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                            }
+                            else if (j != MapObjItemColumn.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemColumn.Points[j + 1].X;
+                                var tmpy = MapObjItemColumn.Points[j + 1].Y;
+
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(a2 - x, b2 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if ((q3 > 0 && p2 > 0 && q3 < 180 && p2 < 180) || (q3 > 180 && p2 > 180 && q3 < 360 && p2 < 360))
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
         #endregion
 
@@ -668,11 +816,307 @@ namespace MapDataLib
         }
         public void PolygonLine()
         {
+            for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            {
+                var a1 = MapObjItemLine.Points[i - 1].X;
+                var b1 = MapObjItemLine.Points[i - 1].Y;
+                var a2 = MapObjItemLine.Points[i].X;
+                var b2 = MapObjItemLine.Points[i].Y;
+                MapPoint mapPoint1 = new MapPoint(a1, b1, 1, 1);
+                MapPoint mapPoint2 = new MapPoint(a2, b2, 1, 1);
+                Line l1 = new Line(mapPoint1, mapPoint2);
 
+                for (int j = 1; j < MapObjItemColumn.Points.Count; j++)
+                {
+                    double x1 = MapObjItemColumn.Points[j].X;
+                    double x2 = MapObjItemColumn.Points[j - 1].X;
+                    double y1 = MapObjItemColumn.Points[j].Y;
+                    double y2 = MapObjItemColumn.Points[j - 1].Y;
+                    MapPoint mapPoint3 = new MapPoint(x1, y1, 1, 1);
+                    MapPoint mapPoint4 = new MapPoint(x2, y2, 1, 1);
+                    Line l2 = new Line(mapPoint3, mapPoint4);
+                    var point = l1.GetIntersectionPoint(l2);
+
+                    var maxx1 = Math.Max(a1, a2);
+                    var minx1 = Math.Min(a1, a2);
+                    var maxy1 = Math.Max(b1, b2);
+                    var miny1 = Math.Min(b1, b2);
+
+                    var maxx2 = Math.Max(x1, x2);
+                    var minx2 = Math.Min(x1, x2);
+                    var maxy2 = Math.Max(y1, y2);
+                    var miny2 = Math.Min(y1, y2);
+                    if (point != null)
+                    {
+                        if (point.X < maxx1 && point.X < maxx2 &&
+                        point.X > minx1 && point.X > minx2 &&
+                        point.Y < maxy1 && point.Y < maxy2 &&
+                        point.Y > miny1 && point.Y > miny2)
+                        {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
+                            var x = point.X;
+                            var y = point.Y;
+                            Vector vector1 = new Vector(a1 - x, b1 - y);
+                            Vector vector2 = new Vector(x1 - x, y1 - y);
+                            Vector vector3 = new Vector(x2 - x, y2 - y);
+                            Vector vector4 = new Vector(a2 - x, b2 - y);
+
+                            var q1 = Vector.AngleOfVectors(vector2, vector1);
+                            var q2 = Vector.AngleOfVectors(vector3, vector1);
+                            var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                            var p1 = Math.Max(q2, q1);
+                            var p2 = Math.Min(q1, q2);
+                            if (q3 > p2 && q3 < p1)
+                            {
+                                matrixofnineintersections[0, 0] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                matrixofnineintersections[2, 2] = true;
+                                return;
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+
+                        }
+                        else if (point.X == a1 && point.Y == b1 || point.X == a2 && point.Y == b2 || point.X == x1 && point.Y == y1 || point.X == x2 && point.Y == y2)
+                        {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
+                            if (i != MapObjItemLine.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemLine.Points[i + 1].X;
+                                var tmpy = MapObjItemLine.Points[i + 1].Y;
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(x1 - x, y1 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if (q3 > p2 && q3 < p1)
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                            }
+                            else if (j != MapObjItemColumn.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemColumn.Points[j + 1].X;
+                                var tmpy = MapObjItemColumn.Points[j + 1].Y;
+
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(a2 - x, b2 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if ((q3 > 0 && p2 > 0 && q3 < 180 && p2 < 180) || (q3 > 180 && p2 > 180 && q3 < 360 && p2 < 360))
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
         public void PolygonPolygon()
         {
+            for (int i = 1; i < MapObjItemLine.Points.Count; i++)
+            {
+                var a1 = MapObjItemLine.Points[i - 1].X;
+                var b1 = MapObjItemLine.Points[i - 1].Y;
+                var a2 = MapObjItemLine.Points[i].X;
+                var b2 = MapObjItemLine.Points[i].Y;
+                MapPoint mapPoint1 = new MapPoint(a1, b1, 1, 1);
+                MapPoint mapPoint2 = new MapPoint(a2, b2, 1, 1);
+                Line l1 = new Line(mapPoint1, mapPoint2);
 
+                for (int j = 1; j < MapObjItemColumn.Points.Count; j++)
+                {
+                    double x1 = MapObjItemColumn.Points[j].X;
+                    double x2 = MapObjItemColumn.Points[j - 1].X;
+                    double y1 = MapObjItemColumn.Points[j].Y;
+                    double y2 = MapObjItemColumn.Points[j - 1].Y;
+                    MapPoint mapPoint3 = new MapPoint(x1, y1, 1, 1);
+                    MapPoint mapPoint4 = new MapPoint(x2, y2, 1, 1);
+                    Line l2 = new Line(mapPoint3, mapPoint4);
+                    var point = l1.GetIntersectionPoint(l2);
+
+                    var maxx1 = Math.Max(a1, a2);
+                    var minx1 = Math.Min(a1, a2);
+                    var maxy1 = Math.Max(b1, b2);
+                    var miny1 = Math.Min(b1, b2);
+
+                    var maxx2 = Math.Max(x1, x2);
+                    var minx2 = Math.Min(x1, x2);
+                    var maxy2 = Math.Max(y1, y2);
+                    var miny2 = Math.Min(y1, y2);
+                    if (point != null)
+                    {
+                        if (point.X < maxx1 && point.X < maxx2 &&
+                        point.X > minx1 && point.X > minx2 &&
+                        point.Y < maxy1 && point.Y < maxy2 &&
+                        point.Y > miny1 && point.Y > miny2)
+                        {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
+                            var x = point.X;
+                            var y = point.Y;
+                            Vector vector1 = new Vector(a1 - x, b1 - y);
+                            Vector vector2 = new Vector(x1 - x, y1 - y);
+                            Vector vector3 = new Vector(x2 - x, y2 - y);
+                            Vector vector4 = new Vector(a2 - x, b2 - y);
+
+                            var q1 = Vector.AngleOfVectors(vector2, vector1);
+                            var q2 = Vector.AngleOfVectors(vector3, vector1);
+                            var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                            var p1 = Math.Max(q2, q1);
+                            var p2 = Math.Min(q1, q2);
+                            if (q3 > p2 && q3 < p1)
+                            {
+                                matrixofnineintersections[0, 0] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                matrixofnineintersections[2, 2] = true;
+                                return;
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+
+                        }
+                        else if (point.X == a1 && point.Y == b1 || point.X == a2 && point.Y == b2 || point.X == x1 && point.Y == y1 || point.X == x2 && point.Y == y2)
+                        {
+                            PointIntesection = new MapPoint(point.X, point.Y, 1, 1);
+                            if (i != MapObjItemLine.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemLine.Points[i + 1].X;
+                                var tmpy = MapObjItemLine.Points[i + 1].Y;
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(x1 - x, y1 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if (q3 > p2 && q3 < p1)
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                            }
+                            else if (j != MapObjItemColumn.Points.Count - 1)
+                            {
+                                var tmpx = MapObjItemColumn.Points[j + 1].X;
+                                var tmpy = MapObjItemColumn.Points[j + 1].Y;
+
+                                var x = point.X;
+                                var y = point.Y;
+                                Vector vector1 = new Vector(a1 - x, b1 - y);
+                                Vector vector2 = new Vector(a2 - x, b2 - y);
+                                Vector vector3 = new Vector(x2 - x, y2 - y);
+                                Vector vector4 = new Vector(tmpx - x, tmpy - y);
+
+                                var q1 = Vector.AngleOfVectors(vector2, vector1);
+                                var q2 = Vector.AngleOfVectors(vector3, vector1);
+                                var q3 = Vector.AngleOfVectors(vector4, vector1);
+
+                                var p1 = Math.Max(q2, q1);
+                                var p2 = Math.Min(q1, q2);
+                                if ((q3 > 0 && p2 > 0 && q3 < 180 && p2 < 180) || (q3 > 180 && p2 > 180 && q3 < 360 && p2 < 360))
+                                {
+                                    matrixofnineintersections[1, 1] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    matrixofnineintersections[0, 0] = true;
+                                    matrixofnineintersections[0, 2] = true;
+                                    matrixofnineintersections[2, 0] = true;
+                                    matrixofnineintersections[2, 2] = true;
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                matrixofnineintersections[1, 1] = true;
+                                matrixofnineintersections[0, 2] = true;
+                                matrixofnineintersections[2, 0] = true;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
         #endregion
     }

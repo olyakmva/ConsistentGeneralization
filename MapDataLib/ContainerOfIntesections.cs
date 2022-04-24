@@ -60,6 +60,16 @@ namespace MapDataLib
             }
             ModelOfNineIntersections.Add(list);
         }
+        private int FindIndex(int objId)
+        {
+            return mapDatas.FindIndex(t => t.Id == objId);
+        }
 
+        public List<ModelOfNineIntersections> GetListsOfModels(int objId)
+        {
+            int index = FindIndex(objId);
+            var list = ModelOfNineIntersections[index];
+            return list;
+        }
     }
 }
