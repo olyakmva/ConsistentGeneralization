@@ -43,7 +43,7 @@ namespace AlgorithmsLibrary
             // двигаться по точкам объекта. Если ячейка = один объект,
             // то получить среднюю точку, остальные пометить как удаляемые
             int i = 0;
-            while (i < pointList.Count-1)
+            while (i < pointList.Count)
             {
                 MapPoint point = pointList[i];
                 var cell = grid.GetCell(objId,point);
@@ -58,7 +58,8 @@ namespace AlgorithmsLibrary
                     var first =cell.MapPoints[objId][0];
                     var last = cell.MapPoints[objId].Last();
                     var middle = new MapPoint((first.X +last.X)/2, (first.Y+last.Y)/2,objId,LiWeight);
-                    pointList.Insert(i-1,middle);
+                    pointList.Insert(i-1,middle); 
+                    i++;
                 }
                 else // несколько объектов в ячейке
                 {
@@ -77,7 +78,7 @@ namespace AlgorithmsLibrary
                         { 
                             var newPoint =  new MapPoint( matrix.PointIntesection.X,
                                 matrix.PointIntesection.Y, objId, LiWeight);
-                            pointList.Insert(i-1, newPoint);
+                            pointList.Insert(i-1, newPoint); i++;//!!!
                         }
 
                     }

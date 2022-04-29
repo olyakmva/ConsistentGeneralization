@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapDataLib;
 
 namespace GridLib
@@ -63,6 +64,7 @@ namespace GridLib
                                 continue;
                             ModifyObjDictionary(point.Id, Cells[i1, j1]);
                             Cells[i1, j1].AddLineIntersectionPoints(point, nextPoint);
+                           //вставить точки в объект???
                             if (Cells[i1, j1].State == CellState.SeveralObjects)
                             {
                                 if(!needToDropList.Contains(Cells[i1, j1]))
@@ -111,7 +113,9 @@ namespace GridLib
                         //заменить большую ячейку на маленькую в objDictionary
                         var cellIndex=ObjDictionary[objId].FindIndex(c=>c.Equals(cell));
                         ObjDictionary[objId].Remove(cell);
-                        foreach(var child in cell.GetChildrenCellsWithThisObject(objId))
+                        var list = cell.GetChildrenCellsWithThisObject(objId).ToList();
+                        list.Reverse();
+                        foreach(var child in list)
                             ObjDictionary[objId].Insert(cellIndex,child);  
                     }
                     // создать новый лист ячеек, подлежащих разбиению

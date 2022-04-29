@@ -16,7 +16,7 @@ namespace GridLib
         public CellState State { get;  set; }
         public ContainerOfIntersections Intersections {get; private set;}
         public Dictionary<int, List<MapPoint>> MapPoints { get; set; }
-
+        public const int IntersectionalWeight =50;
 
         public Cell()
         {
@@ -124,18 +124,18 @@ namespace GridLib
                 }
                 else
                 {
-                    if(!childCell.MapPoints[id].Contains(pnt1))
+                    if (!childCell.MapPoints[id].Contains(pnt1))
                     {
-                    int ind1 =childCell.MapPoints[id].FindIndex(p => p.CompareTo(pnt1) > 0);
-                    if(ind1 >=0)
-                        childCell.MapPoints[id].Insert(ind1,pnt1);
-                    else childCell.MapPoints[id].Add(pnt1);
+                        int ind1 = childCell.MapPoints[id].FindIndex(p => p.CompareTo(pnt1) > 0);
+                        if (ind1 >= 0)
+                            childCell.MapPoints[id].Insert(ind1, pnt1);
+                        else childCell.MapPoints[id].Add(pnt1);
                     }
-                    if (pnt2 != null && !childCell.MapPoints[id].Contains(pnt2) )
+                    if (pnt2 != null && !childCell.MapPoints[id].Contains(pnt2))
                     {
-                        int ind2 = childCell.MapPoints[id].FindIndex(p => p.CompareTo(pnt2) < 0);
-                        if (ind2 >= 0)
-                            childCell.MapPoints[id].Insert(ind2, pnt2);
+                        int ind2 = childCell.MapPoints[id].FindLastIndex(p => p.CompareTo(pnt2) < 0);
+                        if (ind2 >= 0 && ind2!=(childCell.MapPoints[id].Count-1))
+                            childCell.MapPoints[id].Insert(ind2+1, pnt2);
                         else childCell.MapPoints[id].Add(pnt2);
                     }
                 }
@@ -189,7 +189,48 @@ namespace GridLib
 
         public IEnumerable<Cell> GetChildrenCellsWithThisObject(int objId)
         {
-            return Children.FindAll(c => c.ObjectIdList.Contains(objId));
+            var cells = new List<Cell>(Children.FindAll(c => c.ObjectIdList.Contains(objId)));
+            if(cells.Count >=2)
+            {
+                var result = new List<Cell>();
+                int i=0;
+                while (i<MapPoints[objId].Count)
+                {
+                    var current = cells.Find(c=> c.MapPoints[objId].Contains(MapPoints[objId][i]));
+                    if(current!=null)
+                    {
+                        if(!result.Contains(current))
+                            result.Add(current);
+                        i++;
+                        while(i<MapPoints[objId].Count && current.IsIn(MapPoints[objId][i]))
+                            i++;                        
+                    }
+                    if(current!=null) i--;
+                    if( i<MapPoints[objId].Count-1)
+                    {
+                        var next = cells.FindAll(c=> c.HasCommonPoint(MapPoints[objId][i], MapPoints[objId][i+1]));
+                         bool sortOrder = (MapPoints[objId][i].CompareTo(MapPoints[objId][i+1]) <0);
+                        if(sortOrder)
+                            next = next.OrderBy(c=> c.MapPoints[objId][0]).ToList();
+                        else
+                            next = next.OrderByDescending(c=> c.MapPoints[objId][0]).ToList();
+                        foreach(var item in next)
+                        {
+                            if(result.Contains(item))
+                                continue;
+                            result.Add(item);
+                        }
+                    }
+                    i++;
+                }
+                if(result.Count != cells.Count)
+                {
+                    string msg = string.Format("Не найдена ячейка, принадлежащая объекту {0} GetChildrenCellsWithThisObject cell={1}",objId, this.ToString() );
+                    ErrorLog.WriteToLogFile(msg);
+                }
+                return result;
+            }
+            return cells;
         }
         public List<Cell> GetChildrenWithManyObjects()
         {
@@ -228,7 +269,7 @@ namespace GridLib
         {
             return GetAllCells().Where(t => t.ObjectIdList.Contains(objId));
         }
-
+        
         public IEnumerable<MapPoint> GetPoints()
         {
             List<MapPoint> points = new List<MapPoint> {LowerLeftPoint};
@@ -274,18 +315,26 @@ namespace GridLib
                 if (line.GetSign(cellPoints[i]) * line.GetSign(cellPoints[(i + 1) % 4]) > 0) continue;
                 if (line.GetSign(cellPoints[i]) == 0)
                 {
-                    ptsList.Add(cellPoints[i]);
-                    continue;
+                    if(((cellPoints[i].CompareTo( point1)<=0)  && (cellPoints[i].CompareTo(point2)>=0))||
+                        ((cellPoints[i].CompareTo( point1)>=0)  && (cellPoints[i].CompareTo(point2)<=0)))
+                    {
+                        ptsList.Add( new MapPoint(cellPoints[i].X, cellPoints[i].Y, point1.Id, IntersectionalWeight));
+                        continue;
+                    }
                 }
                 if (line.GetSign(cellPoints[(i + 1) % 4]) == 0)
                 {
-                    ptsList.Add(cellPoints[(i + 1) % 4]);
-                    continue;
+                    if(((cellPoints[(i + 1) % 4].CompareTo( point1)<=0)  && (cellPoints[(i + 1) % 4].CompareTo(point2)>=0))||
+                        ((cellPoints[(i + 1) % 4].CompareTo( point1)>=0)  && (cellPoints[(i + 1) % 4].CompareTo(point2)<=0)))
+                    {
+                        ptsList.Add( new MapPoint(cellPoints[(i + 1) % 4].X, cellPoints[(i + 1) % 4].Y, point1.Id, IntersectionalWeight));
+                        continue;
+                    }
                 }
                 if ((i % 2) == 0)
                 {
                     var x = -1 * (line.B * cellPoints[i].Y + line.C) / line.A;
-                    MapPoint p = new MapPoint(x, cellPoints[i].Y, cellPoints[i].Id, cellPoints[i].Weight + 10);
+                    MapPoint p = new MapPoint(x, cellPoints[i].Y, point1.Id, IntersectionalWeight);
                     if ((p.CompareTo(point1) <= 0 && p.CompareTo(point2) > 0) ||
                         (p.CompareTo(point1) > 0 && p.CompareTo(point2) <= 0))
                         ptsList.Add(p);
@@ -294,15 +343,17 @@ namespace GridLib
                 else
                 {
                     var y = -1 * (line.A * cellPoints[i].X + line.C) / line.B;
-                    MapPoint p = new MapPoint(cellPoints[i].X, y, cellPoints[i].Id, cellPoints[i].Weight + 10);
+                    MapPoint p = new MapPoint(cellPoints[i].X, y, point1.Id, IntersectionalWeight);
                     if ((p.CompareTo(point1) <= 0 && p.CompareTo(point2) > 0) ||
                         (p.CompareTo(point1) > 0 && p.CompareTo(point2) <= 0))
                         ptsList.Add(p);
                 }
             }
-
-            ptsList.Sort();
             ptsList= ptsList.Distinct().ToList();
+            ptsList.Sort();
+            if(point1.CompareTo(point2) >0)
+                ptsList.Reverse();
+
             if (ptsList.Count > 1)
                 return (ptsList[0], ptsList[1]);
             if (ptsList.Count == 1)
@@ -316,6 +367,10 @@ namespace GridLib
                 Add(p1,point1.Id);
             if(p2!=null)
                 Add(p2, point2.Id);
+        }
+        public override string ToString()
+        {
+            return string.Format("LowLeftPoint {0} Size{1} State {2}", LowerLeftPoint, Size, State); ;
         }
     }
 }

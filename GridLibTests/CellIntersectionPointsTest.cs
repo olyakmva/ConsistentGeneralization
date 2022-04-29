@@ -68,6 +68,12 @@ namespace GridLibTests
             var detail = 0.5;
             var grid = new Grid(map, cellSize, detail);
             var cells00 = grid.Cells[0, 0].Children;
+            var cells000 = cells00[0].Children;
+            id=1;
+            Assert.Equal(2, cells000[0].MapPoints[id].Count);
+            Assert.Equal(2, cells000[2].MapPoints[id].Count);
+             Assert.Equal(2, cells000[3].MapPoints[id].Count);
+
             var cells001 =cells00[2].Children;
             id=1;
             Assert.Equal(3, cells001[0].MapPoints[id].Count);
@@ -165,7 +171,42 @@ namespace GridLibTests
                 }
             }
         }
+        [Fact]
+        public void CheckProperNumberOfCells()
+        {
+            var map = CreateSmallMap();
+            var cellSize = 2;
+            var detail = 0.5;
+            var grid = new Grid(map, cellSize, detail);
+            Assert.Equal(4, grid.Cells[0,0].MapPoints[1].Count);
+        }
 
+        private Map CreateSmallMap()
+        {
+             Map map = new Map();
+            var mapLineObj = new MapData(GeometryType.Line);
+            var weight = 1;
+            int id=1;
+            mapLineObj.MapObjDictionary.Add(id, new List<MapPoint>(new[]
+            {
+                new MapPoint(0, 0, id, weight),
+                new MapPoint(0.25, 0.5, id, weight),
+                new MapPoint(1.25, 1.5, id, weight),
+                new MapPoint(3.25, 0.75, id, weight)
+            }));
+            map.Add(mapLineObj);
+            id=2;
+            mapLineObj = new MapData(GeometryType.Line);
+            mapLineObj.MapObjDictionary.Add(id, new List<MapPoint>(new[]
+            {
+                new MapPoint(1.25, 0.5, id, weight),
+                new MapPoint(0.25, 1.5, id, weight),
+                new MapPoint(2.5, 1.5, id, weight)               
+            }));
+            map.Add(mapLineObj);
+            return map;
+
+        }
         private Map OneObjMap( int id=1)
         {
             Map map = new Map();
@@ -179,7 +220,7 @@ namespace GridLibTests
                 new MapPoint(4.5, 0.5, id, weight),
                 new MapPoint(3.25, 2.5, id, weight)
             }));
-            map.Add(mapLineObj);
+            map.Add(mapLineObj);       
             return map;
         }
         private MapData SomeObj( int id=2)

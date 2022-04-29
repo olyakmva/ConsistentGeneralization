@@ -46,10 +46,10 @@ namespace GridLibTests
                 int j = cellsList.FindIndex(c => c.IsIn(point));
                 indexesList.Add(j);
             }
-            //for (var i = 0; i < indexesList.Count - 1; i++)
-            //{
-            //    Assert.True(indexesList[i] <= indexesList[i + 1]);
-            //}
+            for (var i = 0; i < indexesList.Count - 1; i++)
+            {
+                Assert.True(indexesList[i] <= indexesList[i + 1]);
+            }
             id = 2;
             indexesList.Clear();
             cellsList = grid.ObjDictionary[id];
