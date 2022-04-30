@@ -37,24 +37,25 @@ namespace AlgorithmsLibrary
         {
             // обработка случая малого количества точек
 
-
-            // получить список ячеек сетки для объекта
-            var objCells = grid.ObjDictionary[objId];
-            // двигаться по точкам объекта. Если ячейка = один объект,
-            // то получить среднюю точку, остальные пометить как удаляемые
+           // получить список ячеек сетки для объекта
+           // двигаться по точкам объекта. Если ячейка = один объект,
+           // то получить среднюю точку, остальные пометить как удаляемые
             int i = 0;
-            while (i < pointList.Count)
+            while (i < pointList.Count-1)
             {
                 MapPoint point = pointList[i];
-                var cell = grid.GetCell(objId,point);
-                if(cell.State == CellState.OneObject)
-                {
-                    point.Weight = RemoveWeight;
-                    while (i< pointList.Count && cell.IsIn(pointList[i]))
+                var next = pointList[i+1];
+                var cellList = grid.GetCellsBetweenPoints(point,next);
+                foreach( var cell in cellList)
+                { 
+                    if(cell.State == CellState.OneObject)
                     {
-                        pointList[i].Weight=RemoveWeight;
-                        i++;
-                    }
+                        point.Weight = RemoveWeight;
+                        while (i< pointList.Count && cell.IsIn(pointList[i]))
+                        {
+                            pointList[i].Weight=RemoveWeight;
+                            i++;
+                        }
                     var first =cell.MapPoints[objId][0];
                     var last = cell.MapPoints[objId].Last();
                     var middle = new MapPoint((first.X +last.X)/2, (first.Y+last.Y)/2,objId,LiWeight);
@@ -83,7 +84,8 @@ namespace AlgorithmsLibrary
 
                     }
                 }
-            }               
+            }
+            }
         }
     }
 }

@@ -226,6 +226,7 @@ namespace GridLib
                 if(result.Count != cells.Count)
                 {
                     string msg = string.Format("Не найдена ячейка, принадлежащая объекту {0} GetChildrenCellsWithThisObject cell={1}",objId, this.ToString() );
+                    throw new ArgumentException(msg);
                     ErrorLog.WriteToLogFile(msg);
                 }
                 return result;

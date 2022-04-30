@@ -323,7 +323,7 @@ namespace GridLibTests
             Assert.Equal(0, severalObjCount);
         }
         [Fact]
-        public void ProperObjDictionaryForPointsAndLines()
+        public void ProperCellsCountForPointsAndLines()
         {
             Map map = new Map();
             var md3 = new MapData(GeometryType.Point);
@@ -349,20 +349,19 @@ namespace GridLibTests
             int cellSize = 2;
             var grid = new Grid(map, cellSize, 0.5);
             
-            int oneObjCount = 0;
-            int otherObjCount = 0;
+            int lineObjCount = 0;
+            int pointObjCount = 0;
             for (var i = 0; i < grid.Cells.GetLength(0); i++)
             {
                 for (var j = 0; j < grid.Cells.GetLength(1); j++)
                 {
                     if (grid.Cells[i, j].State == CellState.EmptyCell) continue;
-                    oneObjCount +=grid.Cells[i, j].GetAllChildCellsWithObject(1).Count();
-                    otherObjCount+= grid.Cells[i, j].GetAllChildCellsWithObject(4).Count();
-
+                    lineObjCount +=grid.Cells[i, j].GetAllChildCellsWithObject(1).Count();
+                    pointObjCount+= grid.Cells[i, j].GetAllChildCellsWithObject(4).Count();
                 }
             }
-            Assert.Equal(grid.ObjDictionary[1].Count, oneObjCount);
-            Assert.Equal(grid.ObjDictionary[4].Count, otherObjCount);
+            Assert.Equal(8, lineObjCount);
+            Assert.Equal(3, pointObjCount);
         }
 
         [Fact]

@@ -2,12 +2,13 @@
 using GridLib;
 using MapDataLib;
 using Xunit;
+using System.Linq;
 
 namespace GridLibTests
 {
     public class MapCellConnectionTests
     {
-         [Fact]
+        [Fact]
         public void OneLineHaveProperCells()
         {
             int id = 1;
@@ -15,20 +16,15 @@ namespace GridLibTests
             var cellSize = 2;
             var detail = 0.5;
             var grid = new Grid(map, cellSize, detail);
-            var cellsList = grid.ObjDictionary[id];
-            var  indexesList= new List<int>();
-            foreach(var point in map.MapLayers[0].MapObjDictionary[id] )
-            {
-                int j = cellsList.FindIndex(c=>c.IsIn(point));
-                indexesList.Add(j);
-            }
-            for(var i=0; i<indexesList.Count-1; i++)
-            {
-                Assert.True(indexesList[i]<=indexesList[i+1]);
-            }           
+            var pointList=map.MapLayers[0].MapObjDictionary[id];
+            var cellsList = grid.GetCellsBetweenPoints(pointList[0],pointList[1]).ToList();
+            Assert.Single(cellsList);
+            cellsList = grid.GetCellsBetweenPoints(pointList[2],pointList[3]).ToList();
+            Assert.Equal(3,cellsList.Count);
+            
         }
         [Fact]
-        public void RightOrderCellsWhichContainsMapObj()
+        public void RightNumberOfCellsBetweenTwoPoints()
         {
             int id = 1;
             var map = OneObjMap(id);
@@ -38,30 +34,13 @@ namespace GridLibTests
             var detail = 0.5;
             var grid = new Grid(map, cellSize, detail);
             id = 1;
-            var cellsList = grid.ObjDictionary[id];
-
-            var indexesList = new List<int>();
-            foreach (var point in map.MapLayers[0].MapObjDictionary[id])
-            {
-                int j = cellsList.FindIndex(c => c.IsIn(point));
-                indexesList.Add(j);
-            }
-            for (var i = 0; i < indexesList.Count - 1; i++)
-            {
-                Assert.True(indexesList[i] <= indexesList[i + 1]);
-            }
-            id = 2;
-            indexesList.Clear();
-            cellsList = grid.ObjDictionary[id];
-            foreach (var point in map.MapLayers[1].MapObjDictionary[id])
-            {
-                int j = cellsList.FindIndex(c => c.IsIn(point));
-                indexesList.Add(j);
-            }
-            for (var i = 0; i < indexesList.Count - 1; i++)
-            {
-                Assert.True(indexesList[i] <= indexesList[i + 1]);
-            }
+            var pointList=map.MapLayers[0].MapObjDictionary[id];
+            var cellsList = grid.GetCellsBetweenPoints(pointList[1],pointList[2]).ToList();
+            Assert.Equal(5,cellsList.Count);
+            cellsList = grid.GetCellsBetweenPoints(pointList[2],pointList[3]).ToList();
+            Assert.Equal(8,cellsList.Count);
+            cellsList = grid.GetCellsBetweenPoints(pointList[3],pointList[4]).ToList();
+            Assert.Equal(5,cellsList.Count);
 
         }
         private Map OneObjMap( int id=1)

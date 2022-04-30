@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GeomObjectsLib;
 using MapDataLib;
 
 namespace GridLib
@@ -10,7 +11,6 @@ namespace GridLib
         public Cell[,] Cells;
         public double DetailSize { get; set; }
         public double CellSize { get; set; }
-        public Dictionary<int, List<Cell>> ObjDictionary;
         private readonly Map _map;
         private readonly int _maxLevel;
 
@@ -23,8 +23,7 @@ namespace GridLib
             InitCells();
 
             var needToDropList = new List<Cell>();
-            ObjDictionary = new Dictionary<int, List<Cell>>();
-           
+                     
             foreach (var mapData in map)
             {
                 if (mapData.Geometry == GeometryType.Point || mapData.Geometry == GeometryType.MultiPoint)
@@ -40,7 +39,7 @@ namespace GridLib
                         var point = pointList[k];
                         var (i, j) = GetGridIndexes(point); 
                         Cells[i,j].Add(point, mapObj.Key);
-                        ModifyObjDictionary(mapObj.Key, Cells[i, j]);
+                       
                         if (Cells[i, j].State == CellState.SeveralObjects)
                         {
                             if(!needToDropList.Contains(Cells[i,j]))    
@@ -62,7 +61,6 @@ namespace GridLib
                         {
                             if (!Cells[i1, j1].HasCommonPoint(point, nextPoint))
                                 continue;
-                            ModifyObjDictionary(point.Id, Cells[i1, j1]);
                             Cells[i1, j1].AddLineIntersectionPoints(point, nextPoint);
                            //вставить точки в объект???
                             if (Cells[i1, j1].State == CellState.SeveralObjects)
@@ -107,20 +105,12 @@ namespace GridLib
                                 {
                                     cell.AddToChildren(pointList[k], nextPoint, pointList[k].Id);
                                 }
-
                             }
-                        }
-                        //заменить большую ячейку на маленькую в objDictionary
-                        var cellIndex=ObjDictionary[objId].FindIndex(c=>c.Equals(cell));
-                        ObjDictionary[objId].Remove(cell);
-                        var list = cell.GetChildrenCellsWithThisObject(objId).ToList();
-                        list.Reverse();
-                        foreach(var child in list)
-                            ObjDictionary[objId].Insert(cellIndex,child);  
+                        }                             
                     }
                     // создать новый лист ячеек, подлежащих разбиению
                     var dropCells = cell.GetChildrenWithManyObjects();
-                    if (dropCells != null)
+                    if (dropCells != null && dropCells.Count>0)
                         listForNextLevel.AddRange(dropCells);
                 }
                 needToDropList = listForNextLevel;
@@ -146,7 +136,6 @@ namespace GridLib
                 {
                     var (i, j) = GetGridIndexes(point);
                     Cells[i, j].Add(point, mapObj.Key);
-                    ModifyObjDictionary(mapObj.Key, Cells[i, j]);
                     if (Cells[i, j].State == CellState.SeveralObjects)
                     {
                         if (!needToDropList.Contains(Cells[i, j]))
@@ -185,16 +174,6 @@ namespace GridLib
             return maxLevel;
         }
 
-        private void ModifyObjDictionary(int objId, Cell cell)
-        {
-            if (ObjDictionary.ContainsKey(objId)  )
-            {
-                if(!ObjDictionary[objId].Contains(cell))
-                            ObjDictionary[objId].Add(cell);
-            }
-            else ObjDictionary.Add(objId, new List<Cell>(new[] {cell}));
-        }
-
         internal (int, int) GetGridIndexes(MapPoint point)
         {
             int ind1 = (int)Math.Truncate((point.X - _map.Xmin) / CellSize);
@@ -203,12 +182,57 @@ namespace GridLib
         }
         public Cell GetCell(int id, MapPoint point)
         {
-            if(!ObjDictionary.ContainsKey(id))
-                return null;
-            var cell = ObjDictionary[id].Find(c=> c.IsIn(point));
-            return cell;
+            var (i,j) = GetGridIndexes(point);          
+            var cells = Cells[i,j].GetAllChildCellsWithObject(id).ToList().FindAll(c=> c.IsIn(point));
+            if( cells.Count == 1)
+                return cells[0];
+            if(cells.Count >=2)
+            {
+                cells = cells.OrderBy(c=> c.Level).ToList();
+                return cells[0];
+            }
+            throw new ArgumentException($"не найдена ячейка для {point} c id {id}");
         }
+        public IEnumerable<Cell> GetCellsBetweenPoints(MapPoint point1, MapPoint point2)
+        {
+            var list = new List<MapPoint>(){point1,point2 };
+            int k=0;
+            while( k<list.Count -1)
+            {
+                if(list[k].DistanceToVertex(list[k+1]) < DetailSize)
+                { 
+                    k++ ;  continue;
+                }
+                var p3 = new MapPoint((list[k].X+list[k+1].X)/2, (list[k].Y+list[k+1].Y)/2, list[k].Id, 9);
+                list.Insert(k+1,p3);
+            }
 
-
+            var resultList = new List<Cell>();
+            var (i,j) = GetGridIndexes(point1); 
+                      
+            var cells = Cells[i,j].GetAllChildCellsWithObject(point1.Id).ToList();
+            var first = cells.Find(c=> c.IsIn(point1));
+            resultList.Add(first);
+            k=1;
+            while(k< list.Count)
+            {
+                if( Cells[i,j].IsIn(list[k]))
+                {   
+                    if(!resultList[resultList.Count-1].IsIn(list[k]))
+                    {
+                        var nextCell= cells.Find(c=> c.IsIn(list[k]));
+                        if(nextCell !=null && !resultList.Contains(nextCell))
+                            resultList.Add(nextCell);                    
+                    }
+                     k++;
+                }
+                else
+                {
+                    (i,j) = GetGridIndexes(list[k]); 
+                    cells = Cells[i,j].GetAllChildCellsWithObject(point1.Id).ToList();
+                }
+            }
+            return resultList;
+        }
     }
 }
