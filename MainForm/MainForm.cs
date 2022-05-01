@@ -92,9 +92,9 @@ namespace MainForm
             double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
             _grid = new Grid(_inputMap, cellSize, detail);
             
-            _outMap = _inputMap.Clone();
-            ISimplificationAlgm algm = _listCtrls[1].GetAlgorithm();
-            algm.Run(_outMap, _grid);
+            //_outMap = _inputMap.Clone();
+            //ISimplificationAlgm algm = _listCtrls[1].GetAlgorithm();
+            //algm.Run(_outMap, _grid);
 
             mapPictureBox.Invalidate();
         }

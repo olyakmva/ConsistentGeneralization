@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
- 
+using System.Linq;
 
 namespace MapDataLib
 {
@@ -71,5 +71,19 @@ namespace MapDataLib
             var list = ModelOfNineIntersections[index];
             return list;
         }
+
+        public List<MapPoint> GetIntersectionPoints(int objId)
+        {
+            var list =  GetListsOfModels(objId);
+            var result = new List<MapPoint>();
+            foreach(var matrix in list)
+            {
+                if(matrix.PointIntesection!=null)
+                    result.Add(matrix.PointIntesection);
+            }
+            return result.Distinct().ToList();
+        }
+
+
     }
 }

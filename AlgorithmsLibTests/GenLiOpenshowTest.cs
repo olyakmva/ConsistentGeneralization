@@ -18,7 +18,7 @@ namespace AlgorithmsLibTests
             var grid = new Grid(map, cellSize, detail);
             var algm = new GenericLiOpenshowAlgm();
             algm.Run(map,grid);
-            Assert.Equal(4,map.MapLayers[0].MapObjDictionary[id].Count);
+            Assert.Equal(5,map.MapLayers[0].MapObjDictionary[id].Count);
 
         }
         private Map OneObjMap( int id=1)
