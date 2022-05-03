@@ -29,7 +29,7 @@ namespace MapDataLib
 
             public override string ToString()
             {
-                return $"x={X}   y={Y}   id={Id} ";
+                return $"x={X} y={Y} id={Id} Wt={Weight}";
             }
             public override bool Equals(object obj)
             {

@@ -211,14 +211,17 @@ namespace GridLib
             var (i,j) = GetGridIndexes(point1); 
                       
             var cells = Cells[i,j].GetAllChildCellsWithObject(point1.Id).ToList();
+            if(cells.Count==0)
+                cells.Add(Cells[i,j]);
             var first = cells.Find(c=> c.IsIn(point1));
+           
             resultList.Add(first);
             k=1;
-            while(k< list.Count)
+            while(k< list.Count)           
             {
                 if( Cells[i,j].IsIn(list[k]))
                 {   
-                    if(!resultList[resultList.Count-1].IsIn(list[k]))
+                    if(resultList.Count>0 && !resultList[resultList.Count-1].IsIn(list[k]))
                     {
                         var nextCell= cells.Find(c=> c.IsIn(list[k]));
                         if(nextCell !=null && !resultList.Contains(nextCell))

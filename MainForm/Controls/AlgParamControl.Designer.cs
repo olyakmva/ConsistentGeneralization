@@ -83,7 +83,7 @@
             this.scaleUpDown.TabIndex = 2;
             this.scaleUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.scaleUpDown.Value = new decimal(new int[] {
-            1000,
+            6000,
             0,
             0,
             0});
@@ -113,12 +113,17 @@
             0,
             0,
             0});
+            this.paramUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.paramUpDown.Name = "paramUpDown";
             this.paramUpDown.Size = new System.Drawing.Size(89, 24);
             this.paramUpDown.TabIndex = 4;
             this.paramUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.paramUpDown.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -189,10 +194,10 @@
             this.detailUpDown.TabIndex = 7;
             this.detailUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.detailUpDown.Value = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
-            65536});
+            0});
             // 
             // label4
             // 

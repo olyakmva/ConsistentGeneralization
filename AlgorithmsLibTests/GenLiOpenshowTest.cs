@@ -18,9 +18,23 @@ namespace AlgorithmsLibTests
             var grid = new Grid(map, cellSize, detail);
             var algm = new GenericLiOpenshowAlgm();
             algm.Run(map,grid);
-            Assert.Equal(5,map.MapLayers[0].MapObjDictionary[id].Count);
+            Assert.Equal(4,map.MapLayers[0].MapObjDictionary[id].Count);
 
         }
+        [Fact]
+        public void CanSimplifyTwoObj()
+        {
+            int id = 1;
+            var map = OneObjMap(id);
+            map.Add(SomeObj());
+            var cellSize = 2;
+            var detail = 0.5;
+            var grid = new Grid(map, cellSize, detail);
+            var algm = new GenericLiOpenshowAlgm();
+            algm.Run(map,grid);
+            Assert.Equal(2, map.MapLayers.Count);
+        }
+
         private Map OneObjMap( int id=1)
         {
             Map map = new Map();
@@ -43,10 +57,10 @@ namespace AlgorithmsLibTests
             var weight = 1;
             mapLineObj.MapObjDictionary.Add(id, new List<MapPoint>(new[]
             {
-                new MapPoint(1.25, 0.5, id, weight),
-                new MapPoint(0.25, 1.5, id, weight),
-                new MapPoint(2.5, 1.5, id, weight),
-                new MapPoint(4.5, 0.2, id, weight)
+                new MapPoint(1.25, 0.25, id, weight),
+                new MapPoint(0.25, 1.45, id, weight),
+                new MapPoint(2.51, 1.48, id, weight),
+                new MapPoint(4.4, 0.2, id, weight)
             }));
 
             return mapLineObj;
