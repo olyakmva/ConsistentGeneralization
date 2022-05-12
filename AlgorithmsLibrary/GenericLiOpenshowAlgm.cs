@@ -80,6 +80,7 @@ namespace AlgorithmsLibrary
                         next=pointList[i];// точкa не в этой ячейке
                 }
                 int lastIndex=i-1;
+                var lastThisCellPoint = pointList[lastIndex];
                 if( currentCell.State==CellState.SeveralObjects && currentCell.Intersections!=null)
                 { 
                     var interPointsList = currentCell.Intersections.GetIntersectionPoints(objId);
@@ -100,9 +101,17 @@ namespace AlgorithmsLibrary
                                     pointList[j].Weight=IntersectionObjWeight;
                                 else
                                 {
-                                    pointList.Insert(startIndex+1,inpnt);
-                                    pointList[startIndex+1].Weight = IntersectionObjWeight;
-                                    lastIndex++;
+                                    for( var k= startIndex; k< lastIndex; k++)
+                                    {
+                                        if( pointList[k].CompareTo(inpnt)*
+                                            pointList[k+1].CompareTo(inpnt) <0)
+                                        {
+                                            pointList.Insert(k+1,inpnt);
+                                            pointList[k+1].Weight= IntersectionObjWeight;
+                                            lastIndex++;
+                                            break;
+                                        }
+                                    }                                   
                                 }
                            }
                        }
@@ -115,13 +124,13 @@ namespace AlgorithmsLibrary
                 var pts =currentCell.MapPoints[objId];
                 if( lastIndex>= pointList.Count-1)
                     break;
-                var line = new Line(pointList[lastIndex], pointList[lastIndex+1]);
+                var line = new Line(lastThisCellPoint, next);
                 MapPoint p= pts.FindLast(t=> (line.GetSign(t)==0)&& t.Weight==IntersectionCellWeight );
                 if(p== null)
                 {
                     string msg =$"не найдена точка пересечения с ячейкой {currentCell} objId={objId}";
                     ErrorLog.WriteToLogFile(msg);
-                    p= pointList[lastIndex];
+                    p= lastThisCellPoint;
                 }
                 if( stack.Count > 0)
                 {

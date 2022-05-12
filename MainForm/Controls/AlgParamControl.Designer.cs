@@ -123,7 +123,7 @@
             this.paramUpDown.TabIndex = 4;
             this.paramUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.paramUpDown.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -194,10 +194,10 @@
             this.detailUpDown.TabIndex = 7;
             this.detailUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.detailUpDown.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
-            0});
+            65536});
             // 
             // label4
             // 

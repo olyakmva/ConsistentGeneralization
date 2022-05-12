@@ -56,6 +56,12 @@
     <Compile Include="Controls\AlgParamControl.Designer.cs">
       <DependentUpon>AlgParamControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LayerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LayerControl.Designer.cs">
+      <DependentUpon>LayerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GraphicsState.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -67,6 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\AlgParamControl.resx">
       <DependentUpon>AlgParamControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerControl.resx">
+      <DependentUpon>LayerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

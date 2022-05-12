@@ -9,6 +9,8 @@ namespace MapDataLib
     {
         static int LineCount=0;
         static int PolygonCount=0;
+        static int LineIdRatio=0;
+        static int PolygoneIdRatio =0;
 
         public static MapData ToMapData(IFeatureSet fSet)
         {
@@ -23,14 +25,16 @@ namespace MapDataLib
             {
                 case FeatureType.Line: type = GeometryType.Line;
                     LineCount++;
-                    idRatio+=LineCount;
+                    idRatio+=LineIdRatio;
+                    LineIdRatio+=list.Count;
                     break;
                 case FeatureType.Point: type = GeometryType.Point;
                     idRatio = 10000;
                     break;
                 case FeatureType.Polygon: type = GeometryType.Polygon;
-                    idRatio = 100000 +PolygonCount;
+                    idRatio = 100000 +PolygoneIdRatio;
                     PolygonCount++;
+                    PolygoneIdRatio+=list.Count;
                     break;
                 case FeatureType.MultiPoint: type = GeometryType.MultiPoint;
                     idRatio = 10000;

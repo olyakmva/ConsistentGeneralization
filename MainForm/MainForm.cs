@@ -23,27 +23,27 @@ namespace MainForm
         private List<AlgParamControl> _listCtrls;
         private readonly string _applicationPath;
         private Grid _grid;
+        private List<LayerControl> _layers;
+        
+        private int currentY;
+
         public MainForm()
         {
             InitializeComponent();
             _state.Scale = 2;
             mapPictureBox.MouseWheel += MapPictureBoxMouseWheel;
              CreateAlgmControls();
+
             _applicationPath = Environment.CurrentDirectory;
             _inputMap = new Map();
+            _layers = new List<LayerControl>();
+
         }
 
         private void CreateAlgmControls()
         {
             int x = 0, y = 55, ctrlHeight = 120;
             _listCtrls = new List<AlgParamControl>();
-            AlgParamControl gridControl = new AlgParamControl()
-            {
-                AlgmName = "GridOptions",
-                Location = new Point(x, y)
-            };
-            y += ctrlHeight;
-            _listCtrls.Add(gridControl);
             var liCtrl = new AlgParamControl()
             {
                 AlgmName = "GenericLiOpenshow",
@@ -52,9 +52,10 @@ namespace MainForm
             };
             y += ctrlHeight;
             _listCtrls.Add(liCtrl);
-            mainContainer .Panel1.Controls.Add(gridControl);
             mainContainer .Panel1.Controls.Add(liCtrl);
             btnProcess.Location = new Point(x,y);
+            btnClear.Location = new Point(x,y+50);
+            currentY= y+ctrlHeight+50;
         }
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -68,7 +69,18 @@ namespace MainForm
                     var shapeFile = new ShapeFileIO(); 
                     var mapObj = shapeFile.Open(shapeFileName);
                     if (mapObj != null)
+                    { 
                         _inputMap.Add(mapObj);
+                        LayerControl control = new LayerControl(mapObj);
+                        var ind = shapeFileName.LastIndexOf('.');
+                        control.LayerName= shapeFileName.Substring(ind-14,14);
+                        control.LblText = "in_";
+                        control.Location = new Point(0,currentY);
+                        currentY+= control.Height;
+                         control.CheckedChanged+=ShowToolStripMenuItemClick;
+                         mainContainer .Panel1.Controls.Add(control);
+                        _layers.Add(control);
+                    }
                     else MessageBox.Show(@"This layer hasn't any point");
                 }
                 catch (Exception ex)
@@ -88,14 +100,24 @@ namespace MainForm
                 return;
             }
 
-            double cellSize = _listCtrls[0].OutScale * _listCtrls[0].Tolerance;
+            double cellSize = _listCtrls[0].OutScale;
             double detail = _listCtrls[0].DetailSize * _listCtrls[0].OutScale;
             _grid = new Grid(_inputMap, cellSize, detail);
 
             _outMap = _inputMap.Clone();
-            ISimplificationAlgm algm = _listCtrls[1].GetAlgorithm();
+            ISimplificationAlgm algm = _listCtrls[0].GetAlgorithm();
             algm.Run(_outMap, _grid);
-
+             foreach( var layer in _outMap.MapLayers)
+             {
+                layer.ColorName = Colors.GetNext();
+                LayerControl control = new LayerControl(layer);
+                control.LblText = "out";
+                control.Location = new Point(0,currentY);
+                currentY+= control.Height;
+                control.CheckedChanged+=ShowToolStripMenuItemClick;
+                mainContainer .Panel1.Controls.Add(control);
+                 _layers.Add(control);
+             }
             mapPictureBox.Invalidate();
         }
 
@@ -169,24 +191,47 @@ namespace MainForm
                 }
             }
         }
-        private void ClearMapToolStripMenuItemClick(object sender, EventArgs e)
+        private void ClearClick(object sender, EventArgs e)
         {
             _inputMap = new Map();
             _grid = null;
             _outMap=null;
+            foreach(var ctrl in _layers)
+                mainContainer.Panel1.Controls.Remove(ctrl);
+            _layers.Clear();
             mapPictureBox.Invalidate();
         }
+
+        private void ChangeLayer(object sender, EventArgs e)
+        {
+            mapPictureBox.Invalidate();
+        }
+
         #region Отрисовка карты
 
         private void MapPictureBoxPaint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             g.Clear(Color.White);
-            DrawMap(_inputMap,g);
-            if(_outMap!=null)
+            foreach( var layer in _layers)
             {
-                DrawMap(_outMap,g);
+                if(layer.LayerVisible)
+                {
+                    var color = Color.FromName(layer.MapDataObj.ColorName) ; 
+                    var pen = new Pen(color, 1.75f);
+                    if (layer.MapDataObj.Geometry == GeometryType.Point || layer.MapDataObj.Geometry == GeometryType.MultiPoint)
+                    {
+                         var brush = new SolidBrush(color);
+                         DisplayPoints(g,layer.MapDataObj, brush);
+                    }
+                    else
+                    {
+                        Display(g, layer.MapDataObj, pen);
+                    }
+                }
+                    
             }
+   
             if (_grid != null)
             {
                 var c = Color.FromName("Black");
@@ -196,23 +241,7 @@ namespace MainForm
             g.Flush();
         }
 
-        private void DrawMap(Map map, Graphics g)
-        {
-            foreach (var mapData in map.MapLayers )
-            {
-                var color = Color.FromName(mapData.ColorName) ; 
-                var pen = new Pen(color, 1.75f);
-                if (mapData.Geometry == GeometryType.Point || mapData.Geometry == GeometryType.MultiPoint)
-                {
-                    var brush = new SolidBrush(color);
-                    DisplayPoints(g,mapData, brush);
-                }
-                else
-                {
-                    Display(g, mapData, pen);
-                }
-            }
-        }
+        
 
         /// <summary>
         /// Отображение MapData md на графике g
